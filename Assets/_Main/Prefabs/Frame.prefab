@@ -266,7 +266,11 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 2113883507160243460}
     m_ColliderPaths:
-    - - X: 39843752
+    - - X: 40000000
+        Y: -19375000
+      - X: 40000000
+        Y: -312500
+      - X: 39843752
         Y: 0
       - X: -30000000
         Y: 0
@@ -276,10 +280,6 @@ CompositeCollider2D:
         Y: -20000000
       - X: 39531248
         Y: -20000000
-      - X: 40000000
-        Y: -19375000
-      - X: 40000000
-        Y: -312500
   m_CompositePaths:
     m_Paths:
     - - {x: 4, y: -2.0375}
@@ -476,7 +476,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fe50c5064616140119399f3734e26fd0, type: 3}
-  m_Color: {r: 0.8000001, g: 0.72156864, b: 0.72156864, a: 1}
+  m_Color: {r: 0.59385014, g: 0.79049325, b: 0.8018868, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

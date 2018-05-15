@@ -14,12 +14,15 @@ public class PlayerPlatformerController : PhysicsObject {
 
     private CapsuleCollider2D m_CapsuleCollider2D;
 
+    private float m_OriginalMaxSpeed;
+
     // Use this for initialization
     void Awake () 
     {
         m_SpriteRenderer = GetComponent<SpriteRenderer> (); 
         m_Animator = GetComponent<Animator> ();
         m_CapsuleCollider2D = GetComponent<CapsuleCollider2D>();
+        m_OriginalMaxSpeed = maxSpeed;
     }
 
     protected override void ComputeVelocity()
@@ -99,5 +102,21 @@ public class PlayerPlatformerController : PhysicsObject {
 
     }
 
+
+    public void SlowDown(float amount)
+    {
+        ChangeBackToNormal();
+
+        m_Animator.speed = amount;
+        maxSpeed = maxSpeed * amount;
+
+
+    }
+
+    public void ChangeBackToNormal()
+    {
+        m_Animator.speed = 1;
+        maxSpeed = m_OriginalMaxSpeed;
+    }
 
 }

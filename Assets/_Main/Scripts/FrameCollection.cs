@@ -49,15 +49,15 @@ public class FrameCollection : MonoBehaviour {
 
 	}
 	
-	public bool FrameContainsPosition(Frame ignoreFrame, Vector3 position, out Frame frame)
+	public bool FrameContainsPosition(Frame ignoredFrame, Vector3 screenPosition, out Frame frame)
     {
         for (int i = 0; i < frames.Length; i++)
         {
-            if (frames[i] == ignoreFrame) continue;
+            if (frames[i] == ignoredFrame) continue;
 
             RectTransform rect = frames[i].GetComponent<RectTransform>();
 
-            if (RectTransformUtility.RectangleContainsScreenPoint(rect, position,Camera.main ))
+            if (RectTransformUtility.RectangleContainsScreenPoint(rect, screenPosition, Camera.main ))
             {
                 frame = frames[i];
                 PreviousBeingHoverOnFrame = frames[i];

@@ -26,14 +26,18 @@ public class FrameCollection : MonoBehaviour {
 
     }
 
+    public Frame PreviousBeingHoverOnFrame
+    {
+        get; private set;
+
+    }
 
     private static FrameCollection m_Instance;
 
     private Frame[] frames;
-    private 
 
 	// Use this for initialization
-	void Awake () {
+	private void Awake () {
 		
         if(Instance != this)
         {
@@ -47,7 +51,6 @@ public class FrameCollection : MonoBehaviour {
 	
 	public bool FrameContainsPosition(Frame ignoreFrame, Vector3 position, out Frame frame)
     {
-
         for (int i = 0; i < frames.Length; i++)
         {
             if (frames[i] == ignoreFrame) continue;
@@ -57,6 +60,7 @@ public class FrameCollection : MonoBehaviour {
             if (RectTransformUtility.RectangleContainsScreenPoint(rect, position,Camera.main ))
             {
                 frame = frames[i];
+                PreviousBeingHoverOnFrame = frames[i];
                 return true;
             }
             

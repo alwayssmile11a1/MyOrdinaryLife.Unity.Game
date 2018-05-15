@@ -18,11 +18,15 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
     private AlessiaController m_Player;
 
+    private Collider2D[] m_Colliders;
+
     public void Awake()
     {
         startPosition = transform.position;
         animator = GetComponent<Animator>();
         rectTransfrom = GetComponent<RectTransform>();
+
+        m_Colliders = GetComponentsInChildren<Collider2D>();
 
         m_Player = FindObjectOfType<AlessiaController>();
 
@@ -39,13 +43,13 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
         m_CanDrag = true;
 
-        TimeManager.SlowdownTime(0.05f, -1f);
-
         startPosition = transform.position;
         animator.SetBool(HashActive, true);
 
+        //Avoid player jump on being-dragged colliders
+        SetCollidersActive(false);
 
-
+        TimeManager.SlowdownTime(0.05f, -1f);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -53,18 +57,19 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
         if (!m_CanDrag) return;
 
-        Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 touchedPosition = GetTouchedPosition();
 
+        Vector3 position = Camera.main.ScreenToWorldPoint(touchedPosition);
         transform.position = (Vector2)position;
-
-        Frame frame;
 
         if (FrameCollection.Instance.PreviousBeingHoverOnFrame != null)
         {
             FrameCollection.Instance.PreviousBeingHoverOnFrame.animator.SetBool(HashHoverOn, false);
         }
 
-        if (FrameCollection.Instance.FrameContainsPosition(this, Input.mousePosition, out frame))
+        Frame frame;
+        if (FrameCollection.Instance.FrameContainsPosition(this, touchedPosition, out frame) &&
+            !frame.FrameContainsPosition(Camera.main.WorldToScreenPoint(m_Player.transform.position)))
         {
             frame.animator.SetBool(HashHoverOn, true);
         }
@@ -76,14 +81,16 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
         if (!m_CanDrag) return;
 
-        Frame frame;
+
 
         if (FrameCollection.Instance.PreviousBeingHoverOnFrame != null)
         {
             FrameCollection.Instance.PreviousBeingHoverOnFrame.animator.SetBool(HashHoverOn, false);
         }
 
-        if (FrameCollection.Instance.FrameContainsPosition(this, Input.mousePosition, out frame))
+        Frame frame;
+        if (FrameCollection.Instance.FrameContainsPosition(this, GetTouchedPosition(), out frame) && 
+            !frame.FrameContainsPosition(Camera.main.WorldToScreenPoint( m_Player.transform.position)))
         {
             FrameCollection.Instance.SwitchBetween(this, frame);
         }
@@ -94,13 +101,38 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
         animator.SetBool(HashActive, false);
 
+        SetCollidersActive(true);
+
         TimeManager.ChangeTimeBackToNormal();
     }
 
 
-    private bool FrameContainsPosition(Vector3 screenPosition)
+    public bool FrameContainsPosition(Vector3 screenPosition)
     {
         return RectTransformUtility.RectangleContainsScreenPoint(rectTransfrom, screenPosition, Camera.main);
+    }
+
+
+    public void SetCollidersActive(bool actived)
+    {
+        for (int i = 0; i < m_Colliders.Length; i++)
+        {
+            m_Colliders[i].enabled = actived;
+        }
+    }
+
+    private Vector3 GetTouchedPosition()
+    {
+
+#if UNITY_EDITOR
+
+        return  Input.mousePosition;
+
+#else  
+        return Input.GetTouch(0).position;
+#endif
+
+
     }
 
 }

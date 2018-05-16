@@ -174,8 +174,6 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
             if(nextFrame!=null)
             {
-                this.Disable();
-
                 nextFrame.SetCharacterOn(true);
 
                 Vector3 newPosition = new Vector3(nextFrame.transform.position.x - nextFrame.GetComponentInChildren<SpriteRenderer>().bounds.extents.x,
@@ -184,10 +182,8 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
                 alessia.transform.position = newPosition;
 
             }
-            else
-            {
-                Debug.Log("EndLevel");
-            }
+
+            this.Disable();
 
         }
 

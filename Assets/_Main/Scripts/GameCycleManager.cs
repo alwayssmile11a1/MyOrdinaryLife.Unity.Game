@@ -14,7 +14,13 @@ public class GameCycleManager : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void FinishLevel(Collider2D collision)
+    {
+        collision.gameObject.SetActive(false);
 
+        //Show dialog panel or something here
+
+    }
 
 
 }

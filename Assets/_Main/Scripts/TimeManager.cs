@@ -17,10 +17,6 @@ public class TimeManager : MonoBehaviour {
     private void Awake()
     {
         m_OriginalFixedDeltaTime = Time.fixedDeltaTime;
-    }
-
-    private void OnEnable()
-    {
         m_TimeManager = this;
     }
 

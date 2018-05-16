@@ -1,23 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameCycleManager : MonoBehaviour {
 
 
-    private PlayerPlatformerController m_Player;
-
-	// Use this for initialization
-	void Awake () {
-
-        m_Player = FindObjectOfType<PlayerPlatformerController>();
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public void ReloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
 
 

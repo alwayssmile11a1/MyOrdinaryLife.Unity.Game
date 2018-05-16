@@ -77,12 +77,13 @@ public class FrameCollection : MonoBehaviour {
 
     public void SwitchBetween(Frame frame1, Frame frame2)
     {
-        StartCoroutine(InternalSwitchBetween(frame1,frame2));
+        //StartCoroutine(InternalSwitchBetween(frame1,frame2));
 
+        InternalSwitchBetween(frame1, frame2);
     }
 
 
-    private IEnumerator InternalSwitchBetween(Frame frame1, Frame frame2)
+    private void InternalSwitchBetween(Frame frame1, Frame frame2)
     {
 
         //Switch order of two frames
@@ -102,15 +103,18 @@ public class FrameCollection : MonoBehaviour {
         }
 
         frame1.transform.position = frame2.transform.position;
+        frame2.transform.position = frame1.startPosition;
 
-        while (!Mathf.Approximately((frame2.transform.position - frame1.startPosition).sqrMagnitude, 0f) )
-        {
-            frame2.transform.position = Vector3.MoveTowards(frame2.transform.position, frame1.startPosition, 3f);
+        frame1.startPosition = frame1.transform.position;
+        frame2.startPosition = frame2.transform.position;
 
-            
+        //while (!Mathf.Approximately((frame2.transform.position - frame1.startPosition).sqrMagnitude, 0f) )
+        //{
+        //    frame2.transform.position = Vector3.MoveTowards(frame2.transform.position, frame1.startPosition, 3f);
 
-            yield return null;
-        }
+                
+        //    yield return null;
+        //}
 
     }
 

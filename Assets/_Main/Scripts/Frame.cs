@@ -17,20 +17,22 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     [HideInInspector]
     public Animator animator;
     [HideInInspector]
-    public BoxCollider2D frameCollider;
 
 
     private readonly int HashActive = Animator.StringToHash("Active");
     private readonly int HashHoverOn = Animator.StringToHash("HoverOn");
+    private readonly int HashDisabled = Animator.StringToHash("Disabled");
+    private readonly int HashCharacterOn = Animator.StringToHash("CharacterOn");
+
     private RectTransform rectTransfrom;
-    private bool m_CanDrag;
     private AlessiaController m_Player;
     private Collider2D[] m_Colliders;
     private SortingGroup m_ObjectsSortingGroup;
 
+    public bool Disabled { get; private set; }
+    public bool IsBeingDragged { get; private set; }
 
-
-    public void Awake()
+    private void Awake()
     {
         startPosition = transform.position;
         animator = GetComponent<Animator>();
@@ -38,43 +40,45 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
         m_Colliders = GetComponentsInChildren<Collider2D>();
 
-        frameCollider = GetComponent<BoxCollider2D>();
-
         m_ObjectsSortingGroup = GetComponentInChildren<SortingGroup>();
 
         m_Player = FindObjectOfType<AlessiaController>();
 
 
+    }
+
+    private void Start()
+    {
+        if (FrameContainsPosition(Camera.main.WorldToScreenPoint(m_Player.transform.position)))
+        {
+            SetCharacterOn(true);
+        }
 
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-       
+
+        if (Disabled) return;
+
         if(FrameContainsPosition(Camera.main.WorldToScreenPoint(m_Player.transform.position)))
         {
-            m_CanDrag = false;
+            IsBeingDragged = false;
             return;
         }
 
-        m_CanDrag = true;
+        IsBeingDragged = true;
 
         startPosition = transform.position;
-        animator.SetBool(HashActive, true);
 
-        m_ObjectsSortingGroup.sortingOrder = 15;
-
-
-        //Avoid player jump on being-dragged colliders
-        SetCollidersActive(false);
-
-        TimeManager.SlowdownTime(0.05f, -1f);
+        EnableDragEssentials();
     }
+
 
     public void OnDrag(PointerEventData eventData)
     {
 
-        if (!m_CanDrag) return;
+        if (!IsBeingDragged) return;
 
         Vector3 touchedPosition = GetTouchedPosition();
 
@@ -87,7 +91,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         }
 
         Frame frame;
-        if (FrameCollection.Instance.FrameContainsPosition(this, touchedPosition, out frame) &&
+        if (FrameCollection.Instance.FrameContainsPosition(this, touchedPosition, out frame) && !frame.Disabled &&
             !frame.FrameContainsPosition(Camera.main.WorldToScreenPoint(m_Player.transform.position)))
         {
             frame.animator.SetBool(HashHoverOn, true);
@@ -98,9 +102,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     public void OnEndDrag(PointerEventData eventData)
     {
 
-        if (!m_CanDrag) return;
-
-
+        if (!IsBeingDragged) return;
 
         if (FrameCollection.Instance.PreviousBeingHoverOnFrame != null)
         {
@@ -118,6 +120,26 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
             transform.position = startPosition;
         }
 
+        DisableDragEssentials();
+
+        IsBeingDragged = false;
+
+    }
+
+    private void EnableDragEssentials()
+    {
+        animator.SetBool(HashActive, true);
+
+        m_ObjectsSortingGroup.sortingOrder = 15;
+
+        //Avoid player jump on being-dragged colliders
+        SetCollidersActive(false);
+
+        TimeManager.SlowdownTime(0.05f, -1f);
+    }
+
+    private void DisableDragEssentials()
+    {
         animator.SetBool(HashActive, false);
 
         m_ObjectsSortingGroup.sortingOrder = 2;
@@ -126,7 +148,6 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
         TimeManager.ChangeTimeBackToNormal();
     }
-
 
     public bool FrameContainsPosition(Vector3 screenPosition)
     {
@@ -153,12 +174,14 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
             if(nextFrame!=null)
             {
+                this.Disable();
 
-                Vector3 newPosition = new Vector3(nextFrame.transform.position.x - nextFrame.frameCollider.bounds.extents.x,
+                nextFrame.SetCharacterOn(true);
+
+                Vector3 newPosition = new Vector3(nextFrame.transform.position.x - nextFrame.GetComponentInChildren<SpriteRenderer>().bounds.extents.x,
                      nextFrame.transform.position.y + (alessia.transform.position.y - transform.position.y), 0);
 
                 alessia.transform.position = newPosition;
-
 
             }
             else
@@ -168,6 +191,34 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
         }
 
+    }
+
+    public void Disable()
+    {
+        animator.SetBool(HashCharacterOn, false);
+        animator.SetTrigger(HashDisabled);
+        IsBeingDragged = false;
+        Disabled = true;
+    }
+
+    public void SetCharacterOn(bool characterOn)
+    {
+        animator.SetBool(HashCharacterOn, characterOn);
+
+        if (characterOn && IsBeingDragged)
+        {
+            transform.position = startPosition;
+
+            if (FrameCollection.Instance.PreviousBeingHoverOnFrame != null)
+            {
+                FrameCollection.Instance.PreviousBeingHoverOnFrame.animator.SetBool(HashHoverOn, false);
+            }
+
+            DisableDragEssentials();
+
+        }
+
+        IsBeingDragged = !characterOn;
     }
 
     private Vector3 GetTouchedPosition()
@@ -180,7 +231,6 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 #else  
         return Input.GetTouch(0).position;
 #endif
-
 
     }
 

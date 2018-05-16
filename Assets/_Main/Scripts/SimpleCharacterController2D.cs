@@ -93,7 +93,7 @@ public class SimpleCharacterController2D : MonoBehaviour
         {
             //Shoot ray
             int count = Physics2D.Raycast(m_RaycastStartPositions[i], raycastDirection, m_ContactFilter, m_HitBuffer, raycastDistance);
-            //Debug.DrawRay(m_RaycastStartPositions[i], raycastDirection);
+            Debug.DrawRay(m_RaycastStartPositions[i], raycastDirection * raycastDistance);
 
             //get ground collider
             m_GroundCollider[i] = count > 0 ? m_HitBuffer[0].collider : null;

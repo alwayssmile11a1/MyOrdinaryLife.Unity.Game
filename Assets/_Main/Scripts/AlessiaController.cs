@@ -57,7 +57,6 @@ public class AlessiaController : MonoBehaviour {
 
     private void Move()
     {
-
         if (CheckForObstacle(0.5f,0.2f) && m_CharacterController2D.IsGrounded)
         {
             Jump();
@@ -69,6 +68,7 @@ public class AlessiaController : MonoBehaviour {
         //Move rigidbody
         m_Rigidbody2D.velocity = m_Velocity;
 
+        
 
     }
 

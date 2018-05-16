@@ -2,23 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+
+
+
+
+
     [HideInInspector]
     public Vector3 startPosition;
     [HideInInspector]
     public Animator animator;
+    [HideInInspector]
 
     private readonly int HashActive = Animator.StringToHash("Active");
     private readonly int HashHoverOn = Animator.StringToHash("HoverOn");
     private RectTransform rectTransfrom;
-
     private bool m_CanDrag;
-
     private AlessiaController m_Player;
-
     private Collider2D[] m_Colliders;
+    private SortingGroup m_ObjectsSortingGroup;
+
+
 
     public void Awake()
     {
@@ -28,8 +36,12 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
         m_Colliders = GetComponentsInChildren<Collider2D>();
 
+        m_ObjectsSortingGroup = GetComponentInChildren<SortingGroup>();
+
         m_Player = FindObjectOfType<AlessiaController>();
 
+
+        
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -45,6 +57,9 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
         startPosition = transform.position;
         animator.SetBool(HashActive, true);
+
+        m_ObjectsSortingGroup.sortingOrder = 15;
+
 
         //Avoid player jump on being-dragged colliders
         SetCollidersActive(false);
@@ -101,6 +116,8 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
         animator.SetBool(HashActive, false);
 
+        m_ObjectsSortingGroup.sortingOrder = 2;
+
         SetCollidersActive(true);
 
         TimeManager.ChangeTimeBackToNormal();
@@ -120,6 +137,8 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
             m_Colliders[i].enabled = actived;
         }
     }
+
+
 
     private Vector3 GetTouchedPosition()
     {

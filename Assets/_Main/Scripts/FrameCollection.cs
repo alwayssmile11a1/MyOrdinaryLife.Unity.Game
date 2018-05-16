@@ -34,7 +34,7 @@ public class FrameCollection : MonoBehaviour {
 
     private static FrameCollection m_Instance;
 
-    private Frame[] frames;
+    private Frame[] m_Frames;
 
 	// Use this for initialization
 	private void Awake () {
@@ -44,23 +44,26 @@ public class FrameCollection : MonoBehaviour {
             Destroy(gameObject);
         }
 
+        m_Frames = GetComponentsInChildren<Frame>();
 
-        frames = FindObjectsOfType<Frame>();
-
+        //for (int i = 0; i < m_Frames.Length; i++)
+        //{
+        //    Debug.Log(m_Frames[i].name);
+        //}
 	}
 	
 	public bool FrameContainsPosition(Frame ignoredFrame, Vector3 screenPosition, out Frame frame)
     {
-        for (int i = 0; i < frames.Length; i++)
+        for (int i = 0; i < m_Frames.Length; i++)
         {
-            if (frames[i] == ignoredFrame) continue;
+            if (m_Frames[i] == ignoredFrame) continue;
 
-            RectTransform rect = frames[i].GetComponent<RectTransform>();
+            RectTransform rect = m_Frames[i].GetComponent<RectTransform>();
 
             if (RectTransformUtility.RectangleContainsScreenPoint(rect, screenPosition, Camera.main ))
             {
-                frame = frames[i];
-                PreviousBeingHoverOnFrame = frames[i];
+                frame = m_Frames[i];
+                PreviousBeingHoverOnFrame = m_Frames[i];
                 return true;
             }
             
@@ -82,6 +85,22 @@ public class FrameCollection : MonoBehaviour {
     private IEnumerator InternalSwitchBetween(Frame frame1, Frame frame2)
     {
 
+        //Switch order of two frames
+        for (int i = 0; i < m_Frames.Length; i++)
+        {
+            if(m_Frames[i]==frame1)
+            {
+                m_Frames[i] = frame2;
+            }
+            else
+            {
+                if (m_Frames[i] == frame2)
+                {
+                    m_Frames[i] = frame1;
+                }
+            }
+        }
+
         frame1.transform.position = frame2.transform.position;
 
         while (!Mathf.Approximately((frame2.transform.position - frame1.startPosition).sqrMagnitude, 0f) )
@@ -93,9 +112,26 @@ public class FrameCollection : MonoBehaviour {
             yield return null;
         }
 
-
-
-
     }
+
+    private Frame GetNextFrame(Frame frame)
+    {
+        for (int i = 0; i < m_Frames.Length; i++)
+        {
+            if(m_Frames[i]==frame && i+1 < m_Frames.Length)
+            {
+                return m_Frames[i+1];
+            }
+        }
+
+
+        return null;
+    }
+
+    private Frame GetFrame(int index)
+    {
+        return m_Frames[index];
+    }
+
 
 }

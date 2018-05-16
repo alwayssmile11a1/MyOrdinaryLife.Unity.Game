@@ -7,7 +7,7 @@ using Gamekit2D;
 public class AlessiaController : MonoBehaviour {
 
     public float speed = 5f;
-    public float jumpForce = 400f;
+    public float jumpTakeOffSpeed = 5f;
 
 
     [Header("Audio")]
@@ -19,7 +19,6 @@ public class AlessiaController : MonoBehaviour {
     private Vector2 m_Velocity = new Vector2();
     private CapsuleCollider2D m_CapsuleCollider2D;
     private Rigidbody2D m_Rigidbody2D;
-    private Vector2 m_JumpForceVector;
 
 
     private Animator m_Animator;
@@ -41,12 +40,6 @@ public class AlessiaController : MonoBehaviour {
         m_CapsuleCollider2D = GetComponent<CapsuleCollider2D>();
     }
 
-    private void Update()
-    {
-
-
-    }
-
     private void FixedUpdate()
     {
 
@@ -58,9 +51,7 @@ public class AlessiaController : MonoBehaviour {
     {
         if (m_CharacterController2D.IsGrounded)
         {
-            m_JumpForceVector.y = jumpForce;
-            m_Rigidbody2D.AddForce(m_JumpForceVector, ForceMode2D.Impulse);
-            m_JumpForceVector = Vector2.zero;
+            m_Rigidbody2D.velocity = new Vector3(0, jumpTakeOffSpeed);
         }
     }
 
@@ -133,5 +124,9 @@ public class AlessiaController : MonoBehaviour {
     {
         hurtAudioPlayer.PlayRandomSound();
     }
+
+
+
+
 
 }

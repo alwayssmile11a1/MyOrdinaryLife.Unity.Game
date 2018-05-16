@@ -110,7 +110,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         }
 
         Frame frame;
-        if (FrameCollection.Instance.FrameContainsPosition(this, GetTouchedPosition(), out frame) && 
+        if (FrameCollection.Instance.FrameContainsPosition(this, GetTouchedPosition(), out frame) && !frame.Disabled &&
             !frame.FrameContainsPosition(Camera.main.WorldToScreenPoint( m_Player.transform.position)))
         {
             FrameCollection.Instance.SwitchBetween(this, frame);

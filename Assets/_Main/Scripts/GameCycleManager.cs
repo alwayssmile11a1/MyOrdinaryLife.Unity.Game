@@ -8,6 +8,9 @@ public class GameCycleManager : MonoBehaviour {
 
     public void ReloadScene()
     {
+
+        TimeManager.ChangeTimeBackToNormal();
+
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

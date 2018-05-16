@@ -17,6 +17,8 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     [HideInInspector]
     public Animator animator;
     [HideInInspector]
+    public BoxCollider2D frameCollider;
+
 
     private readonly int HashActive = Animator.StringToHash("Active");
     private readonly int HashHoverOn = Animator.StringToHash("HoverOn");
@@ -36,12 +38,14 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
         m_Colliders = GetComponentsInChildren<Collider2D>();
 
+        frameCollider = GetComponent<BoxCollider2D>();
+
         m_ObjectsSortingGroup = GetComponentInChildren<SortingGroup>();
 
         m_Player = FindObjectOfType<AlessiaController>();
 
 
-        
+
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -138,7 +142,33 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         }
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
 
+        AlessiaController alessia = collision.GetComponent<AlessiaController>();
+
+        if (alessia != null)
+        {
+            Frame nextFrame = FrameCollection.Instance.GetNextFrame(this);
+
+            if(nextFrame!=null)
+            {
+
+                Vector3 newPosition = new Vector3(nextFrame.transform.position.x - nextFrame.frameCollider.bounds.extents.x,
+                     nextFrame.transform.position.y + (alessia.transform.position.y - transform.position.y), 0);
+
+                alessia.transform.position = newPosition;
+
+
+            }
+            else
+            {
+                Debug.Log("EndLevel");
+            }
+
+        }
+
+    }
 
     private Vector3 GetTouchedPosition()
     {

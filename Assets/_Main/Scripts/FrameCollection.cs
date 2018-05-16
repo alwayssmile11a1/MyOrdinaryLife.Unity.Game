@@ -114,7 +114,7 @@ public class FrameCollection : MonoBehaviour {
 
     }
 
-    private Frame GetNextFrame(Frame frame)
+    public Frame GetNextFrame(Frame frame)
     {
         for (int i = 0; i < m_Frames.Length; i++)
         {
@@ -128,7 +128,7 @@ public class FrameCollection : MonoBehaviour {
         return null;
     }
 
-    private Frame GetFrame(int index)
+    public Frame GetFrame(int index)
     {
         return m_Frames[index];
     }

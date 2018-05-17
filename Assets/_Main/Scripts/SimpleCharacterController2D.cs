@@ -3,7 +3,7 @@ using UnityEngine;
 using Gamekit2D;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CapsuleCollider2D))]
+[RequireComponent(typeof(Collider2D))]
 public class SimpleCharacterController2D : MonoBehaviour
 {
     [Tooltip("The Layers which represent gameobjects that the Character Controller can be grounded on.")]
@@ -12,7 +12,7 @@ public class SimpleCharacterController2D : MonoBehaviour
     public float groundedRaycastDistance = 0.1f;
 
     Rigidbody2D m_Rigidbody2D;
-    CapsuleCollider2D m_CapsuleCollider2D;
+    Collider2D m_Collider2D;
     ContactFilter2D m_ContactFilter;
     RaycastHit2D[] m_HitBuffer = new RaycastHit2D[5];
     Collider2D[] m_GroundCollider = new Collider2D[3];
@@ -29,7 +29,7 @@ public class SimpleCharacterController2D : MonoBehaviour
     void Awake()
     {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
-        m_CapsuleCollider2D = GetComponent<CapsuleCollider2D>();
+        m_Collider2D = GetComponent<Collider2D>();
 
         m_ContactFilter.layerMask = groundedLayerMask;
         m_ContactFilter.useLayerMask = true;
@@ -75,17 +75,18 @@ public class SimpleCharacterController2D : MonoBehaviour
         Vector2 raycastStart;
         float raycastDistance;
 
-        raycastStart = m_Rigidbody2D.position + m_CapsuleCollider2D.offset;
+        raycastStart = m_Rigidbody2D.position + m_Collider2D.offset;
 
         //we add size.x/2 to this line of code because in a bit later, we subtract the  raycastStartBottomCentre to size.x/2
-        raycastDistance = m_CapsuleCollider2D.size.x * 0.5f + groundedRaycastDistance * 2f;
+        raycastDistance = m_Collider2D.bounds.extents.x * 0.5f + groundedRaycastDistance * 2f;
 
         raycastDirection = Vector2.down;
 
-        Vector2 raycastStartBottomCentre = raycastStart + Vector2.down * (m_CapsuleCollider2D.size.y * 0.5f - m_CapsuleCollider2D.size.x * 0.5f);
-        m_RaycastStartPositions[0] = raycastStartBottomCentre + Vector2.left * m_CapsuleCollider2D.size.x * 0.5f;
+        Vector2 raycastStartBottomCentre = raycastStart + Vector2.down * (m_Collider2D.bounds.extents.y * 0.5f - m_Collider2D.bounds.extents.x * 0.5f);
+        m_RaycastStartPositions[0] = raycastStartBottomCentre + Vector2.left * m_Collider2D.bounds.extents.x;
         m_RaycastStartPositions[1] = raycastStartBottomCentre;
-        m_RaycastStartPositions[2] = raycastStartBottomCentre + Vector2.right * m_CapsuleCollider2D.size.x * 0.5f;
+        m_RaycastStartPositions[2] = raycastStartBottomCentre + Vector2.right * m_Collider2D.bounds.extents.x;
+
 
         int totalCount = 0;
 
@@ -109,7 +110,7 @@ public class SimpleCharacterController2D : MonoBehaviour
         {
             IsGrounded = true;
         }
-        
+
         //reset buffer
         for (int i = 0; i < m_HitBuffer.Length; i++)
         {

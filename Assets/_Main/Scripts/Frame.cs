@@ -8,10 +8,6 @@ using UnityEngine.UI;
 public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
 
-
-
-
-
     [HideInInspector]
     public Vector3 startPosition;
     [HideInInspector]
@@ -176,7 +172,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
             {
                 nextFrame.SetCharacterOn(true);
 
-                Vector3 newPosition = new Vector3(nextFrame.transform.position.x - nextFrame.GetComponentInChildren<SpriteRenderer>().bounds.extents.x,
+                Vector3 newPosition = new Vector3(nextFrame.transform.position.x - nextFrame.GetComponentInChildren<SpriteRenderer>().bounds.extents.x - alessia.GetComponent<Collider2D>().bounds.extents.x / 2,
                      nextFrame.transform.position.y + (alessia.transform.position.y - transform.position.y), 0);
 
                 alessia.transform.position = newPosition;

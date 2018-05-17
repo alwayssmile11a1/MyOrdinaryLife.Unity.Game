@@ -79,7 +79,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         Vector3 touchedPosition = GetTouchedPosition();
 
         Vector3 position = Camera.main.ScreenToWorldPoint(touchedPosition);
-        transform.position = (Vector2)position;
+        transform.position = new Vector3(position.x, position.y, transform.position.z);
 
         if (FrameCollection.Instance.PreviousBeingHoverOnFrame != null)
         {

@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3.5
-  jumpTakeOffSpeed: 7.5
+  jumpTakeOffSpeed: 7
   footStepAudioPlayer: {fileID: 0}
   landAudioPlayer: {fileID: 0}
   hurtAudioPlayer: {fileID: 0}

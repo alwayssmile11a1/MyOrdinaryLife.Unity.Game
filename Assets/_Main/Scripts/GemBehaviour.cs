@@ -8,14 +8,10 @@ public class GemBehaviour : MonoBehaviour
 
     public string collectedEffect = "CollectedEffect";
 
-    private Collider2D gemCollider2D;
-
     private int HashCollectedEffect;
 
     private void Awake()
     {
-        gemCollider2D = GetComponent<Collider2D>();
-
         HashCollectedEffect = Gamekit2D.VFXController.StringToHash(collectedEffect);
 
     }

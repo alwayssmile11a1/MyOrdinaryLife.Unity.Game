@@ -13,7 +13,6 @@ public class AlessiaController : MonoBehaviour {
     [Header("Audio")]
     public RandomAudioPlayer footStepAudioPlayer;
     public RandomAudioPlayer landAudioPlayer;
-    public RandomAudioPlayer hurtAudioPlayer;
 
     private SimpleCharacterController2D m_CharacterController2D;
     private Vector2 m_Velocity = new Vector2();
@@ -119,14 +118,6 @@ public class AlessiaController : MonoBehaviour {
     {
         landAudioPlayer.PlayRandomSound();
     }
-
-    public void PlayHurtAudioPlayer()
-    {
-        hurtAudioPlayer.PlayRandomSound();
-    }
-
-
-
 
 
 }

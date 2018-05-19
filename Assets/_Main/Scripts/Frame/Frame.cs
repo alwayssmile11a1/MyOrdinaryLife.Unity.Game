@@ -21,7 +21,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     private readonly int HashCharacterOn = Animator.StringToHash("CharacterOn");
 
     private RectTransform rectTransfrom;
-    private AlessiaController m_Player;
+    private PlayerPlatformerController m_Player;
     private Collider2D[] m_Colliders;
     private SortingGroup m_ObjectsSortingGroup;
 
@@ -38,7 +38,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
         m_ObjectsSortingGroup = GetComponentInChildren<SortingGroup>();
 
-        m_Player = FindObjectOfType<AlessiaController>();
+        m_Player = FindObjectOfType<PlayerPlatformerController>();
 
 
     }
@@ -162,7 +162,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     private void OnTriggerExit2D(Collider2D collision)
     {
 
-        AlessiaController alessia = collision.GetComponent<AlessiaController>();
+        PlayerPlatformerController alessia = collision.GetComponent<PlayerPlatformerController>();
 
         if (alessia != null)
         {

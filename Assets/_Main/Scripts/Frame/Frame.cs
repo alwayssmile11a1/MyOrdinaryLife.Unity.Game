@@ -189,8 +189,10 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     {
         animator.SetBool(HashCharacterOn, false);
         animator.SetTrigger(HashDisabled);
+        m_ObjectsSortingGroup.sortingOrder = 15;
         IsBeingDragged = false;
         Disabled = true;
+
     }
 
     public void SetCharacterOn(bool characterOn)

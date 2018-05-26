@@ -91,11 +91,6 @@ public class LoadScene : MonoBehaviour {
     {
         TimeManager.ChangeTimeBackToNormal();
     }
-
-    public void StartGame()
-    {
-        TimeManager.ChangeTimeBackToNormal();
-        m_StartGame = true;
-    }
+    
 
 }

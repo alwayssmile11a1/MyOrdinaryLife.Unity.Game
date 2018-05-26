@@ -84,7 +84,7 @@ public class PlayerPlatformerController : MonoBehaviour
 
             //Set horizontal movement
             SetHorizontalMovement(m_SpriteRenderer.flipX ? -speed : speed);
-        } 
+        }
         else
         {
             SetHorizontalMovement(0);
@@ -145,7 +145,7 @@ public class PlayerPlatformerController : MonoBehaviour
             SetVerticalMovement(jumpSpeed);
         }
     }
-    
+
     public void Jump(float jump)
     {
         if (m_CharacterController2D.IsGrounded)
@@ -158,7 +158,7 @@ public class PlayerPlatformerController : MonoBehaviour
     {
         m_IsOnLadder = false;
         m_TriggerUse = false;
-        if(m_PlatformEffector2D)
+        if (m_PlatformEffector2D)
         {
             m_PlatformEffector2D.rotationalOffset = 0;
         }
@@ -253,12 +253,14 @@ public class PlayerPlatformerController : MonoBehaviour
 
     public void PlayFootStepAudioPlayer()
     {
-        footStepAudioPlayer.PlayRandomSound();
+        if (footStepAudioPlayer != null)
+            footStepAudioPlayer.PlayRandomSound();
     }
 
     public void PlayLandAudioPlayer()
     {
-        landAudioPlayer.PlayRandomSound();
+        if (landAudioPlayer != null)
+            landAudioPlayer.PlayRandomSound();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

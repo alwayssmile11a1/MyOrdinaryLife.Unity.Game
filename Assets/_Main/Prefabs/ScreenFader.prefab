@@ -617,7 +617,7 @@ MonoBehaviour:
   faderCanvasGroup: {fileID: 225415209257965186}
   loadingCanvasGroup: {fileID: 225029562791527828}
   gameOverCanvasGroup: {fileID: 225602947181298284}
-  fadeDuration: 1
+  fadeDuration: 0.5
 --- !u!114 &114944032863283354
 MonoBehaviour:
   m_ObjectHideFlags: 1

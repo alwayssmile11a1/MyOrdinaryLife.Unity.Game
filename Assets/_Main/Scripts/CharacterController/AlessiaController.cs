@@ -4,7 +4,8 @@ using UnityEngine;
 using Gamekit2D;
 
 [RequireComponent(typeof(SimpleCharacterController2D))]
-public class AlessiaController : MonoBehaviour {
+public class AlessiaController : MonoBehaviour
+{
 
     public float speed = 5f;
     public float jumpTakeOffSpeed = 5f;
@@ -31,7 +32,8 @@ public class AlessiaController : MonoBehaviour {
     private int m_HashDashPara = Animator.StringToHash("Dash");
 
 
-    private void Awake() {
+    private void Awake()
+    {
         m_Rigidbody2D = GetComponent<Rigidbody2D>();
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_Animator = GetComponent<Animator>();
@@ -56,7 +58,7 @@ public class AlessiaController : MonoBehaviour {
 
     private void Move()
     {
-        if (CheckForObstacle(0.5f,0.2f) && m_CharacterController2D.IsGrounded)
+        if (CheckForObstacle(0.5f, 0.2f) && m_CharacterController2D.IsGrounded)
         {
             Jump();
         }
@@ -67,7 +69,7 @@ public class AlessiaController : MonoBehaviour {
         //Move rigidbody
         m_Rigidbody2D.velocity = m_Velocity;
 
-        
+
 
     }
 
@@ -75,7 +77,7 @@ public class AlessiaController : MonoBehaviour {
     {
 
         m_SpriteRenderer.flipX = !m_SpriteRenderer.flipX;
-        
+
     }
 
     private void Animate()
@@ -111,12 +113,14 @@ public class AlessiaController : MonoBehaviour {
 
     public void PlayFootStepAudioPlayer()
     {
-        footStepAudioPlayer.PlayRandomSound();
+        if (footStepAudioPlayer != null)
+            footStepAudioPlayer.PlayRandomSound();
     }
 
     public void PlayLandAudioPlayer()
     {
-        landAudioPlayer.PlayRandomSound();
+        if (landAudioPlayer != null)
+            landAudioPlayer.PlayRandomSound();
     }
 
 

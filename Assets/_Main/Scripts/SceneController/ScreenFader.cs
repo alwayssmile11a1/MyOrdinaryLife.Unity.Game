@@ -48,7 +48,12 @@ namespace Gamekit2D
         public float fadeDuration = 1f;
 
         protected bool m_IsFading;
-    
+
+        private float m_Timer;
+        private CanvasGroup m_CanvasGroup;
+        private float m_FadeSpeed;
+        private bool m_IsFadingIn;
+
         const int k_MaxSortingLayer = 32767;
 
         void Awake ()
@@ -61,6 +66,45 @@ namespace Gamekit2D
         
             DontDestroyOnLoad (gameObject);
         }
+
+        public void Update()
+        {
+            if(m_IsFadingIn)
+            {
+                
+                if (!Mathf.Approximately(m_CanvasGroup.alpha, 0))
+                {
+                    m_CanvasGroup.alpha = Mathf.MoveTowards(m_CanvasGroup.alpha, 0, m_FadeSpeed * (1/60f));
+
+                }
+                else
+                {
+                    m_CanvasGroup.alpha = 0;
+                    m_IsFading = false;
+                    m_IsFadingIn = false;
+                    m_CanvasGroup.blocksRaycasts = false;
+
+                    m_CanvasGroup.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        public void FadeSceneInUnscale()
+        {
+            if (Instance.faderCanvasGroup.alpha > 0.1f)
+                m_CanvasGroup = Instance.faderCanvasGroup;
+            else if (Instance.gameOverCanvasGroup.alpha > 0.1f)
+                m_CanvasGroup = Instance.gameOverCanvasGroup;
+            else
+                m_CanvasGroup = Instance.loadingCanvasGroup;
+
+            m_IsFading = true;
+            m_IsFadingIn = true;
+            m_CanvasGroup.blocksRaycasts = true;
+            m_FadeSpeed = Mathf.Abs(m_CanvasGroup.alpha) / fadeDuration;
+
+        }
+
 
         protected IEnumerator Fade(float finalAlpha, CanvasGroup canvasGroup)
         {

@@ -33,7 +33,7 @@ public class LoadScene : MonoBehaviour {
     IEnumerator Load()
     {
         yield return new WaitForSeconds(screenFader.fadeDuration);
-        screenFader.StartFadeSceneIn();
+
         switch (loadType)
         {
             case LoadType.ButtonText: LoadTextScene(); break;
@@ -42,11 +42,18 @@ public class LoadScene : MonoBehaviour {
             case LoadType.LevelSelect: LoadSelectLevelScene(); break;
             case LoadType.Menu: LoadMenuScene(); break;
         }
+
+        screenFader.FadeSceneInUnscale();
+
     }
     private void LoadTextScene()
     {
         string sceneName = "Level " + gameObject.GetComponentInChildren<TextMeshProUGUI>().text.Trim();
-        SceneManager.LoadSceneAsync(sceneName);
+
+        if (Application.CanStreamedLevelBeLoaded(sceneName))
+        {
+            SceneManager.LoadScene(sceneName);
+        }
     }
     private void LoadSelectLevelScene()
     {

@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadScene : MonoBehaviour {
+    public static bool m_StartGame = false;
     ScreenFader screenFader;
     public enum LoadType
     {
@@ -91,6 +92,10 @@ public class LoadScene : MonoBehaviour {
         TimeManager.ChangeTimeBackToNormal();
     }
 
-
+    public void StartGame()
+    {
+        TimeManager.ChangeTimeBackToNormal();
+        m_StartGame = true;
+    }
 
 }

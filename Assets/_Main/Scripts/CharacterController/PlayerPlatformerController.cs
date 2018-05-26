@@ -47,9 +47,16 @@ public class PlayerPlatformerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        TakeAction();
-        Face();
-        Animate();
+        if (LoadScene.m_StartGame)
+        {
+            TakeAction();
+            Face();
+            Animate();
+        }
+        else
+        {
+            TimeManager.SlowdownTime(0, -1);
+        }
     }
 
 

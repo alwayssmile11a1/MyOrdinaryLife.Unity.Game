@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4425594933397282}
   - component: {fileID: 61937588727334372}
-  - component: {fileID: 114344466102266554}
+  - component: {fileID: 114534102076935796}
   m_Layer: 0
   m_Name: FinishBound
   m_TagString: Untagged
@@ -66,7 +66,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 13.05}
   m_EdgeRadius: 0
---- !u!114 &114344466102266554
+--- !u!114 &114534102076935796
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -74,25 +74,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1251156793561888}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06a8d16e5f6bbc649a800d698d1c19ff, type: 3}
+  m_Script: {fileID: 11500000, guid: 920fff3dcc70b12458b4b0d3158f8245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  OnTriggerEnterEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: FinishLevel
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: TriggerEnterEventTrigger+TriggerEnterEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  endLevelEffect: CFX2_PickupHeart

@@ -639,7 +639,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114740617967164060}
-        m_MethodName: LoadNewScene
+        m_MethodName: LoadMenuLevelSceneNoDelay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

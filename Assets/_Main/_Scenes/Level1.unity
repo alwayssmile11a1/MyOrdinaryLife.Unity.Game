@@ -2863,11 +2863,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224686431311321992, guid: c7e650d768e688045a345fe070601282,
     type: 2}
   m_PrefabInternal: {fileID: 311446914}
---- !u!1 &435216681 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1182430624433540, guid: 49ff6e2edee0d6b4398add81968c4a0e,
-    type: 2}
-  m_PrefabInternal: {fileID: 924678013}
 --- !u!1001 &443889142
 Prefab:
   m_ObjectHideFlags: 0
@@ -3004,11 +2999,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4520396350849616, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -16.16
+      value: -15.62
       objectReference: {fileID: 0}
     - target: {fileID: 4520396350849616, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.67
+      value: 4.11
       objectReference: {fileID: 0}
     - target: {fileID: 4520396350849616, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 2}
       propertyPath: m_LocalPosition.z
@@ -10679,11 +10674,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114344466102266554, guid: 520a3dcd95c8be24798c0921b40deaed,
-        type: 2}
-      propertyPath: OnTriggerEnterEvent.m_PersistentCalls.m_Calls.Array.size
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4425594933397282, guid: 520a3dcd95c8be24798c0921b40deaed, type: 2}
       propertyPath: m_LocalPosition.x
       value: 21
@@ -10715,41 +10705,6 @@ Prefab:
     - target: {fileID: 4425594933397282, guid: 520a3dcd95c8be24798c0921b40deaed, type: 2}
       propertyPath: m_RootOrder
       value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 114344466102266554, guid: 520a3dcd95c8be24798c0921b40deaed,
-        type: 2}
-      propertyPath: OnTriggerEnterEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1838538996}
-    - target: {fileID: 114344466102266554, guid: 520a3dcd95c8be24798c0921b40deaed,
-        type: 2}
-      propertyPath: OnTriggerEnterEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 114344466102266554, guid: 520a3dcd95c8be24798c0921b40deaed,
-        type: 2}
-      propertyPath: OnTriggerEnterEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114344466102266554, guid: 520a3dcd95c8be24798c0921b40deaed,
-        type: 2}
-      propertyPath: OnTriggerEnterEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 435216681}
-    - target: {fileID: 114344466102266554, guid: 520a3dcd95c8be24798c0921b40deaed,
-        type: 2}
-      propertyPath: OnTriggerEnterEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SetActive
-      objectReference: {fileID: 0}
-    - target: {fileID: 114344466102266554, guid: 520a3dcd95c8be24798c0921b40deaed,
-        type: 2}
-      propertyPath: OnTriggerEnterEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
-    - target: {fileID: 114344466102266554, guid: 520a3dcd95c8be24798c0921b40deaed,
-        type: 2}
-      propertyPath: OnTriggerEnterEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 520a3dcd95c8be24798c0921b40deaed, type: 2}
@@ -12331,12 +12286,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 224686431311321992, guid: c7e650d768e688045a345fe070601282,
     type: 2}
   m_PrefabInternal: {fileID: 1810469090}
---- !u!114 &1838538996 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 114638853117189052, guid: 65296b1d6590e5a47bfb8cb690cb5fcd,
-    type: 2}
-  m_PrefabInternal: {fileID: 2138296016}
-  m_Script: {fileID: 11500000, guid: 3330b7442289d674686a58d66166532f, type: 3}
 --- !u!224 &1913487255 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 224495423538667210, guid: c7e650d768e688045a345fe070601282,

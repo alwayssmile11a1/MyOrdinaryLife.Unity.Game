@@ -489,19 +489,17 @@ Prefab:
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
       propertyPath: m_text
-      value: '5
-
-'
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
       propertyPath: m_textInfo.characterCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
       propertyPath: m_textInfo.spaceCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114537148825462316, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
@@ -662,19 +660,17 @@ Prefab:
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
       propertyPath: m_text
-      value: '2
-
-'
-      objectReference: {fileID: 0}
-    - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
-        type: 2}
-      propertyPath: m_textInfo.characterCount
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
-      propertyPath: m_textInfo.spaceCount
+      propertyPath: m_textInfo.characterCount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
@@ -850,12 +846,12 @@ Prefab:
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
       propertyPath: m_havePropertiesChanged
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
       propertyPath: m_isInputParsingRequired
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114537148825462316, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
@@ -881,6 +877,23 @@ Prefab:
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
+        type: 2}
+      propertyPath: m_text
+      value: '1
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
+        type: 2}
+      propertyPath: m_textInfo.characterCount
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
+        type: 2}
+      propertyPath: m_textInfo.spaceCount
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce96db662abff1749aaa8b47544ab120, type: 2}
@@ -1699,19 +1712,17 @@ Prefab:
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
       propertyPath: m_text
-      value: '4
-
-'
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
       propertyPath: m_textInfo.characterCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
       propertyPath: m_textInfo.spaceCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
@@ -2764,19 +2775,17 @@ Prefab:
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
       propertyPath: m_text
-      value: '3
-
-'
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
       propertyPath: m_textInfo.characterCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}
       propertyPath: m_textInfo.spaceCount
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114736486540271208, guid: ce96db662abff1749aaa8b47544ab120,
         type: 2}

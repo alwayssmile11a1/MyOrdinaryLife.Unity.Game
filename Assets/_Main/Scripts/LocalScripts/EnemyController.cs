@@ -8,9 +8,8 @@ public class EnemyController : MonoBehaviour {
     public float startDelay = 0f;
     public float changeAnimationTimer = 2f;
 
-    private int m_HashHurtPara = Animator.StringToHash("Hurt");
-    private int m_HashPunchPara = Animator.StringToHash("Punch");
-    private int m_HashKickPara = Animator.StringToHash("Kick");
+    private int m_HashSkill1Para = Animator.StringToHash("Skill1");
+    private int m_HashSkill2Para = Animator.StringToHash("Skill2");
 
 
     private Animator m_Animator;
@@ -49,7 +48,7 @@ public class EnemyController : MonoBehaviour {
                     {
                         case 0:
                             {
-                                m_Animator.SetTrigger(m_HashPunchPara);
+                                m_Animator.SetTrigger(m_HashSkill1Para);
 
 
                                 break;
@@ -57,7 +56,7 @@ public class EnemyController : MonoBehaviour {
 
                         case 1:
                             {
-                                m_Animator.SetTrigger(m_HashKickPara);
+                                m_Animator.SetTrigger(m_HashSkill2Para);
 
                                 break;
                             }

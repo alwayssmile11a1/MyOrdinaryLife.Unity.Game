@@ -42,7 +42,7 @@ public class PlayerPlatformerController : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_CharacterController2D = GetComponent<CharacterController2D>();
         m_Collider2D = GetComponent<Collider2D>();
-        m_PlatformEffector2D = FindObjectOfType<PlatformEffector2D>();
+        //m_PlatformEffector2D = FindObjectOfType<PlatformEffector2D>();
     }
 
     private void FixedUpdate()
@@ -88,7 +88,12 @@ public class PlayerPlatformerController : MonoBehaviour
             SetHorizontalMovement(0);
             if (!m_TriggerUse)
             {
-                m_PlatformEffector2D.rotationalOffset = m_CharacterController2D.GroundColliders[0].GetComponent<PlatformEffector2D>() ? 180 : 0;
+                m_PlatformEffector2D = m_CharacterController2D.GroundColliders[0].GetComponent<PlatformEffector2D>();
+                if (m_PlatformEffector2D)
+                {
+                    m_PlatformEffector2D.rotationalOffset = 180;
+                }
+                //m_CharacterController2D.GroundColliders[0].GetComponent<PlatformEffector2D>().rotationalOffset = 
                 m_TriggerUse = true;
                 m_Animator.SetTrigger("use");
                 m_Animator.SetBool(m_HashOnLadderPara, true);
@@ -151,7 +156,10 @@ public class PlayerPlatformerController : MonoBehaviour
     {
         m_IsOnLadder = false;
         m_TriggerUse = false;
-        m_PlatformEffector2D.rotationalOffset = 0;
+        if(m_PlatformEffector2D)
+        {
+            m_PlatformEffector2D.rotationalOffset = 0;
+        }
         m_Animator.ResetTrigger("use");
         m_Animator.SetBool(m_HashOnLadderPara, false);
         m_Animator.SetFloat("velocityY", 0);

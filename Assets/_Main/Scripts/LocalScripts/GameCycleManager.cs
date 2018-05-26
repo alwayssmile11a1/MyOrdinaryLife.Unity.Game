@@ -12,7 +12,9 @@ public class GameCycleManager : MonoBehaviour {
         TimeManager.ChangeTimeBackToNormal();
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
     }
+
 
     public void FinishLevel(Collider2D collision)
     {

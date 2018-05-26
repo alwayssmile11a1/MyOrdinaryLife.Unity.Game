@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4689725130467766}
   - component: {fileID: 61689550068618608}
-  - component: {fileID: 114775200992380434}
   - component: {fileID: 114667610699994848}
   m_Layer: 0
   m_Name: DeadBound
@@ -78,33 +77,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da6ec884c33cdf7449c8f76247dd294a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114775200992380434
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1069831470089604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06a8d16e5f6bbc649a800d698d1c19ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  OnTriggerEnterEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: ReloadScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: TriggerEnterEventTrigger+TriggerEnterEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+  deadEffect: DeadEffect

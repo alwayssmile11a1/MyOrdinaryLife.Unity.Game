@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadScene : MonoBehaviour {
-    public static bool m_StartGame = false;
+
     ScreenFader screenFader;
     public enum LoadType
     {

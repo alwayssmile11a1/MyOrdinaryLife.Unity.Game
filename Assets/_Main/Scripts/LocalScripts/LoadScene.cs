@@ -70,9 +70,9 @@ public class LoadScene : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
-    public void LoadMenuSceneNoDelay()
+    public void LoadMenuLevelSceneNoDelay()
     {
-        SceneManager.LoadScene("MenuScene");
+        SceneManager.LoadScene("MenuSelectLevel");
     }
 
     private void LoadNextScene()

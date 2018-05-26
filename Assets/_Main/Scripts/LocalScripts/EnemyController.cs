@@ -10,6 +10,7 @@ public class EnemyController : MonoBehaviour {
 
     private int m_HashSkill1Para = Animator.StringToHash("Skill1");
     private int m_HashSkill2Para = Animator.StringToHash("Skill2");
+    private int m_HashDisappear = Animator.StringToHash("Disappearing");
 
 
     private Animator m_Animator;
@@ -79,8 +80,19 @@ public class EnemyController : MonoBehaviour {
     }
 
 
+    public void Disappear()
+    {
+
+        m_Animator.SetTrigger(m_HashDisappear);
+
+    }
 
 
+
+    public void Disable()
+    {
+        gameObject.SetActive(false);
+    }
 
 
 

@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4588463097815688}
   - component: {fileID: 61487624627216530}
   - component: {fileID: 114164704306870650}
+  - component: {fileID: 114896364745230816}
   m_Layer: 0
   m_Name: Bound
   m_TagString: Untagged
@@ -86,7 +87,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1992411190290802}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.21, y: 5.48, z: -0.107421875}
+  m_LocalPosition: {x: 2.9, y: 5.48, z: -0.107421875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4748352625901942}
@@ -115,7 +116,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1555353976517940}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.43, y: 0, z: 0}
+  m_LocalPosition: {x: 0.65, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4407459343659514}
@@ -128,7 +129,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1500478601958954}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.74, y: 0, z: 0}
+  m_LocalPosition: {x: -1.03, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4407459343659514}
@@ -157,7 +158,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.24, y: 1.67}
+  m_Size: {x: 1.31, y: 1.67}
   m_EdgeRadius: 0
 --- !u!95 &95564695971724718
 Animator:
@@ -209,9 +210,20 @@ MonoBehaviour:
   OnCollect:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1992411190290802}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 114921764932393522}
+        m_MethodName: Disappear
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 114848851734024552}
+        m_MethodName: Disappear
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -222,7 +234,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  collectedEffect: CollectedEffect
+  collectedEffect: CFX2_PickupHeart
 --- !u!114 &114848851734024552
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -236,6 +248,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startDelay: 0.6
   changeAnimationTimer: 1.8
+--- !u!114 &114896364745230816
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1009661778524598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 662d4d7160eb8a04f99b1d0b495df84e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114921764932393522
 MonoBehaviour:
   m_ObjectHideFlags: 1

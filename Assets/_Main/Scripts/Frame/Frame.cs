@@ -12,7 +12,6 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     public Vector3 startPosition;
     [HideInInspector]
     public Animator animator;
-    [HideInInspector]
 
 
     private readonly int HashActive = Animator.StringToHash("Active");

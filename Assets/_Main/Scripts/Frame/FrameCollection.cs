@@ -32,9 +32,13 @@ public class FrameCollection : MonoBehaviour {
 
     }
 
+    public int FrameCount { get; private set; }
+
     private static FrameCollection m_Instance;
 
     private Frame[] m_Frames;
+
+    
 
 	// Use this for initialization
 	private void Awake () {
@@ -45,6 +49,8 @@ public class FrameCollection : MonoBehaviour {
         }
 
         m_Frames = GetComponentsInChildren<Frame>();
+
+        FrameCount = m_Frames.Length;
 
         //for (int i = 0; i < m_Frames.Length; i++)
         //{

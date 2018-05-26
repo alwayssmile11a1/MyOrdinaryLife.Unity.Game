@@ -48,7 +48,7 @@ public class LoadScene : MonoBehaviour {
     }
     private void LoadTextScene()
     {
-        string sceneName = "Level " + gameObject.GetComponentInChildren<TextMeshProUGUI>().text.Trim();
+        string sceneName = "Level" + gameObject.GetComponentInChildren<TextMeshProUGUI>().text.Trim();
 
         if (Application.CanStreamedLevelBeLoaded(sceneName))
         {

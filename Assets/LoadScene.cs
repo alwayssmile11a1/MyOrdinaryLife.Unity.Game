@@ -14,7 +14,8 @@ public class LoadScene : MonoBehaviour {
         NextScene,
         Restart,
         LevelSelect,
-        Menu
+        Menu,
+        PauseGame
     }
     public LoadType loadType;
     private void Awake()
@@ -56,6 +57,16 @@ public class LoadScene : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    public void RestartSceneNoDelay()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void LoadMenuSceneNoDelay()
+    {
+        SceneManager.LoadScene("MenuScene");
+    }
+
     private void LoadNextScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -68,4 +79,18 @@ public class LoadScene : MonoBehaviour {
     {
         Application.Quit();
     }
+
+
+    public void PauseGame()
+    {
+        TimeManager.SlowdownTime(0, -1);
+    }
+
+    public void ResumeGame()
+    {
+        TimeManager.ChangeTimeBackToNormal();
+    }
+
+
+
 }

@@ -27,7 +27,7 @@ public class CountDown : MonoBehaviour {
            
             //StartCoroutine(countDown());
             m_TimeToCountDown -= (1f/60);
-            Debug.Log(m_TimeToCountDown);
+            
             textMeshProUGUI.text = ((int)m_TimeToCountDown).ToString();
             //TimeManager.ChangeTimeBackToNormal();
             if (m_TimeToCountDown < 0)

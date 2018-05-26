@@ -32,6 +32,7 @@ public class PlayerPlatformerController : MonoBehaviour
 
     private bool m_IsOnLadder = false;
     private bool m_TriggerUse = false;
+    private bool m_CanJump = true;
 
     private const float k_GroundedStickingVelocityMultiplier = 3f;    // This is to help the character stick to vertically moving platforms.
 
@@ -59,7 +60,10 @@ public class PlayerPlatformerController : MonoBehaviour
         {
             if (CheckForObstacle(0.5f, 0.2f))
             {
-                Jump();
+                if (m_CanJump)
+                {
+                    Jump();
+                }
             }
 
 
@@ -132,6 +136,14 @@ public class PlayerPlatformerController : MonoBehaviour
         if (m_CharacterController2D.IsGrounded)
         {
             SetVerticalMovement(jumpSpeed);
+        }
+    }
+    
+    public void Jump(float jump)
+    {
+        if (m_CharacterController2D.IsGrounded)
+        {
+            SetVerticalMovement(jump);
         }
     }
 
@@ -250,4 +262,11 @@ public class PlayerPlatformerController : MonoBehaviour
             EndClimbing();
         }
     }
+
+
+    private void SetCanJump(bool canJump)
+    {
+        m_CanJump = canJump;
+    }
+
 }

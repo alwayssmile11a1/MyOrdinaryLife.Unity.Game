@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3.5
+  climbSpeed: 2
   jumpSpeed: 10
   jumpAbortSpeedReduction: 15
   gravity: 15

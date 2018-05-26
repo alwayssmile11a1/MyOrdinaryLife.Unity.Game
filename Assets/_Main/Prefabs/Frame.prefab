@@ -293,13 +293,7 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 2113883506680635442}
     m_ColliderPaths:
-    - - X: 59843752
-        Y: -10000000
-      - X: -50000000
-        Y: -10000000
-      - X: -50000000
-        Y: -38437500
-      - X: -47656248
+    - - X: -47656248
         Y: -40000000
       - X: 59531248
         Y: -40000000
@@ -307,6 +301,12 @@ CompositeCollider2D:
         Y: -39375000
       - X: 60000000
         Y: -10312500
+      - X: 59843752
+        Y: -10000000
+      - X: -50000000
+        Y: -10000000
+      - X: -50000000
+        Y: -38437500
   m_CompositePaths:
     m_Paths:
     - - {x: 6, y: -4.0375}
@@ -513,7 +513,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fe50c5064616140119399f3734e26fd0, type: 3}
-  m_Color: {r: 0.33374867, g: 0.9223738, b: 0.9433962, a: 1}
+  m_Color: {r: 0.94509804, g: 0.5795984, b: 0.33333337, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -567,7 +567,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 7.5, y: -5.25}
-  m_SizeDelta: {x: 12.5, y: 9.5}
+  m_SizeDelta: {x: 11, y: 8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!331 &331292715178257920
 SpriteMask:

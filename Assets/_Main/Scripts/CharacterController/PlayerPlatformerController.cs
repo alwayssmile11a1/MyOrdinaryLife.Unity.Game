@@ -148,10 +148,9 @@ public class PlayerPlatformerController : MonoBehaviour
 
     public void Jump(float jump)
     {
-        if (m_CharacterController2D.IsGrounded)
-        {
-            SetVerticalMovement(jump);
-        }
+
+        SetVerticalMovement(jump);
+
     }
 
     private void EndClimbing()

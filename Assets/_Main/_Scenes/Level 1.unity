@@ -2716,6 +2716,48 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d89cf75bd16dddd4d89e2fae372932ff, type: 2}
   m_IsPrefabAsset: 0
+--- !u!1001 &177318516
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4933026173754992, guid: 3f87272ae10f63e41980f1c2366d16e7, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933026173754992, guid: 3f87272ae10f63e41980f1c2366d16e7, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933026173754992, guid: 3f87272ae10f63e41980f1c2366d16e7, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933026173754992, guid: 3f87272ae10f63e41980f1c2366d16e7, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933026173754992, guid: 3f87272ae10f63e41980f1c2366d16e7, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933026173754992, guid: 3f87272ae10f63e41980f1c2366d16e7, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933026173754992, guid: 3f87272ae10f63e41980f1c2366d16e7, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933026173754992, guid: 3f87272ae10f63e41980f1c2366d16e7, type: 2}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3f87272ae10f63e41980f1c2366d16e7, type: 2}
+  m_IsPrefabAsset: 0
 --- !u!1001 &311446914
 Prefab:
   m_ObjectHideFlags: 0
@@ -10754,16 +10796,6 @@ Prefab:
     - target: {fileID: 1069831470089604, guid: a7b6ff9ae68c1b3448aff8ebd4c00517, type: 2}
       propertyPath: m_Name
       value: DeadBound (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 61689550068618608, guid: a7b6ff9ae68c1b3448aff8ebd4c00517,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 41.42
-      objectReference: {fileID: 0}
-    - target: {fileID: 61689550068618608, guid: a7b6ff9ae68c1b3448aff8ebd4c00517,
-        type: 2}
-      propertyPath: m_Offset.x
-      value: -4.79
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a7b6ff9ae68c1b3448aff8ebd4c00517, type: 2}

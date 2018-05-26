@@ -166,7 +166,6 @@ public class PlayerPlatformerController : MonoBehaviour
         m_Animator.SetBool(m_HashOnLadderPara, false);
         m_Animator.SetFloat("velocityY", 0);
         SetVerticalMovement(0);
-        Debug.Log("go here");
     }
 
     public void SetMoveVector(Vector2 newMoveVector)

@@ -198,7 +198,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 114352767315895512}
-        m_MethodName: LoadMenuSceneNoDelay
+        m_MethodName: LoadMenuLevelSceneNoDelay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

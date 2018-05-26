@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class DeadBound : MonoBehaviour {
 
     public string deadEffect = "DeadEffect";
+    public RandomAudioPlayer deadAudio;
 
     private PlayerPlatformerController player;
 
@@ -21,7 +22,7 @@ public class DeadBound : MonoBehaviour {
 
     private void Update()
     {
-        if(player.transform.position.y < transform.position.y)
+        if(player.transform.position.y - transform.position.y < -0.5f)
         {
             gameObject.SetActive(false);
         }
@@ -36,7 +37,7 @@ public class DeadBound : MonoBehaviour {
         if(player!=null)
         {
             player.gameObject.SetActive(false);
-            StartCoroutine(PlayerDie());
+            StartCoroutine(PlayerDie(player.transform.position + Vector3.up * 0.6f));
 
 
         }
@@ -45,14 +46,16 @@ public class DeadBound : MonoBehaviour {
     }
 
 
-    private IEnumerator PlayerDie()
+    private IEnumerator PlayerDie(Vector3 effectPosition)
     {
         TimeManager.ChangeTimeBackToNormal();
 
 
-        VFXController.Instance.Trigger(HashDeadEffect, transform.position, 0, false, null);
+        VFXController.Instance.Trigger(HashDeadEffect, effectPosition, 0, false, null);
 
-        yield return new WaitForSeconds(2f);
+        deadAudio.PlayRandomSound();
+
+        yield return new WaitForSeconds(2.5f);
 
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

@@ -12,6 +12,7 @@ public class LoadScene : MonoBehaviour {
         ButtonText,
         NextScene,
         Restart,
+        LevelSelect,
         Menu
     }
     public LoadType loadType;
@@ -35,6 +36,7 @@ public class LoadScene : MonoBehaviour {
             case LoadType.ButtonText: LoadTextScene(); break;
             case LoadType.NextScene: LoadNextScene(); break;
             case LoadType.Restart: RestartScene(); break;
+            case LoadType.LevelSelect: LoadSelectLevelScene(); break;
             case LoadType.Menu: LoadMenuScene(); break;
         }
     }
@@ -42,9 +44,9 @@ public class LoadScene : MonoBehaviour {
     {
         SceneManager.LoadSceneAsync(gameObject.GetComponentInChildren<Text>().text);
     }
-    private void LoadMenuScene()
+    private void LoadSelectLevelScene()
     {
-        SceneManager.LoadScene("MenuScene");
+        SceneManager.LoadScene("MenuSelectLevel");
     }
 
     private void RestartScene()
@@ -55,5 +57,9 @@ public class LoadScene : MonoBehaviour {
     private void LoadNextScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+    private void LoadMenuScene()
+    {
+        SceneManager.LoadScene("MenuScene");
     }
 }

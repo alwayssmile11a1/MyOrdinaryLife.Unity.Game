@@ -1,6 +1,7 @@
 ﻿using Gamekit2D;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -42,7 +43,8 @@ public class LoadScene : MonoBehaviour {
     }
     private void LoadTextScene()
     {
-        SceneManager.LoadSceneAsync(gameObject.GetComponentInChildren<Text>().text);
+        string sceneName = "Level " + gameObject.GetComponentInChildren<TextMeshProUGUI>().text.Trim();
+        SceneManager.LoadSceneAsync(sceneName);
     }
     private void LoadSelectLevelScene()
     {
@@ -61,5 +63,9 @@ public class LoadScene : MonoBehaviour {
     private void LoadMenuScene()
     {
         SceneManager.LoadScene("MenuScene");
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

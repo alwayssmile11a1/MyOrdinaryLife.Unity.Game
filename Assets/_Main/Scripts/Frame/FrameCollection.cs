@@ -60,6 +60,7 @@ public class FrameCollection : MonoBehaviour {
 
             RectTransform rect = m_Frames[i].GetComponent<RectTransform>();
 
+
             if (RectTransformUtility.RectangleContainsScreenPoint(rect, screenPosition, Camera.main ))
             {
                 frame = m_Frames[i];

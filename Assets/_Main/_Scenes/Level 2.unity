@@ -4720,6 +4720,11 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114066989930496108, guid: 66934e035f6ef914f9f58c0c49affead,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: LoadMenuLevelSceneNoDelay
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66934e035f6ef914f9f58c0c49affead, type: 2}
   m_IsPrefabAsset: 0

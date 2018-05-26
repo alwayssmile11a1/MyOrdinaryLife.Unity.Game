@@ -29,6 +29,7 @@ public class CountDown : MonoBehaviour {
                 Debug.Log(LoadScene.m_StartGame);
                 TimeManager.ChangeTimeBackToNormal();
                 m_TimeToCountDown = 3;
+                textMeshProUGUI.gameObject.SetActive(false);
             }
             
         }

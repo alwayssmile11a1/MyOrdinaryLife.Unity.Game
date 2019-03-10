@@ -21,7 +21,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
     private RectTransform rectTransfrom;
     private PlayerPlatformerController m_Player;
-    private Collider2D[] m_Colliders;
+    private List<Collider2D> m_Colliders = new List<Collider2D>();
     private SortingGroup m_ObjectsSortingGroup;
 
     public bool Disabled { get; private set; }
@@ -33,7 +33,13 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         animator = GetComponent<Animator>();
         rectTransfrom = GetComponent<RectTransform>();
 
-        m_Colliders = GetComponentsInChildren<Collider2D>();
+        //Collect all colliders except CompositeCollider2D
+        Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            if (colliders[i] is CompositeCollider2D) continue;
+            m_Colliders.Add(colliders[i]);
+        }
 
         m_ObjectsSortingGroup = GetComponentInChildren<SortingGroup>();
 
@@ -152,7 +158,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
     public void SetCollidersActive(bool actived)
     {
-        for (int i = 0; i < m_Colliders.Length; i++)
+        for (int i = 0; i < m_Colliders.Count; i++)
         {
             m_Colliders[i].enabled = actived;
         }

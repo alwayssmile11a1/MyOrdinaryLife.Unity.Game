@@ -136,7 +136,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         //Avoid player jump on being-dragged colliders
         SetCollidersActive(false);
 
-        TimeManager.SlowdownTime(0.05f, -1f);
+        TimeManager.SlowdownTime(0f, -1f);
     }
 
     private void DisableDragEssentials()

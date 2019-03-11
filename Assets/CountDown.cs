@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class CountDown : MonoBehaviour {
     private float m_TimeToCountDown = 3;
-    private float currentTime;
     private TextMeshProUGUI textMeshProUGUI;
 
 
@@ -15,7 +14,6 @@ public class CountDown : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        currentTime = 0;
         textMeshProUGUI = GetComponent<TextMeshProUGUI>();
         TimeManager.SlowdownTime(0, -1);
 	}

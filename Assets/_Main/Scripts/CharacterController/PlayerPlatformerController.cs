@@ -27,6 +27,7 @@ public class PlayerPlatformerController : MonoBehaviour
 
     private int m_HashGroundedPara = Animator.StringToHash("Grounded");
     private int m_HashRunPara = Animator.StringToHash("Run");
+    private int m_HashJumpPara = Animator.StringToHash("Jump");
     private int m_HashHurtPara = Animator.StringToHash("Hurt");
     private int m_HashOnLadderPara = Animator.StringToHash("OnLadder");
 
@@ -47,13 +48,11 @@ public class PlayerPlatformerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-
         TakeAction();
         Face();
         Animate();
 
     }
-
 
     private void TakeAction()
     {
@@ -131,6 +130,7 @@ public class PlayerPlatformerController : MonoBehaviour
     {
         m_Animator.SetBool(m_HashGroundedPara, m_CharacterController2D.IsGrounded);
         m_Animator.SetFloat(m_HashRunPara, Mathf.Abs(m_MoveVector.x));
+        m_Animator.SetFloat(m_HashJumpPara, m_MoveVector.y);
     }
 
     private void Move()

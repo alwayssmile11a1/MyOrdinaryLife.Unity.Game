@@ -331,6 +331,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 9125689899990882200}
     m_Modifications:
+    - target: {fileID: 1361769226639278, guid: 66934e035f6ef914f9f58c0c49affead, type: 3}
+      propertyPath: m_Name
+      value: PauseGameCanvas
+      objectReference: {fileID: 0}
     - target: {fileID: 224265310936431962, guid: 66934e035f6ef914f9f58c0c49affead,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -370,6 +374,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 224265310936431962, guid: 66934e035f6ef914f9f58c0c49affead,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224265310936431962, guid: 66934e035f6ef914f9f58c0c49affead,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224265310936431962, guid: 66934e035f6ef914f9f58c0c49affead,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224265310936431962, guid: 66934e035f6ef914f9f58c0c49affead,
         type: 3}

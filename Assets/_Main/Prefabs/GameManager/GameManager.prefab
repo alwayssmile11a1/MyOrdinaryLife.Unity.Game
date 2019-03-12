@@ -1147,13 +1147,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 174f17fb28d6d6347ba8b9089d14fd00, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  musicAudioClip: {fileID: 8300000, guid: 7822f36ea64cf5f49829cfe84ddf1c96, type: 3}
+  musicAudioClip: {fileID: 8300000, guid: 72957dfe1a47cc44cac34f9411fcb3da, type: 3}
   musicOutput: {fileID: 0}
   musicPlayOnAwake: 1
-  musicVolume: 0.8
-  ambientAudioClip: {fileID: 0}
+  musicVolume: 1
+  ambientAudioClip: {fileID: 8300000, guid: 5657c084a5287d140a7dc3301b9e965a, type: 3}
   ambientOutput: {fileID: 0}
-  ambientPlayOnAwake: 0
+  ambientPlayOnAwake: 1
   ambientVolume: 1
 --- !u!114 &676283043
 MonoBehaviour:

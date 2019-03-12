@@ -182,9 +182,8 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
                 alessia.transform.position = newPosition;
 
+                this.Disable();
             }
-
-            this.Disable();
 
         }
 
@@ -194,7 +193,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     {
         animator.SetBool(HashCharacterOn, false);
         animator.SetTrigger(HashDisabled);
-        m_ObjectsSortingGroup.sortingOrder = 15;
+        m_ObjectsSortingGroup.sortingOrder = 2;
         IsBeingDragged = false;
         Disabled = true;
 

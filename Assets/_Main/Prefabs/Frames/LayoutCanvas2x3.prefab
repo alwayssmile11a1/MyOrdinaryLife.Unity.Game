@@ -154,11 +154,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4425594933397282, guid: 520a3dcd95c8be24798c0921b40deaed, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 21
+      value: 21.65
       objectReference: {fileID: 0}
     - target: {fileID: 4425594933397282, guid: 520a3dcd95c8be24798c0921b40deaed, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7.33
+      value: -7.46
       objectReference: {fileID: 0}
     - target: {fileID: 4425594933397282, guid: 520a3dcd95c8be24798c0921b40deaed, type: 3}
       propertyPath: m_LocalPosition.z
@@ -205,7 +205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4689725130467766, guid: a7b6ff9ae68c1b3448aff8ebd4c00517, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.53
+      value: 4.05
       objectReference: {fileID: 0}
     - target: {fileID: 4689725130467766, guid: a7b6ff9ae68c1b3448aff8ebd4c00517, type: 3}
       propertyPath: m_LocalPosition.y
@@ -252,7 +252,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4689725130467766, guid: a7b6ff9ae68c1b3448aff8ebd4c00517, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 4.04
       objectReference: {fileID: 0}
     - target: {fileID: 4689725130467766, guid: a7b6ff9ae68c1b3448aff8ebd4c00517, type: 3}
       propertyPath: m_LocalPosition.y
@@ -411,6 +411,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tilemap (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1715157285456748305, guid: c7e650d768e688045a345fe070601282,
+        type: 3}
+      propertyPath: m_Name
+      value: BackgroundTilemap (2)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7e650d768e688045a345fe070601282, type: 3}
 --- !u!224 &83268193300717731 stripped
@@ -539,6 +544,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tilemap (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715157285456748305, guid: c7e650d768e688045a345fe070601282,
+        type: 3}
+      propertyPath: m_Name
+      value: BackgroundTilemap (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7e650d768e688045a345fe070601282, type: 3}
@@ -669,6 +679,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tilemap (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1715157285456748305, guid: c7e650d768e688045a345fe070601282,
+        type: 3}
+      propertyPath: m_Name
+      value: BackgroundTilemap (4)
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7e650d768e688045a345fe070601282, type: 3}
 --- !u!224 &1428922463445138322 stripped
@@ -797,6 +812,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tilemap (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715157285456748305, guid: c7e650d768e688045a345fe070601282,
+        type: 3}
+      propertyPath: m_Name
+      value: BackgroundTilemap (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7e650d768e688045a345fe070601282, type: 3}
@@ -1050,6 +1070,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Tilemap (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1715157285456748305, guid: c7e650d768e688045a345fe070601282,
+        type: 3}
+      propertyPath: m_Name
+      value: BackgroundTilemap (5)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7e650d768e688045a345fe070601282, type: 3}

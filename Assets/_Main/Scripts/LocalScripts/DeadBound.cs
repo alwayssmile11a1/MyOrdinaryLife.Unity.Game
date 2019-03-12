@@ -32,14 +32,12 @@ public class DeadBound : MonoBehaviour {
     {
 
         PlayerPlatformerController player = collision.GetComponent<PlayerPlatformerController>();
-
-
-        if(player!=null)
+        
+        //check to see if it's player and the player collided from above
+        if(player!=null && player.transform.position.y > transform.position.y)
         {
             player.gameObject.SetActive(false);
             StartCoroutine(PlayerDie(player.transform.position + Vector3.up * 0.6f));
-
-
         }
 
 

@@ -9,8 +9,6 @@ public class FinishBound : MonoBehaviour {
 
     public string endLevelEffect = "EndLevelEffect";
 
-    public int StarsCount { get; set; }
-
     private int HashEndLevelEffect;
 
 
@@ -20,10 +18,10 @@ public class FinishBound : MonoBehaviour {
         HashEndLevelEffect = VFXController.StringToHash(endLevelEffect);
     }
 
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameObject.Find("EndLevelCanvasWrapper").GetComponentInChildren<EndLevelCanvas>(true).gameObject.SetActive(true);
+        EndLevelCanvas endLevelCanvas = GameObject.Find("EndLevelCanvasWrapper").GetComponentInChildren<EndLevelCanvas>(true);
+        endLevelCanvas.gameObject.SetActive(true);
 
         PlayerPlatformerController player = collision.GetComponent<PlayerPlatformerController>();
 
@@ -31,28 +29,25 @@ public class FinishBound : MonoBehaviour {
         {
             collision.gameObject.SetActive(false);
             VFXController.Instance.Trigger(HashEndLevelEffect, player.transform.position - Vector3.left, 0, false, null);
-        }
 
-   
+            int startCount = endLevelCanvas.GetStarsCount();
 
+            SavedData savedData = new SavedData();
 
-        SavedData savedData = new SavedData();
-
-        if(savedData.Load(SceneManager.GetActiveScene().name))
-        {
-            if (savedData.count < StarsCount)
+            if (savedData.Load(SceneManager.GetActiveScene().name))
             {
-                savedData.count = StarsCount;
+                if (savedData.count < startCount)
+                {
+                    savedData.count = startCount;
+                    savedData.Save(SceneManager.GetActiveScene().name);
+                }
+            }
+            else
+            {
+                savedData.count = startCount;
                 savedData.Save(SceneManager.GetActiveScene().name);
             }
         }
-        else
-        {
-            savedData.count = StarsCount;
-            savedData.Save(SceneManager.GetActiveScene().name);
-        }
-
-
     }
 
 }

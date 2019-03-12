@@ -18,12 +18,14 @@ public class EndLevelCanvas : MonoBehaviour {
         }
     }
 
-
-
     public void AddOneStar()
     {
         m_StarCount++;
     }
 
+    public int GetStarsCount()
+    {
+        return m_StarCount;
+    }
 
 }

@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Windows;
 
 public class LevelEditor : EditorWindow
 {
@@ -15,8 +16,7 @@ public class LevelEditor : EditorWindow
 
     string[] options = new string[] { "1x3", "2x2", "2x3" };
     int popupIndex = 0;
-
-    // xóa sau
+    
     int newSceneIndex;
 
     [MenuItem("Tool/Level Editor")]
@@ -33,8 +33,7 @@ public class LevelEditor : EditorWindow
 
         if (GUILayout.Button("Create new level", GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth)))
         {
-            // xóa sau
-            newSceneIndex = EditorSceneManager.sceneCountInBuildSettings - 1;
+            newSceneIndex = FindAppropriateIndex();
 
             if (EditorUtility.DisplayDialog("Create new scene", "Do you want to create new scene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
             {
@@ -42,7 +41,7 @@ public class LevelEditor : EditorWindow
                 EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
                 // Add new scene to build settings
-                AddNewSceneToBuildSetting();
+                AddNewSceneToBuildSetting(newSceneIndex);
 
                 // Add prefabs to new scene
                 AddPrefabsToNewScene();
@@ -51,51 +50,101 @@ public class LevelEditor : EditorWindow
                 AddBackgroundToNewScene();
 
                 // Save scene after adding everything
-                EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), $"Assets/_Main/_Scenes/Level{newSceneIndex}.unity");
+                EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), $"Assets/_Main/_Scenes/Levels/Level{newSceneIndex}.unity");
             }
         }
 
+        GUILayout.Space(space);
         // Popup (it's a dropdown)
         popupIndex = EditorGUILayout.Popup(popupIndex, options, GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth));
 
         GUI.enabled = true;
 
         // Toggle (checkbox)
-        editExistingLevel = EditorGUILayout.Toggle("Edit existing level", editExistingLevel);
+        editExistingLevel = EditorGUILayout.Toggle("Edit existing level", editExistingLevel, GUILayout.Width(buttonWidth));
 
         GUI.enabled = editExistingLevel;
 
+        #region Textfield && Arrows
+        EditorGUILayout.BeginHorizontal();
+        GUIStyle gUIStyleButton = new GUIStyle(GUI.skin.button);
+        gUIStyleButton.fontSize = 20;
+        // Left arrow
+        if (GUILayout.Button("↤", gUIStyleButton, GUILayout.Height(buttonHeight), GUILayout.Width(50)))
+        {
+            int newNumber = (int.Parse(openScene) - 1);
+            if(newNumber >= 1)
+            {
+                openScene = newNumber.ToString();
+                ShowYesNoPopup();
+            }
+        }
         // Textfield
-        openScene = EditorGUILayout.TextField(openScene, GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth));
+        GUIStyle gUIStyle = new GUIStyle(GUI.skin.textField);
+        gUIStyle.alignment = TextAnchor.MiddleLeft;
+        openScene = EditorGUILayout.TextField(openScene, gUIStyle, GUILayout.Height(buttonHeight), GUILayout.Width(100));
+        // Right arrow
+        if (GUILayout.Button("↦", gUIStyleButton, GUILayout.Height(buttonHeight), GUILayout.Width(50)))
+        {
+            int newNumber = (int.Parse(openScene) + 1);
+            openScene = newNumber.ToString();
+            ShowYesNoPopup();
+        }
+        EditorGUILayout.EndHorizontal();
+        #endregion
 
-        if (GUILayout.Button("Open", GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth)))
+        GUILayout.Space(space / 2);
+        if (GUILayout.Button($"Open Level {openScene}", GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth)))
         {
             if (int.TryParse(openScene, out int i))
             {
-                if (EditorUtility.DisplayDialog($"Open Level{openScene} scene", $"Do you want to open Level{openScene} scene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
-                {
-                    EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/Level{openScene}.unity");
-                }
+                ShowYesNoPopup();
             }
         }
 
-        //if (GUILayout.Button("Delete", GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth)))
-        //{
-        //    if (EditorUtility.DisplayDialog($"Delete Level{openScene} scene", $"Do you want to delete Level{openScene} scene?", "Yes", "No"))
-        //    {
-        //        Scene scene = SceneManager.GetSceneByName($"Level{editExistingLevel}");
-        //    }
-        //}
+        GUILayout.Space(space / 2);
+        if (GUILayout.Button("Delete", GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth)))
+        {
+            string filePath = $"Assets/_Main/_Scenes/Levels/Level{openScene}.unity";
+            if (File.Exists(filePath))
+            {
+                if (EditorUtility.DisplayDialog($"Delete Level{openScene} scene", $"Do you want to delete Level{openScene} scene?", "Yes", "No"))
+                {
+                    File.Delete(filePath);
+                    #if UNITY_EDITOR
+                        AssetDatabase.Refresh();
+                    #endif
 
-        GUI.enabled = true;
+                    EditorBuildSettingsScene[] originalSettingScenes = EditorBuildSettings.scenes;
+                    EditorBuildSettingsScene sceneToRemove = new EditorBuildSettingsScene($"Assets/_Main/_Scenes/Levels/Level{openScene}.unity", true);
+                    EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[originalSettingScenes.Length - 1];
+                    for (int i = 0, j = 0; i < originalSettingScenes.Length; i++)
+                    {
+                        if(originalSettingScenes[i].path != sceneToRemove.path)
+                        {
+                            newSettings[j++] = originalSettingScenes[i];
+                        }
+                    }
+                    EditorBuildSettings.scenes = newSettings;
 
-        //if (GUILayout.Button("Save changes in current scene", GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth)))
-        //{
-        //    Debug.LogError("Chưa làm cái save current scene !!!");
-        //    Debug.LogError("Chưa làm cái save current scene !!!");
-        //    Debug.LogError("Chưa làm cái save current scene !!!");
-        //    Debug.LogError("Chưa làm cái save current scene !!!");
-        //}
+                    if (EditorSceneManager.GetActiveScene().name == $"Level{openScene}")
+                    {
+                        EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/Levels/Level{int.Parse(openScene) - 1}.unity");
+                    }
+
+                    EditorUtility.DisplayDialog("Message", $"Level{openScene} has been deleted from project folder and build settings", "OK");
+                }
+            }
+        }
+    }
+
+    private void ShowYesNoPopup()
+    {
+        if (EditorSceneManager.GetActiveScene().name.Equals($"Level{openScene}")) return;
+        if (EditorUtility.DisplayDialog($"Open Level{openScene} scene", $"Do you want to open Level{openScene} scene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
+        {
+            EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/Levels/Level{openScene}.unity");
+        }
     }
 
     private static void AddBackgroundToNewScene()
@@ -121,13 +170,38 @@ public class LevelEditor : EditorWindow
         PrefabUtility.InstantiatePrefab(mainCharacter);
     }
 
-    private static void AddNewSceneToBuildSetting()
+    private static void AddNewSceneToBuildSetting(int newIndex)
     {
         EditorBuildSettingsScene[] originalSettingScenes = EditorBuildSettings.scenes;
-        EditorBuildSettingsScene sceneToAdd = new EditorBuildSettingsScene($"Assets/_Main/_Scenes/Level{EditorSceneManager.sceneCountInBuildSettings - 1}.unity", true);
+        EditorBuildSettingsScene sceneToAdd = new EditorBuildSettingsScene($"Assets/_Main/_Scenes/Levels/Level{newIndex}.unity", true);
         EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[originalSettingScenes.Length + 1];
         System.Array.Copy(originalSettingScenes, newSettings, originalSettingScenes.Length);
         newSettings[newSettings.Length - 1] = sceneToAdd;
         EditorBuildSettings.scenes = newSettings;
+    }
+
+    private int FindAppropriateIndex()
+    {
+        int j = 1;
+        List<int> listIndex = new List<int>();
+        for (int i = 2; i < EditorBuildSettings.scenes.Length; i++)
+        {
+            string[] strSplit = EditorBuildSettings.scenes[i].path.Split('/');
+            string sceneIndex = strSplit[strSplit.Length - 1].Split('.')[0].Substring(5);
+            listIndex.Add(int.Parse(sceneIndex));
+        }
+        listIndex.Sort();
+        for(int i = 0; i < listIndex.Count; i++, j++)
+        {
+            if(listIndex[i] == j)
+            {
+                continue;
+            }
+            else
+            {
+                return j;
+            }
+        }
+        return j;
     }
 }

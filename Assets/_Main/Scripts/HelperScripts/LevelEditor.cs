@@ -70,9 +70,12 @@ public class LevelEditor : EditorWindow
 
         if (GUILayout.Button("Open", GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth)))
         {
-            if (EditorUtility.DisplayDialog($"Open Level{openScene} scene", $"Do you want to open Level{openScene} scene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
+            if (int.TryParse(openScene, out int i))
             {
-                EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/Level{openScene}.unity");
+                if (EditorUtility.DisplayDialog($"Open Level{openScene} scene", $"Do you want to open Level{openScene} scene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
+                {
+                    EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/Level{openScene}.unity");
+                }
             }
         }
 

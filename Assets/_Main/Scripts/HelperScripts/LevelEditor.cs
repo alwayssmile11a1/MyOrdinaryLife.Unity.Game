@@ -30,7 +30,6 @@ public class LevelEditor : EditorWindow
         GUILayout.Space(space);
 
         GUI.enabled = !editExistingLevel;
-
         if (GUILayout.Button("Create new level", GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth)))
         {
             newSceneIndex = FindAppropriateIndex();
@@ -58,17 +57,17 @@ public class LevelEditor : EditorWindow
         // Popup (it's a dropdown)
         popupIndex = EditorGUILayout.Popup(popupIndex, options, GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth));
 
-        GUI.enabled = true;
-
+        #region Edit existing level
         // Toggle (checkbox)
-        editExistingLevel = EditorGUILayout.Toggle("Edit existing level", editExistingLevel, GUILayout.Width(buttonWidth));
-
+        //editExistingLevel = EditorGUILayout.Toggle("Edit existing level", editExistingLevel, GUILayout.Width(buttonWidth));
+        editExistingLevel = EditorGUILayout.BeginToggleGroup("Edit existing level", editExistingLevel);
         GUI.enabled = editExistingLevel;
 
         #region Textfield && Arrows
         EditorGUILayout.BeginHorizontal();
         GUIStyle gUIStyleButton = new GUIStyle(GUI.skin.button);
         gUIStyleButton.fontSize = 20;
+
         // Left arrow
         if (GUILayout.Button("↤", gUIStyleButton, GUILayout.Height(buttonHeight), GUILayout.Width(50)))
         {
@@ -79,10 +78,12 @@ public class LevelEditor : EditorWindow
                 ShowYesNoPopup();
             }
         }
+
         // Textfield
         GUIStyle gUIStyle = new GUIStyle(GUI.skin.textField);
         gUIStyle.alignment = TextAnchor.MiddleLeft;
         openScene = EditorGUILayout.TextField(openScene, gUIStyle, GUILayout.Height(buttonHeight), GUILayout.Width(100));
+
         // Right arrow
         if (GUILayout.Button("↦", gUIStyleButton, GUILayout.Height(buttonHeight), GUILayout.Width(50)))
         {
@@ -136,6 +137,8 @@ public class LevelEditor : EditorWindow
                 }
             }
         }
+        EditorGUILayout.EndToggleGroup();
+        #endregion
     }
 
     private void ShowYesNoPopup()

@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelButtonManager : MonoBehaviour {
 
-    public Color activeColor;
+    public Color starActiveColor;
+    public Text text;
 
     private  List<Image> stars = new List<Image>();
 
@@ -22,14 +24,20 @@ public class LevelButtonManager : MonoBehaviour {
             for (int i = 0; i < savedData.count; i++)
             {
               
-                stars[i].color = activeColor;
+                stars[i].color = starActiveColor;
             }
 
-            FindObjectOfType<TotalScore>().ScoresCount += savedData.count;
+            UIManager.Instance.AddToTotalStars(savedData.count);
 
         }
 
     }
 
+    public void LoadScene()
+    {
+        string sceneName = "Level" + text.text;
+
+        GameManager.Instance.LoadLevel(sceneName);
+    }
 
 }

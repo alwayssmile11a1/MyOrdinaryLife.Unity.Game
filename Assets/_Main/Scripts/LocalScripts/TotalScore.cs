@@ -1,35 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class TotalScore : MonoBehaviour {
 
 
-    public int ScoresCount { set; get; }
-
-
-    private TextMeshProUGUI text;
-
-    private void Awake()
-    {
-        text = GetComponent<TextMeshProUGUI>();
-    }
-
+    public Text text;
 
     // Use this for initialization
     void Start () {
-
-
-        text.SetText(ScoresCount + "/" + 36.ToString());
-
+        text.text = UIManager.Instance.GetTotalStars() + "/" + 36.ToString();
 	}
 	
-	
-
-
-
-
-
-
 }

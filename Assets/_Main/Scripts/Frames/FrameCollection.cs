@@ -26,11 +26,11 @@ public class FrameCollection : MonoBehaviour {
 
     }
 
-    public Frame PreviousBeingHoverOnFrame
-    {
-        get; private set;
+    //public Frame PreviousBeingHoverOnFrame
+    //{
+    //    get; private set;
 
-    }
+    //}
 
     public int FrameCount { get; private set; }
 
@@ -58,19 +58,19 @@ public class FrameCollection : MonoBehaviour {
         //}
 	}
 	
-	public bool FrameContainsPosition(Frame ignoredFrame, Vector3 screenPosition, out Frame frame)
+	public bool FrameContainsPosition(Frame ignoredFrame, Vector3 position, out Frame frame)
     {
         for (int i = 0; i < m_Frames.Length; i++)
         {
             if (m_Frames[i] == ignoredFrame) continue;
 
-            RectTransform rect = m_Frames[i].GetComponent<RectTransform>();
+            //RectTransform rect = m_Frames[i].GetComponent<RectTransform>();
 
-
-            if (RectTransformUtility.RectangleContainsScreenPoint(rect, screenPosition, Camera.main ))
+            //if (RectTransformUtility.RectangleContainsScreenPoint(rect, screenPosition, Camera.main ))
+            if(m_Frames[i].startRect.Contains(position))
             {
                 frame = m_Frames[i];
-                PreviousBeingHoverOnFrame = m_Frames[i];
+                //PreviousBeingHoverOnFrame = m_Frames[i];
                 return true;
             }
             
@@ -109,17 +109,17 @@ public class FrameCollection : MonoBehaviour {
             }
         }
 
-        frame1.transform.position = frame2.transform.position;
-        frame2.transform.position = frame1.startPosition;
+        Vector3 starPosition1 = frame1.startPosition;
+        Vector3 starPosition2 = frame2.startPosition;
 
-        frame1.startPosition = frame1.transform.position;
-        frame2.startPosition = frame2.transform.position;
+        frame1.ResetPosition(starPosition2);
+        frame2.ResetPosition(starPosition1);
 
         //while (!Mathf.Approximately((frame2.transform.position - frame1.startPosition).sqrMagnitude, 0f) )
         //{
         //    frame2.transform.position = Vector3.MoveTowards(frame2.transform.position, frame1.startPosition, 3f);
 
-                
+
         //    yield return null;
         //}
 
@@ -144,5 +144,19 @@ public class FrameCollection : MonoBehaviour {
         return m_Frames[index];
     }
 
+    //public void MoveFrameTo(Frame frame, Vector3 position)
+    //{
+    //    StartCoroutine(InternalMoveFrameTo(frame, position));
+    //}
+
+    //private IEnumerator InternalMoveFrameTo(Frame frame, Vector3 position)
+    //{
+    //    while (!Mathf.Approximately((frame.transform.position - position).sqrMagnitude, 0f))
+    //    {
+    //        frame.transform.position = Vector3.MoveTowards(frame.transform.position, position, 3f);
+
+    //        yield return null;
+    //    }
+    //}
 
 }

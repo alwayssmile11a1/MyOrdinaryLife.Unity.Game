@@ -48,15 +48,13 @@ public class DeadBound : MonoBehaviour {
     {
         TimeManager.ChangeTimeBackToNormal();
 
-
         VFXController.Instance.Trigger(HashDeadEffect, effectPosition, 0, false, null);
 
         deadAudio.PlayRandomSound();
 
         yield return new WaitForSeconds(2.5f);
 
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameManager.Instance.RestartLevel();
 
     }
 

@@ -161,7 +161,8 @@ public class LevelEditor : EditorWindow
     private void AddPrefabsToNewScene()
     {
         GameObject sharedSceneObject = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/SharedSceneObject.prefab", typeof(GameObject)) as GameObject;
-        GameObject gameManager = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/GameManager/GameManager.prefab", typeof(GameObject)) as GameObject;
+        GameObject gameManager = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/Resources/GameManager.prefab", typeof(GameObject)) as GameObject;
+        GameObject uiManager = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/Resources/UIManager.prefab", typeof(GameObject)) as GameObject;
         GameObject mainCharacter = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/MainCharacter/MainCharacter.prefab", typeof(GameObject)) as GameObject;
         GameObject layoutCanvas = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/Frames/LayoutCanvas{options[popupIndex]}.prefab", typeof(GameObject)) as GameObject;
         PrefabUtility.InstantiatePrefab(sharedSceneObject);

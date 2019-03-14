@@ -71,3 +71,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   endLevelEffect: CFX2_PickupHeart
+  endLevelCanvas: {fileID: 0}

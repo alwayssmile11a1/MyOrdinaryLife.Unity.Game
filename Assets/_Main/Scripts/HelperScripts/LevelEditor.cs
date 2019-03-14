@@ -57,6 +57,8 @@ public class LevelEditor : EditorWindow
         // Popup (it's a dropdown)
         popupIndex = EditorGUILayout.Popup(popupIndex, options, GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth));
 
+        GUI.enabled = true;
+
         #region Edit existing level
         // Toggle (checkbox)
         //editExistingLevel = EditorGUILayout.Toggle("Edit existing level", editExistingLevel, GUILayout.Width(buttonWidth));

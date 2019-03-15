@@ -170,6 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 709ee11994a2f44658e5fc9887c45081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startDelayTime: 1
   speed: 3.5
   climbSpeed: 2
   jumpSpeed: 10

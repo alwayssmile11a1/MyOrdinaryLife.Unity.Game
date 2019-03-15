@@ -37,24 +37,17 @@ public class DeadBound : MonoBehaviour {
         if(player!=null && player.transform.position.y > transform.position.y)
         {
             player.gameObject.SetActive(false);
-            StartCoroutine(PlayerDie(player.transform.position + Vector3.up * 0.6f));
+
+            TimeManager.ChangeTimeBackToNormal();
+
+            VFXController.Instance.Trigger(HashDeadEffect, player.transform.position + Vector3.up * 0.6f, 0, false, null);
+
+            deadAudio.PlayRandomSound();
+
+            StartCoroutine(GameManager.Instance.RestartLevel());
+
         }
 
-
-    }
-
-
-    private IEnumerator PlayerDie(Vector3 effectPosition)
-    {
-        TimeManager.ChangeTimeBackToNormal();
-
-        VFXController.Instance.Trigger(HashDeadEffect, effectPosition, 0, false, null);
-
-        deadAudio.PlayRandomSound();
-
-        yield return new WaitForSeconds(2.5f);
-
-        GameManager.Instance.RestartLevel();
 
     }
 

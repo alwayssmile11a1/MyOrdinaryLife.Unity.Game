@@ -30,10 +30,11 @@ public class GameManager : MonoBehaviour {
     #endregion
 
 
-    public float fadeDuration;
+    public float fadeDuration = 0.5f;
 
     private int m_StarsCount = 0;
     private IngameFadeCanvas m_IngameFadeCanvas;
+    private WaitForSeconds m_FadeDurationSeconds;
 
     private void Awake()
     {
@@ -44,7 +45,7 @@ public class GameManager : MonoBehaviour {
         }
 
         DontDestroyOnLoad(gameObject);
-
+        m_FadeDurationSeconds = new WaitForSeconds(fadeDuration);
     }
 
     public void AddOneStar()
@@ -83,28 +84,28 @@ public class GameManager : MonoBehaviour {
 
     public IEnumerator RestartLevel()
     {
-        if (m_IngameFadeCanvas != null)
-            m_IngameFadeCanvas.FadeSceneOut();
-        yield return new WaitForSeconds(fadeDuration);
+        FadeSceneOut();
+        yield return m_FadeDurationSeconds;
         ResetGameState();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public IEnumerator LoadNextLevel()
     {
-        if (m_IngameFadeCanvas != null)
-            m_IngameFadeCanvas.FadeSceneOut();
-        yield return new WaitForSeconds(fadeDuration);
-        ResetGameState();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        FadeSceneOut();
+        yield return m_FadeDurationSeconds;
+        if (Application.CanStreamedLevelBeLoaded(SceneManager.GetActiveScene().buildIndex + 1))
+        {
+            ResetGameState();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     //Used to load level
     public IEnumerator LoadLevel(string name)
     {
-        if (m_IngameFadeCanvas != null)
-            m_IngameFadeCanvas.FadeSceneOut();
-        yield return new WaitForSeconds(fadeDuration);
+        FadeSceneOut();
+        yield return m_FadeDurationSeconds;
         if (Application.CanStreamedLevelBeLoaded(name))
         {
             ResetGameState();
@@ -115,22 +116,26 @@ public class GameManager : MonoBehaviour {
     //Used to load other scenes
     public IEnumerator LoadScene(string name)
     {
-        if (m_IngameFadeCanvas != null)
-            m_IngameFadeCanvas.FadeSceneOut();
-        yield return new WaitForSeconds(fadeDuration);
-        GameManager.Instance.ResetGameState();
+        FadeSceneOut();
+        yield return m_FadeDurationSeconds;
+        ResetGameState();
         UIManager.Instance.TurnOff();
         SceneManager.LoadScene(name);
     }
 
-    private IEnumerator ResetGameState()
+    private void ResetGameState()
     {
-        if(m_IngameFadeCanvas!=null)
-            m_IngameFadeCanvas.FadeSceneOut();
-        yield return new WaitForSeconds(fadeDuration);
         m_StarsCount = 0;
-        TimeManager.ChangeTimeBackToNormal();
         UIManager.Instance.ResetUIs();
+    }
+
+    private void FadeSceneOut()
+    {
+        //Change time back to normal so coroutine can work normally
+        TimeManager.ChangeTimeBackToNormal();
+        if (m_IngameFadeCanvas != null)
+            m_IngameFadeCanvas.FadeSceneOut();
+
     }
 
     public void RegisterIngameFadeCanvas(IngameFadeCanvas ingameFadeCanvas)

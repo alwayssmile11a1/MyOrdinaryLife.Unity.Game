@@ -5,13 +5,14 @@ public class FinishBound : MonoBehaviour {
 
 
     public string endLevelEffect = "EndLevelEffect";
-    private int HashEndLevelEffect;
-
+    private int m_HashEndLevelEffect;
+    private RandomAudioPlayer m_Audio;
 
 
     private void Awake()
     {
-        HashEndLevelEffect = VFXController.StringToHash(endLevelEffect);
+        m_HashEndLevelEffect = VFXController.StringToHash(endLevelEffect);
+        m_Audio = GetComponent<RandomAudioPlayer>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -21,7 +22,8 @@ public class FinishBound : MonoBehaviour {
         if (player != null)
         {
             collision.gameObject.SetActive(false);
-            VFXController.Instance.Trigger(HashEndLevelEffect, player.transform.position - Vector3.left, 0, false, null);
+            VFXController.Instance.Trigger(m_HashEndLevelEffect, player.transform.position - Vector3.left, 0, false, null);
+            m_Audio.PlayRandomSound();
             GameManager.Instance.FinishLevel();
         }
     }

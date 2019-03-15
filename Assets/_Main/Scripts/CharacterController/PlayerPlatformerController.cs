@@ -6,7 +6,7 @@ using Gamekit2D;
 [RequireComponent(typeof(CharacterController2D))]
 public class PlayerPlatformerController : MonoBehaviour
 {
-
+    public float startDelayTime = 1f;
     public float speed = 5f;
     public float climbSpeed = 2;
     public float jumpSpeed = 8.5f;
@@ -24,6 +24,7 @@ public class PlayerPlatformerController : MonoBehaviour
     private SpriteRenderer m_SpriteRenderer;
     private Vector2 m_MoveVector;
     private PlatformEffector2D m_PlatformEffector2D;
+    private float m_OriginalSpeed;
 
     private int m_HashGroundedPara = Animator.StringToHash("Grounded");
     private int m_HashRunPara = Animator.StringToHash("Run");
@@ -31,6 +32,7 @@ public class PlayerPlatformerController : MonoBehaviour
     private int m_HashHurtPara = Animator.StringToHash("Hurt");
     private int m_HashOnLadderPara = Animator.StringToHash("OnLadder");
 
+    private bool m_CanAct = false;
     private bool m_IsOnLadder = false;
     private bool m_TriggerUse = false;
     private bool m_CanJump = true;
@@ -43,12 +45,20 @@ public class PlayerPlatformerController : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_CharacterController2D = GetComponent<CharacterController2D>();
         m_Collider2D = GetComponent<Collider2D>();
-        //m_PlatformEffector2D = FindObjectOfType<PlatformEffector2D>();
+        this.Invoke("StartDelay", startDelayTime);
+    }
+
+    private void StartDelay()
+    {
+        m_CanAct = true;
     }
 
     private void FixedUpdate()
     {
-        TakeAction();
+        if (m_CanAct)
+        {
+            TakeAction();
+        }
         Face();
         Animate();
 

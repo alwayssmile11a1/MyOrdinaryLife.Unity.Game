@@ -13,7 +13,7 @@ public class UICharacterController : MonoBehaviour
     private PlayerPlatformerController m_PlayerPlatformerController2D;
     private Animator m_Animator;
     private SpriteRenderer m_SpriteRenderer;
-    public float m_TargetXPosition;
+    private float m_TargetXPosition;
 
     //Behavior Tree
     private Root m_Ai = BT.Root();
@@ -178,45 +178,48 @@ public class UICharacterController : MonoBehaviour
         #endregion
 
         m_Ai.OpenBranch(
-            BT.RandomSequence(new int[] { 2, 1, 1, 1, 1, 1, 1 }).OpenBranch(
-                 //Move to random position
-                 BT.Sequence().OpenBranch(
-                    BT.Call(SetRandomXPosition),
-                    BT.WaitUntil(() => Mathf.Abs(m_TargetXPosition - transform.position.x) <= 0.2f),
-                    BT.Call(() => m_PlayerPlatformerController2D.speed = 0f),
-                    BT.Wait(1.5f)
-                 ),
-                 //Attack1
-                 BT.Sequence().OpenBranch(
-                    BT.Call(() => m_Animator.SetTrigger(m_HashAttack1Para)),
-                    BT.Wait(1.5f)
-                 ),
-                 //Attack2
-                 BT.Sequence().OpenBranch(
-                    BT.Call(() => m_Animator.SetTrigger(m_HashAttack2Para)),
-                    BT.Wait(1.5f)
-                 ),
-                 //Attack3
-                 BT.Sequence().OpenBranch(
-                    BT.Call(() => m_Animator.SetTrigger(m_HashAttack3Para)),
-                    BT.Wait(1.5f)
-                 ),
-                 //Kick
-                 BT.Sequence().OpenBranch(
-                    BT.Call(() => m_Animator.SetTrigger(m_HashKickPara)),
-                    BT.Wait(1.5f)
-                 ),
-                 //Punch
-                 BT.Sequence().OpenBranch(
-                    BT.Call(() => m_Animator.SetTrigger(m_HashPunchPara)),
-                    BT.Wait(2.5f)
-                 ),
-                 //BowAttack
-                 BT.Sequence().OpenBranch(
-                    BT.Call(() => m_Animator.SetTrigger(m_HashBowAttackPara)),
-                    BT.Wait(1.5f)
-                 )
-            )
+            BT.Sequence().OpenBranch(
+                BT.RandomSequence(new int[] { 3, 1, 1, 1, 1, 1, 1 }).OpenBranch(
+                     //Move to random position
+                     BT.Sequence().OpenBranch(
+                        BT.Call(SetRandomXPosition),
+                        BT.WaitUntil(() => Mathf.Abs(m_TargetXPosition - transform.position.x) <= 0.2f),
+                        BT.Call(() => m_PlayerPlatformerController2D.speed = 0f),
+                        BT.Wait(1.5f)
+                     ),
+                     //Attack1
+                     BT.Sequence().OpenBranch(
+                        BT.Call(() => m_Animator.SetTrigger(m_HashAttack1Para)),
+                        BT.Wait(1.5f)
+                     ),
+                     //Attack2
+                     BT.Sequence().OpenBranch(
+                        BT.Call(() => m_Animator.SetTrigger(m_HashAttack2Para)),
+                        BT.Wait(1.5f)
+                     ),
+                     //Attack3
+                     BT.Sequence().OpenBranch(
+                        BT.Call(() => m_Animator.SetTrigger(m_HashAttack3Para)),
+                        BT.Wait(1.5f)
+                     ),
+                     //Kick
+                     BT.Sequence().OpenBranch(
+                        BT.Call(() => m_Animator.SetTrigger(m_HashKickPara)),
+                        BT.Wait(1.5f)
+                     ),
+                     //Punch
+                     BT.Sequence().OpenBranch(
+                        BT.Call(() => m_Animator.SetTrigger(m_HashPunchPara)),
+                        BT.Wait(2.5f)
+                     ),
+                     //BowAttack
+                     BT.Sequence().OpenBranch(
+                        BT.Call(() => m_Animator.SetTrigger(m_HashBowAttackPara)),
+                        BT.Wait(1.5f)
+                     )
+                ),
+                BT.Wait(2)
+          )
         );
 
     }

@@ -18,6 +18,7 @@ Shader "Custom/Fader"
 			
 		Lighting Off
 		Blend SrcAlpha OneMinusSrcAlpha
+		Ztest Always
 
 		Pass
 		{

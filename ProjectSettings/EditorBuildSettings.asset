@@ -15,15 +15,15 @@ EditorBuildSettings:
     path: Assets/_Main/_Scenes/MenuSelectLevel.unity
     guid: 6e2c04e21c7769143a72cfcd37f03eea
   - enabled: 1
-    path: Assets/_Main/_Scenes/Levels/Level1.unity
+    path: Assets/_Main/_Scenes/SkyLand/Level1.unity
     guid: d1c10b467bfd828478e6fe159fcb8473
   - enabled: 1
-    path: Assets/_Main/_Scenes/Levels/Level2.unity
+    path: Assets/_Main/_Scenes/SkyLand/Level2.unity
     guid: a3a1879b43c0cd9428d86ed5bb5bce8f
   - enabled: 1
-    path: Assets/_Main/_Scenes/Levels/Level3.unity
+    path: Assets/_Main/_Scenes/SkyLand/Level3.unity
     guid: 3904a24041d08a946a67bffaca8fbc72
   - enabled: 1
-    path: Assets/_Main/_Scenes/Levels/Level4.unity
+    path: Assets/_Main/_Scenes/SkyLand/Level4.unity
     guid: 533fc970f8c9c2147b62d76ad7ec56d5
   m_configObjects: {}

@@ -31,6 +31,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     private bool m_NeedToMove;
 
     public bool Disabled { get; private set; }
+    public bool CharacterOn { get; private set; }
     public bool IsBeingDragged { get; private set; }
 
     private void Awake()
@@ -81,10 +82,11 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     public void OnBeginDrag(PointerEventData eventData)
     {
 
-        if (Disabled) return;
+        if (Disabled || CharacterOn) return;
 
         if(FrameContainsPosition(m_Player.transform.position))
         {
+            SetCharacterOn(true);
             IsBeingDragged = false;
             return;
         }
@@ -117,7 +119,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         Frame frame;
         if (m_PreviousBeingHoverOnFrame ==null && FrameCollection.Instance.FrameContainsPosition(this, position, out frame))
         {
-            if (!frame.Disabled && !frame.FrameContainsPosition(m_Player.transform.position))
+            if (!frame.Disabled && !frame.CharacterOn)
             {
                 m_PreviousBeingHoverOnFrame = frame;
                 //frame.animator.SetBool(HashHoverOn, true);
@@ -212,9 +214,9 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     private void OnTriggerExit2D(Collider2D collision)
     {
 
-        PlayerPlatformerController alessia = collision.GetComponent<PlayerPlatformerController>();
+        PlayerPlatformerController player = collision.GetComponent<PlayerPlatformerController>();
 
-        if (alessia != null)
+        if (player != null)
         {
             Frame nextFrame = FrameCollection.Instance.GetNextFrame(this);
 
@@ -222,10 +224,10 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
             {
                 nextFrame.SetCharacterOn(true);
 
-                Vector3 newPosition = new Vector3(nextFrame.transform.position.x - nextFrame.GetComponentInChildren<SpriteRenderer>().bounds.extents.x - alessia.GetComponent<Collider2D>().bounds.extents.x / 2,
-                     nextFrame.transform.position.y + (alessia.transform.position.y - transform.position.y), 0);
+                Vector3 newPosition = new Vector3(nextFrame.transform.position.x - nextFrame.GetComponentInChildren<SpriteRenderer>().bounds.extents.x - player.GetComponent<Collider2D>().bounds.extents.x / 2,
+                     nextFrame.transform.position.y + (player.transform.position.y - transform.position.y), 0);
 
-                alessia.transform.position = newPosition;
+                player.transform.position = newPosition;
 
                 this.Disable();
             }
@@ -262,6 +264,8 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         }
 
         IsBeingDragged = !characterOn;
+
+        CharacterOn = characterOn;
     }
 
     private Vector3 GetTouchedPosition()

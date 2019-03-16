@@ -305,7 +305,7 @@ MonoBehaviour:
   startDelayTime: 1
   speed: 4
   climbSpeed: 2
-  jumpSpeed: 11
+  jumpSpeed: 12
   jumpAbortSpeedReduction: 16
   gravity: 16
   footStepAudioPlayer: {fileID: 6326183730539963541}

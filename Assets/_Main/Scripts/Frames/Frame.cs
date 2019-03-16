@@ -224,16 +224,34 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
             {
                 nextFrame.SetCharacterOn(true);
 
-                Vector3 newPosition = new Vector3(nextFrame.transform.position.x - nextFrame.GetComponentInChildren<SpriteRenderer>().bounds.extents.x - player.GetComponent<Collider2D>().bounds.extents.x / 2,
-                     nextFrame.transform.position.y + (player.transform.position.y - transform.position.y), 0);
+                //Calculate new player position
+                float x = nextFrame.transform.position.x - nextFrame.GetComponentInChildren<SpriteRenderer>().bounds.extents.x;
+                float y = nextFrame.transform.position.y + (player.transform.position.y - transform.position.y);
+                //Vector3 newPosition = new Vector3(nextFrame.transform.position.x - nextFrame.GetComponentInChildren<SpriteRenderer>().bounds.extents.x,
+                //     nextFrame.transform.position.y + (player.transform.position.y - transform.position.y), 0);
 
-                player.transform.position = newPosition;
+                player.transform.position = new Vector3(x, y, player.transform.position.z);
+
+
+                ////Since OnTriggerExit can be a little bit late, we can lose a bit of player's movement progress when it's set to the new position. 
+                ////Therefore, we have to make up that lost. 
+                //player.IncrementVerticalMovement(player.jumpSpeed * 0.3f);
+
+                //Avoid the situation in which player just enters the frame and immediately get out of that frame for some reason. We don't want that to happen
+                StartCoroutine(DisableFrameColliderTemporarily(nextFrame));
 
                 this.Disable();
             }
 
         }
 
+    }
+
+    private IEnumerator DisableFrameColliderTemporarily(Frame frame)
+    {
+        frame.GetComponent<BoxCollider2D>().enabled = false;
+        yield return new WaitForSeconds(2f);
+        frame.GetComponent<BoxCollider2D>().enabled = true;
     }
 
     public void Disable()

@@ -69,7 +69,7 @@ public class PlayerPlatformerController : MonoBehaviour
 
         if (!m_IsOnLadder)
         {
-            if (CheckForObstacle(0.8f, 0.2f))
+            if (CheckForObstacle(0.5f, 0.2f))
             {
                 if (m_CanJump)
                 {

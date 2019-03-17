@@ -41,8 +41,12 @@ namespace UnityEditor
             //Find suitable Frame
             Vector3Int suitablePosition;
             Tilemap suitableTilemap = FindSuitableFrame(tilemap, position, out suitablePosition);
-            if (suitableTilemap == null) return;
-            suitableTilemap.SetTile(suitablePosition, null);         
+            if (suitableTilemap == null || suitableTilemap.GetTile(suitablePosition) == null)
+            {
+                base.Erase(gridLayout, brushTarget, position);
+                return;
+            }
+            suitableTilemap.SetTile(suitablePosition, null);
         }
 
         private static Tilemap FindSuitableFrame(Tilemap baseTileMap, Vector3Int position, out Vector3Int newPosition)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
@@ -180,7 +181,14 @@ public class LevelEditor : EditorWindow
         if (EditorSceneManager.GetActiveScene().name.Equals($"Level{openScene}")) return;
         if (EditorUtility.DisplayDialog($"Open Level{openScene} scene", $"Do you want to open Level{openScene} scene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
         {
-            EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{openScene}.unity");
+            try
+            {
+                EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{openScene}.unity");
+            }
+            catch(Exception e)
+            {
+                EditorUtility.DisplayDialog("File not found", $"Level{openScene} does not exist in folder Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/", "OK");
+            }
         }
     }
 

@@ -303,7 +303,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startDelayTime: 1
-  speed: 4
+  speed: 4.2
   climbSpeed: 2
   jumpSpeed: 12
   jumpAbortSpeedReduction: 16

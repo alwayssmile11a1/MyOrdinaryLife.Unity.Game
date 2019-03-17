@@ -232,10 +232,9 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
                 player.transform.position = new Vector3(x, y, player.transform.position.z);
 
-
                 ////Since OnTriggerExit can be a little bit late, we can lose a bit of player's movement progress when it's set to the new position. 
                 ////Therefore, we have to make up that lost. 
-                //player.IncrementVerticalMovement(player.jumpSpeed * 0.3f);
+                //player.IncrementVerticalMovement(player.jumpSpeed * 0.1f);
 
                 //Avoid the situation in which player just enters the frame and immediately get out of that frame for some reason. We don't want that to happen
                 StartCoroutine(DisableFrameColliderTemporarily(nextFrame));

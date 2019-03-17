@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
+using File = UnityEngine.Windows.File;
 
 public class LevelEditor : EditorWindow
 {
@@ -12,8 +14,12 @@ public class LevelEditor : EditorWindow
     bool deleteScene = false;
     float buttonWidth = 200;
     float buttonHeight = 25;
+    float dropdownWidth = 200;
+    float dropdownHeight = 25;
+    float labelWidth = 80;
     string openScene = string.Empty;
     int space = 10;
+    Vector2 scrollPosition = Vector2.zero;
 
     string[] options = new string[] { "1x3", "2x2", "2x3" };
     string[] folderName = new string[] { "SkyLand" };
@@ -30,6 +36,8 @@ public class LevelEditor : EditorWindow
 
     private void OnGUI()
     {
+        #region ScrollView
+        scrollPosition = GUILayout.BeginScrollView(scrollPosition);
         GUILayout.Space(space);
 
         GUI.enabled = !editExistingLevel;
@@ -54,18 +62,19 @@ public class LevelEditor : EditorWindow
                 // Save scene after adding everything
                 EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), $"Assets/_Main/_Scenes/{folderName[folderIndex]}/Level{newSceneIndex}.unity");
             }
+            return;
         }
 
         GUILayout.Space(space);
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Frame type", GUILayout.Width(80));
+        GUILayout.Label("Frame type", GUILayout.Width(labelWidth));
         // Popup (it's a dropdown)
-        popupIndex = EditorGUILayout.Popup(popupIndex, options, GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth));
+        popupIndex = EditorGUILayout.Popup(popupIndex, options, GUILayout.Height(dropdownHeight), GUILayout.Width(dropdownWidth));
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Scene Folder", GUILayout.Width(80));
-        folderIndex = EditorGUILayout.Popup(popupIndex, folderName, GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth));
+        GUILayout.Label("Scene Folder", GUILayout.Width(labelWidth));
+        folderIndex = EditorGUILayout.Popup(folderIndex, folderName, GUILayout.Height(dropdownHeight), GUILayout.Width(dropdownWidth));
         GUILayout.EndHorizontal();
 
         GUI.enabled = true;
@@ -115,44 +124,48 @@ public class LevelEditor : EditorWindow
                 ShowYesNoPopup();
             }
         }
-        deleteScene = EditorGUILayout.BeginToggleGroup("Delete Scene", deleteScene);
-        GUILayout.Space(space / 2);
-        if (GUILayout.Button("Delete", GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth)))
-        {
-            string filePath = $"Assets/_Main/_Scenes/{folderName[folderIndex]}/Level{openScene}.unity";
-            if (File.Exists(filePath))
+            deleteScene = EditorGUILayout.BeginToggleGroup("Delete Scene", deleteScene);
+            GUILayout.Space(space / 2);
+            if (GUILayout.Button("Delete", GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth)))
             {
-                if (EditorUtility.DisplayDialog($"Delete Level{openScene} scene", $"Do you want to delete Level{openScene} scene?", "Yes", "No"))
+                string sceneName = EditorSceneManager.GetActiveScene().name;
+                string filePath = $"Assets/_Main/_Scenes/{folderName[folderIndex]}/{sceneName}.unity";
+                if (File.Exists(filePath))
                 {
-                    File.Delete(filePath);
-                    #if UNITY_EDITOR
-                        AssetDatabase.Refresh();
-                    #endif
-
-                    EditorBuildSettingsScene[] originalSettingScenes = EditorBuildSettings.scenes;
-                    EditorBuildSettingsScene sceneToRemove = new EditorBuildSettingsScene($"Assets/_Main/_Scenes/{folderName[folderIndex]}/Level{openScene}.unity", true);
-                    EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[originalSettingScenes.Length - 1];
-                    for (int i = 0, j = 0; i < originalSettingScenes.Length; i++)
+                    if (EditorUtility.DisplayDialog($"Delete Level{openScene} scene", $"Do you want to delete {sceneName} scene?", "Yes", "No"))
                     {
-                        if(originalSettingScenes[i].path != sceneToRemove.path)
+                        File.Delete(filePath);
+                        #if UNITY_EDITOR
+                            AssetDatabase.Refresh();
+                        #endif
+
+                        EditorBuildSettingsScene[] originalSettingScenes = EditorBuildSettings.scenes;
+                        EditorBuildSettingsScene sceneToRemove = new EditorBuildSettingsScene($"Assets/_Main/_Scenes/{folderName[folderIndex]}/{sceneName}.unity", true);
+                        EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[originalSettingScenes.Length - 1];
+                        for (int i = 0, j = 0; i < originalSettingScenes.Length; i++)
                         {
-                            newSettings[j++] = originalSettingScenes[i];
+                            if(originalSettingScenes[i].path != sceneToRemove.path)
+                            {
+                                newSettings[j++] = originalSettingScenes[i];
+                            }
                         }
-                    }
-                    EditorBuildSettings.scenes = newSettings;
+                        EditorBuildSettings.scenes = newSettings;
 
-                    if (EditorSceneManager.GetActiveScene().name == $"Level{openScene}")
-                    {
-                        EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/{folderName[folderIndex]}/Level{int.Parse(openScene) - 1}.unity");
-                    }
+                        EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/{folderName[folderIndex]}/Level{int.Parse(sceneName.Substring(5)) - 1}.unity");
 
-                    EditorUtility.DisplayDialog("Message", $"Level{openScene} has been deleted from project folder and build settings", "OK");
+                        EditorUtility.DisplayDialog("Message", $"{sceneName} has been deleted from project folder and build settings", "OK");
+                    }
                 }
             }
-        }
-        EditorGUILayout.EndToggleGroup();
+            EditorGUILayout.EndToggleGroup();
         EditorGUILayout.EndToggleGroup();
         #endregion
+
+        GUI.enabled = true;
+        GUILayout.Space(space / 2);
+        GUILayout.EndScrollView();
+        //GUIUtility.ExitGUI();
+        #endregion end ScrollView
     }
 
     private void ShowYesNoPopup()
@@ -178,12 +191,13 @@ public class LevelEditor : EditorWindow
     private void AddPrefabsToNewScene()
     {
         GameObject sharedSceneObject = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/SharedSceneObject.prefab", typeof(GameObject)) as GameObject;
-        GameObject gameManager = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/Resources/GameManager.prefab", typeof(GameObject)) as GameObject;
-        GameObject uiManager = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/Resources/UIManager.prefab", typeof(GameObject)) as GameObject;
         GameObject mainCharacter = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/MainCharacter/MainCharacter.prefab", typeof(GameObject)) as GameObject;
         GameObject layoutCanvas = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/Frames/LayoutCanvas{options[popupIndex]}.prefab", typeof(GameObject)) as GameObject;
+        GameObject gameManager = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Resources/GameManager.prefab", typeof(GameObject)) as GameObject;
+        GameObject uiManager = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Resources/UIManager.prefab", typeof(GameObject)) as GameObject;
         PrefabUtility.InstantiatePrefab(sharedSceneObject);
         PrefabUtility.InstantiatePrefab(gameManager);
+        PrefabUtility.InstantiatePrefab(uiManager);
         PrefabUtility.InstantiatePrefab(layoutCanvas);
         PrefabUtility.InstantiatePrefab(mainCharacter);
     }
@@ -200,13 +214,15 @@ public class LevelEditor : EditorWindow
 
     private int FindAppropriateIndex()
     {
+        DirectoryInfo directoryInfo = new DirectoryInfo($"Assets/_Main/_Scenes/{folderName[folderIndex]}");
+        FileInfo[] arrFiles = directoryInfo.GetFiles("Level*.unity");
         int j = 1;
         List<int> listIndex = new List<int>();
-        for (int i = 3; i < EditorBuildSettings.scenes.Length; i++)
+
+        for (int i = 0; i < arrFiles.Length; i++)
         {
-            string[] strSplit = EditorBuildSettings.scenes[i].path.Split('/');
-            string sceneIndex = strSplit[strSplit.Length - 1].Split('.')[0].Substring(5);
-            listIndex.Add(int.Parse(sceneIndex));
+            string name = arrFiles[i].Name;
+            listIndex.Add(int.Parse(arrFiles[i].Name.Split('.')[0].Substring(5)));
         }
         listIndex.Sort();
         for(int i = 0; i < listIndex.Count; i++, j++)

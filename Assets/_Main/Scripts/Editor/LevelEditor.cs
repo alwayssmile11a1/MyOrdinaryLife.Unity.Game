@@ -23,8 +23,8 @@ public class LevelEditor : EditorWindow
     Vector2 scrollPosition = Vector2.zero;
 
     string test;
-    int popupIndex = 0;
-    int folderIndex = 0;
+    int popupIndex = 1;
+    int folderIndex = 1;
     int newSceneIndex;
 
     LevelEditorSO levelEditorSO;
@@ -133,7 +133,7 @@ public class LevelEditor : EditorWindow
                 ShowYesNoPopup();
             }
         }
-        deleteScene = EditorGUILayout.BeginToggleGroup("Delete Scene", deleteScene);
+        deleteScene = EditorGUILayout.BeginToggleGroup("Delete current scene", deleteScene);
         GUILayout.Space(space / 2);
         if (GUILayout.Button("Delete", GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth)))
         {

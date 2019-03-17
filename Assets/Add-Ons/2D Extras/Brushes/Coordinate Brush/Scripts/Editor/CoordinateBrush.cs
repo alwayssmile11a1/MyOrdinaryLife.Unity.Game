@@ -5,6 +5,7 @@ using UnityEngine;
 namespace UnityEditor
 {
     [CustomGridBrush(true, false, false, "Coordinate Brush")]
+    [CreateAssetMenu(fileName = "New Coordinate Brush", menuName = "Brushes/Coordinate Brush")]
     public class CoordinateBrush : GridBrush {
         public int z = 0;
 
@@ -26,15 +27,11 @@ namespace UnityEditor
             base.FloodFill(grid, brushTarget, zPosition);
         }
 
-        [MenuItem("Assets/Create/Coordinate Brush")]
-        public static void CreateBrush()
+        public override void BoxFill(GridLayout gridLayout, GameObject brushTarget, BoundsInt position)
         {
-            string path = EditorUtility.SaveFilePanelInProject("Save Coordinate Brush", "New Coordinate Brush", "asset", "Save Coordinate Brush", "Assets");
-
-            if (path == "")
-                return;
-
-            AssetDatabase.CreateAsset(ScriptableObject.CreateInstance<CoordinateBrush>(), path);
+            var zPosition = new Vector3Int(position.x, position.y, z);
+            position.position = zPosition;
+            base.BoxFill(gridLayout, brushTarget, position);
         }
     }
 
@@ -71,7 +68,13 @@ namespace UnityEditor
                     Handles.DrawLine(cellLocals[j], cellLocals[i]);
                 }
             }
-            Handles.Label(grid.CellToWorld(new Vector3Int(position.x, position.y, coordinateBrush.z)), new Vector3Int(position.x, position.y, coordinateBrush.z).ToString());
+
+            var labelText = "Pos: " + new Vector3Int(position.x, position.y, coordinateBrush.z);
+            if (position.size.x > 1 || position.size.y > 1) {
+                labelText += " Size: " + new Vector2Int(position.size.x, position.size.y);
+            }
+
+            Handles.Label(grid.CellToWorld(new Vector3Int(position.x, position.y, coordinateBrush.z)), labelText);
         }
     }
 }

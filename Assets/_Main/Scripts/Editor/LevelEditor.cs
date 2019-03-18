@@ -81,7 +81,7 @@ public class LevelEditor : EditorWindow
                 AddBackgroundToNewScene();
 
                 // Save scene after adding everything
-                EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), $"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{newSceneIndex}.unity");
+                EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), $"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{folderIndex + 1}-{newSceneIndex}.unity");
             }
             return;
         }
@@ -192,12 +192,12 @@ public class LevelEditor : EditorWindow
 
     private void ShowYesNoPopup()
     {
-        if (EditorSceneManager.GetActiveScene().path.Equals($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{openScene}")) return;
+        if (EditorSceneManager.GetActiveScene().path.Equals($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{folderIndex + 1}-{openScene}")) return;
         if (EditorUtility.DisplayDialog($"Open Level{openScene} scene", $"Do you want to open Level{openScene} scene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
         {
             try
             {
-                EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{openScene}.unity");
+                EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{folderIndex + 1}-{openScene}.unity");
             }
             catch(Exception e)
             {
@@ -240,7 +240,7 @@ public class LevelEditor : EditorWindow
     private void AddNewSceneToBuildSetting(int newIndex)
     {
         EditorBuildSettingsScene[] originalSettingScenes = EditorBuildSettings.scenes;
-        EditorBuildSettingsScene sceneToAdd = new EditorBuildSettingsScene($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{newIndex}.unity", true);
+        EditorBuildSettingsScene sceneToAdd = new EditorBuildSettingsScene($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{folderIndex + 1}-{newIndex}.unity", true);
         EditorBuildSettingsScene[] newSettings = new EditorBuildSettingsScene[originalSettingScenes.Length + 1];
         System.Array.Copy(originalSettingScenes, newSettings, originalSettingScenes.Length);
         newSettings[newSettings.Length - 1] = sceneToAdd;
@@ -257,7 +257,7 @@ public class LevelEditor : EditorWindow
         for (int i = 0; i < arrFiles.Length; i++)
         {
             string name = arrFiles[i].Name;
-            listIndex.Add(int.Parse(arrFiles[i].Name.Split('.')[0].Substring(5)));
+            listIndex.Add(int.Parse(arrFiles[i].Name.Split('.')[0].Split('-')[1]));
         }
         listIndex.Sort();
         for (int i = 0; i < listIndex.Count; i++, j++)

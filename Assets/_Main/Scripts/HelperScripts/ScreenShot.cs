@@ -45,14 +45,21 @@ public class ScreenShot : MonoBehaviour
     private IEnumerator DoScreenShot(string sceneName, string directory)
     {
         yield return new WaitForEndOfFrame();
-        if (/*!File.Exists($"{directory}/{sceneName}.png")*/true)
+        Texture2D texture2D = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
+        texture2D.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0, false);
+        texture2D.Apply();
+        byte[] writeBytes = texture2D.EncodeToPNG();
+        if (!File.Exists($"{directory}/{sceneName}.png"))
         {
-            Texture2D texture2D = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
-            texture2D.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0, false);
-            texture2D.Apply();
-
-            byte[] bytes = texture2D.EncodeToPNG();
-            File.WriteAllBytes($"{directory}/{sceneName}.png", bytes);
+            File.WriteAllBytes($"{directory}/{sceneName}.png", writeBytes);
+        }
+        else
+        {
+            byte[] readBytes = File.ReadAllBytes($"{directory}/{sceneName}.png");
+            if (!readBytes.Equals(writeBytes))
+            {
+                File.WriteAllBytes($"{directory}/{sceneName}.png", writeBytes);
+            }
         }
     }
 #endif

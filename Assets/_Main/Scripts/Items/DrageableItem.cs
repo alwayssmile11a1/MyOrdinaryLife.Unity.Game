@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 
-public class DrageableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public abstract class DrageableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
+
+    public string effect = "Effect";
+
     [HideInInspector]
     public Vector3 startPosition;
-
 
     private int m_HashActivePara = Animator.StringToHash("Active");
     private Animator m_Animator;
@@ -17,6 +19,7 @@ public class DrageableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
     private bool m_CanDrag = true;
 
+    private int HashEffect;
 
     // Use this for initialization
     void Awake()    
@@ -25,6 +28,7 @@ public class DrageableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
         m_Animator = GetComponent<Animator>();
         m_Collider2D = GetComponent<Collider2D>();
         m_Collider2D.enabled = false;
+        HashEffect = Gamekit2D.VFXController.StringToHash(effect);
     }
 
 
@@ -48,7 +52,6 @@ public class DrageableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
         Vector3 position = Camera.main.ScreenToWorldPoint(touchedPosition);
         transform.position = new Vector3(position.x, position.y, transform.position.z);
-
 
     }
 
@@ -92,6 +95,20 @@ public class DrageableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEn
 
         TimeManager.ChangeTimeBackToNormal();
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        PlayerPlatformerController player = collision.GetComponent<PlayerPlatformerController>();
+
+
+        if (player != null)
+        {
+            Gamekit2D.VFXController.Instance.Trigger(HashEffect, transform.position, 0, false, null);
+            OnPlayerEnter(player);
+        }
+    }
+
+    protected abstract void OnPlayerEnter(PlayerPlatformerController player);
 
     private Vector3 GetTouchedPosition()
     {

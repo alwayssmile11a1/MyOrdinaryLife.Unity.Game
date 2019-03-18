@@ -249,7 +249,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     private IEnumerator DisableFrameColliderTemporarily(Frame frame)
     {
         frame.GetComponent<BoxCollider2D>().enabled = false;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         frame.GetComponent<BoxCollider2D>().enabled = true;
     }
 

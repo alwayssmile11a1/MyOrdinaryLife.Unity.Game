@@ -26,11 +26,12 @@ public class PlayerPlatformerController : MonoBehaviour
     private PlatformEffector2D m_PlatformEffector2D;
     private float m_OriginalSpeed;
 
-    private int m_HashGroundedPara = Animator.StringToHash("Grounded");
-    private int m_HashRunPara = Animator.StringToHash("Run");
-    private int m_HashJumpPara = Animator.StringToHash("Jump");
-    private int m_HashHurtPara = Animator.StringToHash("Hurt");
-    private int m_HashOnLadderPara = Animator.StringToHash("OnLadder");
+    public readonly int m_HashGroundedPara = Animator.StringToHash("Grounded");
+    public readonly int m_HashRunPara = Animator.StringToHash("Run");
+    public readonly int m_HashRunFastPara = Animator.StringToHash("RunFast");
+    public readonly int m_HashJumpPara = Animator.StringToHash("Jump");
+    public readonly int m_HashHurtPara = Animator.StringToHash("Hurt");
+    public readonly int m_HashOnLadderPara = Animator.StringToHash("OnLadder");
 
     private bool m_CanAct = false;
     private bool m_IsOnLadder = false;
@@ -45,11 +46,12 @@ public class PlayerPlatformerController : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_CharacterController2D = GetComponent<CharacterController2D>();
         m_Collider2D = GetComponent<Collider2D>();
-        this.Invoke("StartDelay", startDelayTime);
+        StartCoroutine(StartDelay());
     }
 
-    private void StartDelay()
+    private IEnumerator StartDelay()
     {
+        yield return new WaitForSeconds(startDelayTime);
         m_CanAct = true;
     }
 
@@ -257,7 +259,6 @@ public class PlayerPlatformerController : MonoBehaviour
 
         return false;
     }
-
 
     public void PlayFootStepAudioPlayer()
     {

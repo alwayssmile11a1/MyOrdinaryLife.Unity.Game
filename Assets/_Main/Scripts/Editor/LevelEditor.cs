@@ -44,7 +44,7 @@ public class LevelEditor : EditorWindow
         string sceneName = strSplit[strSplit.Length - 1].Split('.')[0];
         string folder = strSplit[strSplit.Length - 2];
         string path = $"Assets/_Main/Editor/ScreenShots/{folder}/{sceneName}.png";
-        if (File.Exists($"Assets/_Main/Editor/ScreenShots/{folder}/{sceneName}.png"))
+        if (File.Exists(path))
         {
             screenCapture = AssetDatabase.LoadAssetAtPath(path, typeof(Texture2D)) as Texture2D;
         }
@@ -192,7 +192,7 @@ public class LevelEditor : EditorWindow
 
     private void ShowYesNoPopup()
     {
-        if (EditorSceneManager.GetActiveScene().name.Equals($"Level{openScene}")) return;
+        if (EditorSceneManager.GetActiveScene().path.Equals($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{openScene}")) return;
         if (EditorUtility.DisplayDialog($"Open Level{openScene} scene", $"Do you want to open Level{openScene} scene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
         {
             try

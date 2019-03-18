@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour {
         FadeSceneOut();
         yield return m_FadeDurationSeconds;
         ResetGameState();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().path);
     }
 
     public IEnumerator LoadNextLevel()

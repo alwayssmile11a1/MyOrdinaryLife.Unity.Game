@@ -34,6 +34,7 @@ public class PlayerPlatformerController : MonoBehaviour
     public readonly int m_HashOnLadderPara = Animator.StringToHash("OnLadder");
 
     private bool m_CanAct = false;
+    private bool m_DontStartDelay = false;
     private bool m_IsOnLadder = false;
     private bool m_TriggerUse = false;
     private bool m_CanJump = true;
@@ -46,13 +47,26 @@ public class PlayerPlatformerController : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_CharacterController2D = GetComponent<CharacterController2D>();
         m_Collider2D = GetComponent<Collider2D>();
-        StartCoroutine(StartDelay());
     }
 
-    private IEnumerator StartDelay()
+    private void Start()
     {
+        if (!m_DontStartDelay)
+        {
+            StartCoroutine(StartDelay());
+        }
+    }
+
+    public IEnumerator StartDelay()
+    {
+        m_CanAct = false;
         yield return new WaitForSeconds(startDelayTime);
         m_CanAct = true;
+    }
+
+    public void DontStartDelay()
+    {
+        m_DontStartDelay = true;
     }
 
     private void FixedUpdate()

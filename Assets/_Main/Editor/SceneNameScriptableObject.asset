@@ -19,3 +19,8 @@ MonoBehaviour:
   sceneFolderName:
   - SkyLand
   - TrapLand
+  prefabs:
+  - {fileID: 9125689899990882201, guid: 816fe0c4694ae6947be8f749c19fb0cf, type: 3}
+  - {fileID: 1983749364390440, guid: 65296b1d6590e5a47bfb8cb690cb5fcd, type: 3}
+  - {fileID: 3845821322116916623, guid: efbb2dcda77655e4dac9642c9193b78a, type: 3}
+  - {fileID: 6221484272697799805, guid: 48e0abbe1c29e25408f7dbaf180a8772, type: 3}

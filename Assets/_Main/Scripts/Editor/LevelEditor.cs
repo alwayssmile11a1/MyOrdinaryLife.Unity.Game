@@ -18,13 +18,14 @@ public class LevelEditor : EditorWindow
     float dropdownWidth = 200;
     float dropdownHeight = 25;
     float labelWidth = 80;
-    string openScene = string.Empty;
+    string openScene = "1";
     int space = 10;
     Vector2 scrollPosition = Vector2.zero;
+    static Texture2D screenCapture;
 
     string test;
-    int popupIndex = 1;
-    int folderIndex = 1;
+    int popupIndex = 0;
+    int folderIndex = 0;
     int newSceneIndex;
 
     LevelEditorSO levelEditorSO;
@@ -33,12 +34,25 @@ public class LevelEditor : EditorWindow
     static void OpenLevelEditor()
     {
         LevelEditor levelEditor = GetWindow<LevelEditor>();
+        EditorSceneManager.sceneOpened += SceneOpened;
+        screenCapture = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Editor/ScreenShots/SkyLand/Level1.png", typeof(Texture2D)) as Texture2D;
+    }
+
+    private static void SceneOpened(Scene scene, OpenSceneMode mode)
+    {
+        string[] strSplit = EditorSceneManager.GetActiveScene().path.Split('/');
+        string sceneName = strSplit[strSplit.Length - 1].Split('.')[0];
+        string folder = strSplit[strSplit.Length - 2];
+        string path = $"Assets/_Main/Editor/ScreenShots/{folder}/{sceneName}.png";
+        if (File.Exists($"Assets/_Main/Editor/ScreenShots/{folder}/{sceneName}.png"))
+        {
+            screenCapture = AssetDatabase.LoadAssetAtPath(path, typeof(Texture2D)) as Texture2D;
+        }
     }
 
     private void OnEnable()
     {
-        levelEditorSO = AssetDatabase.LoadAssetAtPath("Assets/_Main/Scripts/Editor/SceneNameScriptableObject.asset", typeof(LevelEditorSO)) as LevelEditorSO;
-        Debug.Log("enable");
+        levelEditorSO = AssetDatabase.LoadAssetAtPath("Assets/_Main/Editor/SceneNameScriptableObject.asset", typeof(LevelEditorSO)) as LevelEditorSO;
     }
 
     private void OnGUI()
@@ -171,8 +185,8 @@ public class LevelEditor : EditorWindow
 
         GUI.enabled = true;
         GUILayout.Space(space / 2);
+        GUILayout.Label(screenCapture, GUILayout.Width(Screen.width), GUILayout.Height(400));
         GUILayout.EndScrollView();
-        //GUIUtility.ExitGUI();
         #endregion end ScrollView
     }
 
@@ -195,26 +209,32 @@ public class LevelEditor : EditorWindow
     private static void AddBackgroundToNewScene()
     {
         GameObject environment = new GameObject("Environment", typeof(Parallax));
-        GameObject backgroundGradient = new GameObject("Background_Gradient", typeof(SpriteRenderer));
-        backgroundGradient.transform.SetParent(environment.transform);
-        backgroundGradient.GetComponent<SpriteRenderer>().sortingOrder = -100;
-        backgroundGradient.transform.localScale = new Vector3(10000, 10, 1);
+        GameObject backgroundImage = new GameObject("Background_Gradient", typeof(SpriteRenderer));
+        backgroundImage.transform.SetParent(environment.transform);
+        backgroundImage.GetComponent<SpriteRenderer>().sortingOrder = -100;
+        backgroundImage.transform.localScale = new Vector3(10000, 10, 1);
         Texture2D texture2D = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Art/Background/Background_Gradient.png", typeof(Texture2D)) as Texture2D;
-        backgroundGradient.GetComponent<SpriteRenderer>().sprite = Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
+        backgroundImage.GetComponent<SpriteRenderer>().sprite = Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
     }
 
     private void AddPrefabsToNewScene()
     {
-        GameObject sharedSceneObject = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/SharedSceneObject.prefab", typeof(GameObject)) as GameObject;
-        GameObject mainCharacter = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/MainCharacter/MainCharacter.prefab", typeof(GameObject)) as GameObject;
+        //GameObject sharedSceneObject = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/SharedSceneObject.prefab", typeof(GameObject)) as GameObject;
+        //GameObject mainCharacter = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/MainCharacter/MainCharacter.prefab", typeof(GameObject)) as GameObject;
+        //GameObject gameManager = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Resources/GameManager.prefab", typeof(GameObject)) as GameObject;
+        //GameObject uiManager = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Resources/UIManager.prefab", typeof(GameObject)) as GameObject;
+        //PrefabUtility.InstantiatePrefab(sharedSceneObject);
+        //PrefabUtility.InstantiatePrefab(gameManager);
+        //PrefabUtility.InstantiatePrefab(uiManager);
+        //PrefabUtility.InstantiatePrefab(mainCharacter);
+
+        foreach (GameObject prefab in levelEditorSO.prefabs)
+        {
+            PrefabUtility.InstantiatePrefab(prefab);
+        }
+
         GameObject layoutCanvas = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Prefabs/Frames/LayoutCanvas{levelEditorSO.frameType[popupIndex]}.prefab", typeof(GameObject)) as GameObject;
-        GameObject gameManager = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Resources/GameManager.prefab", typeof(GameObject)) as GameObject;
-        GameObject uiManager = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Resources/UIManager.prefab", typeof(GameObject)) as GameObject;
-        PrefabUtility.InstantiatePrefab(sharedSceneObject);
-        PrefabUtility.InstantiatePrefab(gameManager);
-        PrefabUtility.InstantiatePrefab(uiManager);
         PrefabUtility.InstantiatePrefab(layoutCanvas);
-        PrefabUtility.InstantiatePrefab(mainCharacter);
     }
 
     private void AddNewSceneToBuildSetting(int newIndex)

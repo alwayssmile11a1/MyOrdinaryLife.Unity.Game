@@ -9,7 +9,7 @@ public class ScreenShot : MonoBehaviour
 #if UNITY_EDITOR
     private int frameToCapture = 30;
     private int frameCount = 0;
-    private bool Captured = false;
+    private bool Captured = true;
 
     private void Update()
     {

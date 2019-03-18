@@ -7,4 +7,5 @@ public class LevelEditorSO : ScriptableObject
 {
     public string[] frameType;
     public string[] sceneFolderName;
+    public GameObject[] prefabs;
 }

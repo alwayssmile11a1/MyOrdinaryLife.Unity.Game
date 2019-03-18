@@ -69,6 +69,11 @@ public class PlayerPlatformerController : MonoBehaviour
         m_DontStartDelay = true;
     }
 
+    public bool CanAct()
+    {
+        return m_CanAct;
+    }
+
     private void FixedUpdate()
     {
         if (m_CanAct)

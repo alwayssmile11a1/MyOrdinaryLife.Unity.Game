@@ -8,32 +8,33 @@ public abstract class ClickableItem : MonoBehaviour
 {
     public string effect = "Effect";
 
-    protected int HashEffect;
+    protected int m_HashEffect;
     protected Button m_Button;
-    protected Image backGroundImage;
+    protected Image m_backGroundImage;
     protected RandomAudioPlayer m_Audio;
+    protected PlayerPlatformerController m_Player;
 
     private void Awake()
     {
         m_Button = GetComponent<Button>();
         m_Button.onClick.AddListener(OnClick);
-        backGroundImage = GetComponentsInChildren<Image>(true)[1];
-        backGroundImage.enabled = false;
-        HashEffect = Gamekit2D.VFXController.StringToHash(effect);
+        m_backGroundImage = GetComponentsInChildren<Image>(true)[1];
+        m_backGroundImage.enabled = false;
+        m_HashEffect = Gamekit2D.VFXController.StringToHash(effect);
         m_Audio = GetComponent<RandomAudioPlayer>();
+        m_Player = FindObjectOfType<PlayerPlatformerController>();
     }
 
     private void OnClick()
     {
-        PlayerPlatformerController player = FindObjectOfType<PlayerPlatformerController>();
-        if(player!=null)
+        if(m_Player != null && m_Player.CanAct())
         {
-            OnClick(player);
+            OnClick(m_Player);
 
-            Gamekit2D.VFXController.Instance.Trigger(HashEffect, player.transform.position, 0f, false, null);
+            Gamekit2D.VFXController.Instance.Trigger(m_HashEffect, m_Player.transform.position, 0f, false, null);
             m_Audio.PlayRandomSound();
             m_Button.enabled = false;
-            backGroundImage.enabled = true;
+            m_backGroundImage.enabled = true;
 
         }
     }

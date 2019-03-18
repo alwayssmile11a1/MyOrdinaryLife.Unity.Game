@@ -185,7 +185,7 @@ public class LevelEditor : EditorWindow
 
         GUI.enabled = true;
         GUILayout.Space(space / 2);
-        GUILayout.Label(screenCapture, GUILayout.Width(Screen.width), GUILayout.Height(400));
+        GUILayout.Label(screenCapture, GUILayout.Width(Screen.width - 10), GUILayout.Height(300));
         GUILayout.EndScrollView();
         #endregion end ScrollView
     }

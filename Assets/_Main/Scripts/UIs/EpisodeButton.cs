@@ -28,7 +28,8 @@ public class EpisodeButton : MonoBehaviour
 
     public void LoadScene()
     {
-        //Even though making one MenuSelectLevel for each episode can be repetitive and tedious, for performance purpose, we do it anyway.
+        //It would be more convenient to instatiate LevelButtons at run time depending on which episode users choose, but it might affect runtime performance 
+        //Even though making one MenuSelectLevel for each episode could be repetitive and tedious, for performance purpose, we do it anyway.
         string sceneName = "MenuSelectLevel" + episodeNumberText.text;
         StartCoroutine(GameManager.Instance.LoadScene(sceneName));
     }

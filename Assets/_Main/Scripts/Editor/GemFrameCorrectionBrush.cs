@@ -40,10 +40,11 @@ namespace UnityEditor
             GameObject instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
             if (instance != null)
             {
+                Tilemap newTileMap = FindSuitableFrame(brushTarget.GetComponent<Tilemap>(), position);
+                if (newTileMap == null) return;
+
                 Undo.MoveGameObjectToScene(instance, brushTarget.scene, "Paint Prefabs");
                 Undo.RegisterCreatedObjectUndo((Object)instance, "Paint Prefabs");
-                Tilemap newTileMap = FindSuitableFrame(brushTarget.GetComponent<Tilemap>(), position);
-
                 instance.transform.SetParent(newTileMap.transform);
                 instance.transform.position = grid.LocalToWorld(grid.CellToLocalInterpolated(new Vector3Int(position.x, position.y, 0) + new Vector3(.5f, .5f, .5f))) + Vector3.forward * m_Z;
             }

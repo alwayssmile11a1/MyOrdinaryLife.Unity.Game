@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class teleport : MonoBehaviour {
+public class Teleport : MonoBehaviour {
     public Transform destination;
 
     private AudioSource audioSource;
@@ -14,7 +14,9 @@ public class teleport : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag.Equals("Player"))
+        //shouldn't use compare tag for perfomance purpose
+        //if (collision.tag.Equals("Player"))
+        if (collision.GetComponent<PlayerPlatformerController>() != null)
         {
             destination.GetComponent<BoxCollider2D>().enabled = false;
             collision.transform.position = destination.position;

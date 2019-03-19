@@ -47,7 +47,10 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         startRect = rectTransfrom.rect;
         startRect.center = startPosition;
         m_MainCamera = Camera.main;
-        graphics = transform.Find("Graphics");
+        //Shouldn't use string comparation for performance purpose
+        //graphics = transform.Find("Graphics");
+        //The best way is to use public reference, but we do this for now (might be refactor lator)
+        graphics = transform.GetComponentInChildren<SpriteMask>().transform.parent;
         m_OriginalScale = graphics.localScale;
         m_MouseDownScale = new Vector3(m_OriginalScale.x + 1, m_OriginalScale.y + 1, 1);
 
@@ -62,8 +65,6 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         m_ObjectsSortingGroup = GetComponentInChildren<SortingGroup>();
 
         m_Player = FindObjectOfType<PlayerPlatformerController>();
-
-
     }
 
     private void Start()
@@ -86,17 +87,16 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         }
     }
 
-    private void OnMouseDown()
-    {
-        if (Disabled || CharacterOn) return;
-
-        graphics.localScale = m_MouseDownScale;
-    }
-
-    private void OnMouseUp()
-    {
-        ResetScale();
-    }
+    //Move to OnBeginDrag and OnEndDrag (inside Enable/DisableDragEssentials) for code organization purpose
+    //private void OnMouseDown()
+    //{
+    //    if (Disabled || CharacterOn) return;
+    //    graphics.localScale = m_MouseDownScale;
+    //}
+    //private void OnMouseUp()
+    //{
+    //    ResetScale();
+    //}
 
     public void OnBeginDrag(PointerEventData eventData)
     {
@@ -194,6 +194,8 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     {
         animator.SetBool(HashActive, true);
 
+        graphics.localScale = m_MouseDownScale;
+
         m_ObjectsSortingGroup.sortingOrder = 15;
 
         //Avoid player jump on being-dragged colliders
@@ -205,6 +207,8 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     private void DisableDragEssentials()
     {
         animator.SetBool(HashActive, false);
+
+        ResetScale();
 
         m_ObjectsSortingGroup.sortingOrder = 2;
 

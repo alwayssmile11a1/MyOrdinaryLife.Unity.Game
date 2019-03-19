@@ -6,8 +6,8 @@ using UnityEngine.Tilemaps;
 
 namespace UnityEditor
 {
-    [CustomGridBrush(false, false, false, "Frame Correction Brush")]
-    public class FrameCorrectionBrush : GridBrush
+    [CustomGridBrush(false, false, false, "Background Frame Correction Brush")]
+    public class BackgroundFrameCorrectionBrush : GridBrush
     {
         public override void Paint(GridLayout grid, GameObject brushTarget, Vector3Int position)
         {
@@ -59,23 +59,23 @@ namespace UnityEditor
                 if (frameRect.Contains(baseTileMap.transform.position + new Vector3(position.x, position.y, position.z)))
                 {
                     //Find suitable position
-                    Tilemap platformTilemap = frames[i].GetComponentsInChildren<Tilemap>().Where(x => x.GetComponent<Rigidbody2D>() != null).ToArray()[0]; //Platform
-                    Vector3 offset = platformTilemap.transform.position - baseTileMap.transform.position;
+                    Tilemap newTileMap = frames[i].GetComponentsInChildren<Tilemap>().Where(x => x.GetComponent<Rigidbody2D>() != null).ToArray()[1]; //Background
+                    Vector3 offset = newTileMap.transform.position - baseTileMap.transform.position;
                     //Set tile map 
                     newPosition = position - new Vector3Int((int)offset.x, (int)offset.y, (int)offset.z);
 
-                    return platformTilemap;
+                    return newTileMap;
                 }
             }
 
-            newPosition = Vector3Int.zero;              
+            newPosition = Vector3Int.zero;
             return null;
         }
     }
 
 
-    [CustomEditor(typeof(FrameCorrectionBrush))]
-    public class FrameCorrectionBrushEditor: GridBrushEditorBase
+    [CustomEditor(typeof(BackgroundFrameCorrectionBrush))]
+    public class BackgroundFrameCorrectionBrushEditor : GridBrushEditorBase
     {
         public override GameObject[] validTargets
         {

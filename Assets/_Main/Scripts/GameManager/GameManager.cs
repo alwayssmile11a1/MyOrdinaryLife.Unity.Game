@@ -63,21 +63,35 @@ public class GameManager : MonoBehaviour {
         UIManager.Instance.FinishLevel();
 
         //save progress
-        int startCount = m_StarsCount;
-        SavedData savedData = new SavedData();
-        if (savedData.Load(SceneManager.GetActiveScene().name))
+        string activeScene = SceneManager.GetActiveScene().name;
+        string episodeName = $"Episode{activeScene[5]}";
+        SavedData episodeSavedData = new SavedData();
+        if (!episodeSavedData.Load(episodeName))
         {
-            if (savedData.count < startCount)
+            episodeSavedData.count = 0;
+        }
+
+        SavedData levelSavedData = new SavedData();
+        if (levelSavedData.Load(SceneManager.GetActiveScene().name))
+        {
+            if (levelSavedData.count < m_StarsCount)
             {
-                savedData.count = startCount;
-                savedData.Save(SceneManager.GetActiveScene().name);
+                levelSavedData.count = m_StarsCount;
+                levelSavedData.Save(SceneManager.GetActiveScene().name);
+
+                episodeSavedData.count += m_StarsCount - levelSavedData.count;
+                episodeSavedData.Save(episodeName);
             }
         }
         else
         {
-            savedData.count = startCount;
-            savedData.Save(SceneManager.GetActiveScene().name);
+            levelSavedData.count = m_StarsCount;
+            levelSavedData.Save(SceneManager.GetActiveScene().name);
+
+            episodeSavedData.count += levelSavedData.count;
+            episodeSavedData.Save(episodeName);
         }
+
 
         m_StarsCount = 0;
     }

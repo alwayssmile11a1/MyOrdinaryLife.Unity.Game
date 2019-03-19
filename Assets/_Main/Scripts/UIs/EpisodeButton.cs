@@ -10,19 +10,17 @@ public class EpisodeButton : MonoBehaviour
 
     private void Awake()
     {
-        //SavedData savedData = new SavedData();
+        SavedData savedData = new SavedData();
 
-        //if (savedData.Load(gameObject.name))
-        //{
-        //    for (int i = 0; i < savedData.count; i++)
-        //    {
-
-        //        stars[i].color = starActiveColor;
-        //    }
-
-        //    UIManager.Instance.AddToTotalStars(savedData.count);
-
-        //}
+        if (savedData.Load("Episode" + episodeNumberText.text))
+        {
+            UIManager.Instance.AddToCurrentTotalScore(savedData.count);
+            starsCountText.text = $"* {savedData.count}";
+        }
+        else
+        {
+            starsCountText.text = $"* {0}";
+        }
 
     }
 

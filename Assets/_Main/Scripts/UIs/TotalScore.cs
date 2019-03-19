@@ -5,10 +5,17 @@ public class TotalScore : MonoBehaviour {
 
 
     public Text text;
+    public bool shortForm = false;
 
-    // Use this for initialization
     void Start () {
-        text.text = UIManager.Instance.GetTotalStars() + "/" + 36.ToString();
+        if (shortForm)
+        {
+            text.text = UIManager.Instance.GetCurrentTotalScore().ToString();
+        }
+        else
+        {
+            text.text = $"{UIManager.Instance.GetCurrentTotalScore()}/{UIManager.Instance.GetTotalStars()}";
+        }
 	}
 	
 }

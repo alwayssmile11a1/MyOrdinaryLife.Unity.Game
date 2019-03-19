@@ -8,18 +8,18 @@ public class LevelButton : MonoBehaviour {
 
     public Color starActiveColor;
     public Text text;
+    public Image[] stars;
 
-    private  List<Image> stars = new List<Image>();
+    private string m_SceneName;
 
     private void Awake()
     {
-
-        GetComponentsInChildren<Image>(stars);
-        stars.RemoveAt(0);
+        string activeScene = SceneManager.GetActiveScene().name;
+        m_SceneName = $"Level{activeScene[activeScene.Length - 1]}-{text.text}";
 
         SavedData savedData = new SavedData();
 
-        if(savedData.Load(gameObject.name))
+        if(savedData.Load(m_SceneName))
         {
             for (int i = 0; i < savedData.count; i++)
             {
@@ -27,18 +27,15 @@ public class LevelButton : MonoBehaviour {
                 stars[i].color = starActiveColor;
             }
 
-            UIManager.Instance.AddToTotalStars(savedData.count);
+            UIManager.Instance.AddToCurrentTotalScore(savedData.count);
 
         }
-
+        UIManager.Instance.AddToTotalStars(stars.Length);
     }
 
     public void LoadScene()
     {
-        string activeScene = SceneManager.GetActiveScene().name;
-        string sceneName = $"Level{activeScene[activeScene.Length-1]}-{text.text}";
-
-        StartCoroutine(GameManager.Instance.LoadLevel(sceneName));
+        StartCoroutine(GameManager.Instance.LoadLevel(m_SceneName));
     }
 
 }

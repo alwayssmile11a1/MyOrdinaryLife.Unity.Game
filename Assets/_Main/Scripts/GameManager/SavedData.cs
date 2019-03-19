@@ -1,8 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 /// <summary>
 /// Serializable data
@@ -20,11 +22,10 @@ public class SerializableSavedData
 public class SavedData
 {
     public int count;
-
+    private static readonly string gameName = "MyOrdinaryLife.dat";
 
     public SerializableSavedData GetSeralizableData()
     {
-        //Since Unity doesn't support serializing Dictionary, we have to convert it to List 
         SerializableSavedData serializableData = new SerializableSavedData();
 
         serializableData.count = count;
@@ -43,7 +44,7 @@ public class SavedData
     {
 
         BinaryFormatter bf = new BinaryFormatter();
-        string path = Path.Combine(Application.persistentDataPath, additionalPath + "MyOrdinaryLife.dat");
+        string path = Path.Combine(Application.persistentDataPath, additionalPath + gameName);
         FileStream file = File.Create(path);
 
         //Since Unity doesn't support serializing Dictionary, we have to convert it to List 
@@ -62,7 +63,7 @@ public class SavedData
     /// <returns></returns>
     public bool Load(string addtionalPath)
     {
-        string path = Path.Combine(Application.persistentDataPath, addtionalPath + "MyOrdinaryLife.dat");
+        string path = Path.Combine(Application.persistentDataPath, addtionalPath + gameName);
 
         if (File.Exists(path))
         {
@@ -82,4 +83,23 @@ public class SavedData
 
     }
 
+    public static void DeleteData()
+    {
+        string[] paths = Directory.GetFiles(Application.persistentDataPath, "*" + gameName);
+        for (int i = 0; i < paths.Length; i++)
+        {
+            File.Delete(paths[i]);
+        }
+    }
 }
+
+#if UNITY_EDITOR
+class MyWindow : Editor
+{
+    [MenuItem("Tool/Delete All SavedData")]
+    public static void ShowWindow()
+    {
+        SavedData.DeleteData();
+    }
+}
+#endif

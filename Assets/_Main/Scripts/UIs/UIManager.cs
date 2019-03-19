@@ -33,6 +33,7 @@ public class UIManager : MonoBehaviour
     public GameObject[] stars;
 
     private int m_TotalStarsCount = 0;
+    private int m_CurrentTotalScore = 0;
 
     private void Awake()
     {
@@ -52,6 +53,7 @@ public class UIManager : MonoBehaviour
         pauseGameCanvas.SetActive(true);
         pauseGamePanel.SetActive(false);
         m_TotalStarsCount = 0;
+        m_CurrentTotalScore = 0;
         for (int i = 0; i < 3; i++)
         {
             stars[i].gameObject.SetActive(false);
@@ -71,6 +73,16 @@ public class UIManager : MonoBehaviour
         {
             stars[i].gameObject.SetActive(true);
         }
+    }
+
+    public void AddToCurrentTotalScore(int count)
+    {
+        m_CurrentTotalScore += count;
+    }
+
+    public int GetCurrentTotalScore()
+    {
+        return m_CurrentTotalScore;
     }
 
     public void AddToTotalStars(int count)

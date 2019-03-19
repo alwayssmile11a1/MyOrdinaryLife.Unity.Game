@@ -42,7 +42,7 @@ namespace UnityEditor
             {
                 Tilemap newTileMap = FindSuitableFrame(brushTarget.GetComponent<Tilemap>(), position);
                 if (newTileMap == null) return;
-                Debug.Log("Hello");
+
                 Undo.MoveGameObjectToScene(instance, brushTarget.scene, "Paint Prefabs");
                 Undo.RegisterCreatedObjectUndo((Object)instance, "Paint Prefabs");
                 instance.transform.SetParent(newTileMap.transform);

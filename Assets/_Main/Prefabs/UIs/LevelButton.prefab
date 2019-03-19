@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 114925044255324774}
   - component: {fileID: 114762543573177534}
   m_Layer: 5
-  m_Name: Level
+  m_Name: LevelButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -273,6 +273,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   starActiveColor: {r: 1, g: 1, b: 0, a: 1}
   text: {fileID: 3253522056785831612}
+  stars:
+  - {fileID: 114817018580339858}
+  - {fileID: 3173942365672773490}
+  - {fileID: 2078330616395173936}
 --- !u!1 &1751653701270620
 GameObject:
   m_ObjectHideFlags: 0

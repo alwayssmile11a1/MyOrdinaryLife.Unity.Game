@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
@@ -21,7 +22,10 @@ public class LevelEditor : EditorWindow
     string openScene = "1";
     int space = 10;
     Vector2 scrollPosition = Vector2.zero;
+    EditorWindow gameView;
     static Texture2D screenCapture;
+    float timeCount = 0;
+    static bool startTimeCount;
 
     string test;
     int popupIndex = 0;
@@ -30,7 +34,7 @@ public class LevelEditor : EditorWindow
 
     LevelEditorSO levelEditorSO;
 
-    [MenuItem("Tool/Level Editor")]
+    [MenuItem("Tool/Level Editor %#O")]
     static void OpenLevelEditor()
     {
         LevelEditor levelEditor = GetWindow<LevelEditor>();
@@ -40,14 +44,18 @@ public class LevelEditor : EditorWindow
 
     private static void SceneOpened(Scene scene, OpenSceneMode mode)
     {
-        string[] strSplit = EditorSceneManager.GetActiveScene().path.Split('/');
-        string sceneName = strSplit[strSplit.Length - 1].Split('.')[0];
-        string folder = strSplit[strSplit.Length - 2];
-        string path = $"Assets/_Main/Editor/ScreenShots/{folder}/{sceneName}.png";
-        if (File.Exists(path))
-        {
-            screenCapture = AssetDatabase.LoadAssetAtPath(path, typeof(Texture2D)) as Texture2D;
-        }
+        //string[] strSplit = EditorSceneManager.GetActiveScene().path.Split('/');
+        //string sceneName = strSplit[strSplit.Length - 1].Split('.')[0];
+        //string folder = strSplit[strSplit.Length - 2];
+        //string path = $"Assets/_Main/Editor/ScreenShots/{folder}/{sceneName}.png";
+        //if (File.Exists(path))
+        //{
+        //    screenCapture = AssetDatabase.LoadAssetAtPath(path, typeof(Texture2D)) as Texture2D;
+        //}
+
+        //var activeWindow = EditorWindow.focusedWindow;
+
+        startTimeCount = true;
     }
 
     private void OnEnable()
@@ -185,9 +193,43 @@ public class LevelEditor : EditorWindow
 
         GUI.enabled = true;
         GUILayout.Space(space / 2);
-        GUILayout.Label(screenCapture, GUILayout.Width(Screen.width - 10), GUILayout.Height(300));
+        GUILayout.Label(screenCapture, GUILayout.Width(Screen.width - 10), GUILayout.Height(400));
         GUILayout.EndScrollView();
         #endregion end ScrollView
+    }
+
+    private void Update()
+    {
+        if (startTimeCount)
+        {
+            timeCount += 0.01f;
+            if (timeCount > 0.1f)
+            {
+                if (gameView == null)
+                {
+                    var assembly = typeof(EditorWindow).Assembly;
+                    var type = assembly.GetType("UnityEditor.GameView");
+                    gameView = EditorWindow.GetWindow(type);
+                }
+
+                // Get screen position and sizes
+                var vec2Position = new Vector2(gameView.position.position.x, gameView.position.position.y + 40);
+                var sizeX = gameView.position.width;
+                var sizeY = gameView.position.height - 20;
+
+                // Take Screenshot at given position sizes
+                var colors = InternalEditorUtility.ReadScreenPixel(vec2Position, (int)sizeX, (int)sizeY);
+
+                screenCapture = new Texture2D((int)sizeX, (int)sizeY);
+                screenCapture.SetPixels(colors);
+                screenCapture.Apply();
+
+                timeCount = 0;
+                startTimeCount = false;
+
+                Repaint();
+            }
+        }
     }
 
     private void ShowYesNoPopup()

@@ -28,11 +28,16 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     private Frame m_PreviousBeingHoverOnFrame;
     private Camera m_MainCamera;
     private Vector3 m_TargetMovePosition;
+    private Vector3 offsetFromMouse;
+    private Transform graphics;
+    private Vector3 m_OriginalScale;
+    private Vector3 m_MouseDownScale;
     private bool m_NeedToMove;
 
     public bool Disabled { get; private set; }
     public bool CharacterOn { get; private set; }
     public bool IsBeingDragged { get; private set; }
+    public bool graphis { get; private set; }
 
     private void Awake()
     {
@@ -42,6 +47,9 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         startRect = rectTransfrom.rect;
         startRect.center = startPosition;
         m_MainCamera = Camera.main;
+        graphics = transform.Find("Graphics");
+        m_OriginalScale = graphics.localScale;
+        m_MouseDownScale = new Vector3(m_OriginalScale.x + 1, m_OriginalScale.y + 1, 1);
 
         //Collect all colliders except CompositeCollider2D
         Collider2D[] colliders = GetComponentsInChildren<Collider2D>();
@@ -64,7 +72,6 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         {
             SetCharacterOn(true);
         }
-
     }
 
     private void Update()
@@ -77,6 +84,18 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
                 m_NeedToMove = false;
             }
         }
+    }
+
+    private void OnMouseDown()
+    {
+        if (Disabled || CharacterOn) return;
+
+        graphics.localScale = m_MouseDownScale;
+    }
+
+    private void OnMouseUp()
+    {
+        ResetScale();
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -95,6 +114,10 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
         startPosition = transform.position;
 
+        Vector3 touchedPosition = GetTouchedPosition();
+        Vector3 position = m_MainCamera.ScreenToWorldPoint(touchedPosition);
+        offsetFromMouse = position - transform.position;
+
         EnableDragEssentials();
     }
 
@@ -107,7 +130,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         Vector3 touchedPosition = GetTouchedPosition();
 
         Vector3 position = m_MainCamera.ScreenToWorldPoint(touchedPosition);
-        transform.position = new Vector3(position.x, position.y, transform.position.z);
+        transform.position = new Vector3(position.x - offsetFromMouse.x, position.y - offsetFromMouse.y, transform.position.z);
 
         //if (FrameCollection.Instance.PreviousBeingHoverOnFrame != null)
         //{
@@ -223,7 +246,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
             if(nextFrame!=null)
             {
                 nextFrame.SetCharacterOn(true);
-
+                
                 //Calculate new player position
                 float x = nextFrame.transform.position.x - nextFrame.GetComponentInChildren<SpriteRenderer>().bounds.extents.x;
                 float y = nextFrame.transform.position.y + (player.transform.position.y - transform.position.y);
@@ -239,6 +262,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
                 //Avoid the situation in which player just enters the frame and immediately get out of that frame for some reason. We don't want that to happen
                 StartCoroutine(DisableFrameColliderTemporarily(nextFrame));
 
+                nextFrame.ResetScale();
                 this.Disable();
             }
 
@@ -260,7 +284,12 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         m_ObjectsSortingGroup.sortingOrder = 2;
         IsBeingDragged = false;
         Disabled = true;
+    }
 
+    public void ResetScale()
+    {
+        if (graphics.localScale != m_OriginalScale)
+            graphics.localScale = m_OriginalScale;
     }
 
     public void SetCharacterOn(bool characterOn)

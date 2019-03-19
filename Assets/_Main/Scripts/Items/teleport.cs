@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Teleport : MonoBehaviour {
     public Transform destination;
-
+    public ParticleSystem burst;
     private AudioSource audioSource;
 
     private void Start()
@@ -21,6 +21,7 @@ public class Teleport : MonoBehaviour {
             destination.GetComponent<BoxCollider2D>().enabled = false;
             collision.transform.position = destination.position;
             audioSource.Play();
+            burst.Play();
         }
     }
 }

@@ -49,7 +49,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         m_MainCamera = Camera.main;
         //Shouldn't use string comparation for performance purpose
         //graphics = transform.Find("Graphics");
-        //The best way is to use public reference, but we do this for now (might be refactor lator)
+        //The best way is to use public reference, but we do this for now (might be refactor later)
         graphics = transform.GetComponentInChildren<SpriteMask>().transform.parent;
         m_OriginalScale = graphics.localScale;
         m_MouseDownScale = new Vector3(m_OriginalScale.x + 1, m_OriginalScale.y + 1, 1);

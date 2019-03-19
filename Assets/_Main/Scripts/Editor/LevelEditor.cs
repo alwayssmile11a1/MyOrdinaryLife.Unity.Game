@@ -23,7 +23,7 @@ public class LevelEditor : EditorWindow
     int space = 10;
     Vector2 scrollPosition = Vector2.zero;
     EditorWindow gameView;
-    static Texture2D screenCapture;
+    static Texture2D screenCapture = null;
     float timeCount = 0;
     static bool startTimeCount;
 
@@ -34,12 +34,16 @@ public class LevelEditor : EditorWindow
 
     LevelEditorSO levelEditorSO;
 
+    static LevelEditor()
+    {
+        EditorSceneManager.sceneOpened += SceneOpened;
+    }
+
     [MenuItem("Tool/Level Editor %#O")]
     static void OpenLevelEditor()
     {
         LevelEditor levelEditor = GetWindow<LevelEditor>();
         EditorSceneManager.sceneOpened += SceneOpened;
-        screenCapture = AssetDatabase.LoadAssetAtPath($"Assets/_Main/Editor/ScreenShots/SkyLand/Level1.png", typeof(Texture2D)) as Texture2D;
     }
 
     private static void SceneOpened(Scene scene, OpenSceneMode mode)
@@ -193,7 +197,14 @@ public class LevelEditor : EditorWindow
 
         GUI.enabled = true;
         GUILayout.Space(space / 2);
-        GUILayout.Label(screenCapture, GUILayout.Width(Screen.width - 10), GUILayout.Height(400));
+        if (screenCapture == null)
+        {
+            GUILayout.Label("Open scene to see image!");
+        }
+        else
+        {
+            GUILayout.Label(screenCapture, GUILayout.Width(Screen.width - 10));
+        }
         GUILayout.EndScrollView();
         #endregion end ScrollView
     }
@@ -205,31 +216,36 @@ public class LevelEditor : EditorWindow
             timeCount += 0.01f;
             if (timeCount > 0.1f)
             {
-                if (gameView == null)
-                {
-                    var assembly = typeof(EditorWindow).Assembly;
-                    var type = assembly.GetType("UnityEditor.GameView");
-                    gameView = EditorWindow.GetWindow(type);
-                }
-
-                // Get screen position and sizes
-                var vec2Position = new Vector2(gameView.position.position.x, gameView.position.position.y + 40);
-                var sizeX = gameView.position.width;
-                var sizeY = gameView.position.height - 20;
-
-                // Take Screenshot at given position sizes
-                var colors = InternalEditorUtility.ReadScreenPixel(vec2Position, (int)sizeX, (int)sizeY);
-
-                screenCapture = new Texture2D((int)sizeX, (int)sizeY);
-                screenCapture.SetPixels(colors);
-                screenCapture.Apply();
-
-                timeCount = 0;
-                startTimeCount = false;
-
-                Repaint();
+                CaptureGameView();
             }
         }
+    }
+
+    private void CaptureGameView()
+    {
+        if (gameView == null)
+        {
+            var assembly = typeof(EditorWindow).Assembly;
+            var type = assembly.GetType("UnityEditor.GameView");
+            gameView = EditorWindow.GetWindow(type);
+        }
+
+        // Get screen position and sizes
+        var vec2Position = new Vector2(gameView.position.position.x, gameView.position.position.y + 40);
+        var sizeX = gameView.position.width;
+        var sizeY = gameView.position.height - 20;
+
+        // Take Screenshot at given position sizes
+        var colors = InternalEditorUtility.ReadScreenPixel(vec2Position, (int)sizeX, (int)sizeY);
+
+        screenCapture = new Texture2D((int)sizeX, (int)sizeY);
+        screenCapture.SetPixels(colors);
+        screenCapture.Apply();
+
+        timeCount = 0;
+        startTimeCount = false;
+
+        Repaint();
     }
 
     private void ShowYesNoPopup()

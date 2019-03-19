@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LevelButtonManager : MonoBehaviour {
+public class LevelButton : MonoBehaviour {
 
     public Color starActiveColor;
     public Text text;
@@ -35,7 +35,8 @@ public class LevelButtonManager : MonoBehaviour {
 
     public void LoadScene()
     {
-        string sceneName = "Level" + text.text;
+        string activeScene = SceneManager.GetActiveScene().name;
+        string sceneName = $"Level{activeScene[activeScene.Length-1]}-{text.text}";
 
         StartCoroutine(GameManager.Instance.LoadLevel(sceneName));
     }

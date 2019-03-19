@@ -1,15 +1,22 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoadScene : MonoBehaviour {
 
     public void LoadSelectLevelScene()
     {
-        StartCoroutine(GameManager.Instance.LoadScene("MenuSelectLevel"));
+        string activeScene = SceneManager.GetActiveScene().name;
+        StartCoroutine(GameManager.Instance.LoadScene($"MenuSelectLevel{activeScene[5]}"));
     }
 
     public void LoadMenuScene()
     {
         StartCoroutine(GameManager.Instance.LoadScene("MenuScene"));
+    }
+
+    public void LoadSelectEpisodeScene()
+    {
+        StartCoroutine(GameManager.Instance.LoadScene("MenuSelectEpisode"));
     }
 
     public void RestartScene()

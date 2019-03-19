@@ -92,10 +92,10 @@ public class GameManager : MonoBehaviour {
 
     public IEnumerator LoadNextLevel()
     {
-        FadeSceneOut();
-        yield return m_FadeDurationSeconds;
         if (Application.CanStreamedLevelBeLoaded(SceneManager.GetActiveScene().buildIndex + 1))
         {
+            FadeSceneOut();
+            yield return m_FadeDurationSeconds;
             ResetGameState();
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
@@ -104,10 +104,10 @@ public class GameManager : MonoBehaviour {
     //Used to load level
     public IEnumerator LoadLevel(string name)
     {
-        FadeSceneOut();
-        yield return m_FadeDurationSeconds;
         if (Application.CanStreamedLevelBeLoaded(name))
         {
+            FadeSceneOut();
+            yield return m_FadeDurationSeconds;
             ResetGameState();
             SceneManager.LoadScene(name);
         }
@@ -116,11 +116,14 @@ public class GameManager : MonoBehaviour {
     //Used to load other scenes
     public IEnumerator LoadScene(string name)
     {
-        FadeSceneOut();
-        yield return m_FadeDurationSeconds;
-        ResetGameState();
-        UIManager.Instance.TurnOff();
-        SceneManager.LoadScene(name);
+        if (Application.CanStreamedLevelBeLoaded(name))
+        {
+            FadeSceneOut();
+            yield return m_FadeDurationSeconds;
+            ResetGameState();
+            UIManager.Instance.TurnOff();
+            SceneManager.LoadScene(name);
+        }
     }
 
     private void ResetGameState()

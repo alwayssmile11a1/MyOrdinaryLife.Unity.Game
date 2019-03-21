@@ -18,9 +18,6 @@ EditorBuildSettings:
     path: Assets/_Main/_Scenes/SkyLand/MenuSelectLevel1.unity
     guid: 6e2c04e21c7769143a72cfcd37f03eea
   - enabled: 1
-    path: Assets/_Main/_Scenes/TrapLand/MenuSelectLevel2.unity
-    guid: 21057e66d44a9974382df0074ecd42c9
-  - enabled: 1
     path: Assets/_Main/_Scenes/SkyLand/Level1-1.unity
     guid: d1c10b467bfd828478e6fe159fcb8473
   - enabled: 1
@@ -57,14 +54,14 @@ EditorBuildSettings:
     path: Assets/_Main/_Scenes/SkyLand/Level1-12.unity
     guid: 616c4a0fc6f97b1409fe81e3c93717fc
   - enabled: 1
+    path: Assets/_Main/_Scenes/TrapLand/MenuSelectLevel2.unity
+    guid: 21057e66d44a9974382df0074ecd42c9
+  - enabled: 1
     path: Assets/_Main/_Scenes/TrapLand/Level2-1.unity
     guid: 4e757574fb9bc84478b159cf266f11d6
   - enabled: 1
     path: Assets/_Main/_Scenes/TrapLand/Level2-2.unity
     guid: 816775fae26cb7f4fa9a0d651ab0e3ad
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/_Main/_Scenes/TrapLand/Level2-3.unity
     guid: f36a10aeafeadb442bb258b9188354d7

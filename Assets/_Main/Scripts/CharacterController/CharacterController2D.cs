@@ -19,9 +19,9 @@ namespace Gamekit2D
         Vector2 m_NextMovement;
         ContactFilter2D m_ContactFilter;
         RaycastHit2D[] m_HitBuffer = new RaycastHit2D[5];
-        RaycastHit2D[] m_FoundHits = new RaycastHit2D[3];
-        Collider2D[] m_GroundColliders = new Collider2D[3];
-        Vector2[] m_RaycastPositions = new Vector2[3];
+        RaycastHit2D[] m_FoundHits = new RaycastHit2D[2];
+        Collider2D[] m_GroundColliders = new Collider2D[2];
+        Vector2[] m_RaycastPositions = new Vector2[2];
 
         public bool IsGrounded { get; protected set; }
         public bool IsCeilinged { get; protected set; }
@@ -99,17 +99,21 @@ namespace Gamekit2D
                 {
                     raycastDirection = Vector2.down;
 
+                    //m_RaycastPositions[0] = raycastStart + Vector2.left * 0.4f;
+                    //m_RaycastPositions[1] = raycastStart;
+                    //m_RaycastPositions[2] = raycastStart + Vector2.right * 0.4f;
                     m_RaycastPositions[0] = raycastStart + Vector2.left * 0.4f;
-                    m_RaycastPositions[1] = raycastStart;
-                    m_RaycastPositions[2] = raycastStart + Vector2.right * 0.4f;
+                    m_RaycastPositions[1] = raycastStart + Vector2.right * 0.4f;
                 }
                 else
                 {
                     raycastDirection = Vector2.up;
 
+                    //m_RaycastPositions[0] = raycastStart + Vector2.left * 0.4f;
+                    //m_RaycastPositions[1] = raycastStart;
+                    //m_RaycastPositions[2] = raycastStart + Vector2.right * 0.4f;
                     m_RaycastPositions[0] = raycastStart + Vector2.left * 0.4f;
-                    m_RaycastPositions[1] = raycastStart;
-                    m_RaycastPositions[2] = raycastStart + Vector2.right * 0.4f;
+                    m_RaycastPositions[1] = raycastStart + Vector2.right * 0.4f;
                 }
             }
             else
@@ -124,18 +128,22 @@ namespace Gamekit2D
                     raycastDirection = Vector2.down;
                     Vector2 raycastStartBottomCentre = raycastStart + Vector2.down * (m_Capsule.size.y * 0.5f - m_Capsule.size.x * 0.5f); //why subtract size.x?
 
+                    //m_RaycastPositions[0] = raycastStartBottomCentre + Vector2.left * m_Capsule.size.x * 0.5f;
+                    //m_RaycastPositions[1] = raycastStartBottomCentre;
+                    //m_RaycastPositions[2] = raycastStartBottomCentre + Vector2.right * m_Capsule.size.x * 0.5f;
                     m_RaycastPositions[0] = raycastStartBottomCentre + Vector2.left * m_Capsule.size.x * 0.5f;
-                    m_RaycastPositions[1] = raycastStartBottomCentre;
-                    m_RaycastPositions[2] = raycastStartBottomCentre + Vector2.right * m_Capsule.size.x * 0.5f;
+                    m_RaycastPositions[1] = raycastStartBottomCentre + Vector2.right * m_Capsule.size.x * 0.5f;
                 }
                 else
                 {
                     raycastDirection = Vector2.up;
                     Vector2 raycastStartTopCentre = raycastStart + Vector2.up * (m_Capsule.size.y * 0.5f - m_Capsule.size.x * 0.5f);
 
+                    //m_RaycastPositions[0] = raycastStartTopCentre + Vector2.left * m_Capsule.size.x * 0.5f;
+                    //m_RaycastPositions[1] = raycastStartTopCentre;
+                    //m_RaycastPositions[2] = raycastStartTopCentre + Vector2.right * m_Capsule.size.x * 0.5f;
                     m_RaycastPositions[0] = raycastStartTopCentre + Vector2.left * m_Capsule.size.x * 0.5f;
-                    m_RaycastPositions[1] = raycastStartTopCentre;
-                    m_RaycastPositions[2] = raycastStartTopCentre + Vector2.right * m_Capsule.size.x * 0.5f;
+                    m_RaycastPositions[1] = raycastStartTopCentre + Vector2.right * m_Capsule.size.x * 0.5f;
                 }
             }
 
@@ -143,7 +151,9 @@ namespace Gamekit2D
             {
                 //Shoot ray
                 int count = Physics2D.Raycast(m_RaycastPositions[i], raycastDirection, m_ContactFilter, m_HitBuffer, raycastDistance);
+                #if UNITY_EDITOR
                 Debug.DrawRay(m_RaycastPositions[i], raycastDirection * raycastDistance);
+                #endif
                 if (bottom)
                 {
                     m_FoundHits[i] = count > 0 ? m_HitBuffer[0] : new RaycastHit2D();

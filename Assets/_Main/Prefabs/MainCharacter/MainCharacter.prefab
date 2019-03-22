@@ -303,11 +303,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startDelayTime: 1.5
-  speed: 4.2
-  climbSpeed: 2
+  speed: 4.3
   jumpSpeed: 12
   jumpAbortSpeedReduction: 16
   gravity: 16
+  obstacleForwardDistance: 1.5
+  gulfForwardDistance: 0.1
   footStepAudioPlayer: {fileID: 6326183730539963541}
   landAudioPlayer: {fileID: 6324761083667446417}
 --- !u!1 &6221524056691872021

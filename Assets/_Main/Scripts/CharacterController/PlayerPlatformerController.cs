@@ -8,10 +8,14 @@ public class PlayerPlatformerController : MonoBehaviour
 {
     public float startDelayTime = 1f;
     public float speed = 5f;
-    public float climbSpeed = 2;
+    //public float climbSpeed = 2;
     public float jumpSpeed = 8.5f;
     public float jumpAbortSpeedReduction = 20f;
     public float gravity = 15f;
+
+    [Header("Obstacles Check")]
+    public float obstacleForwardDistance = 1.5f;
+    public float gulfForwardDistance = 0.1f;
 
     [Header("Audio")]
     public RandomAudioPlayer footStepAudioPlayer;
@@ -35,7 +39,7 @@ public class PlayerPlatformerController : MonoBehaviour
 
     private bool m_CanAct = false;
     private bool m_DontStartDelay = false;
-    private bool m_IsOnLadder = false;
+    //private bool m_IsOnLadder = false;
     private bool m_TriggerUse = false;
     private bool m_CanJump = true;
 
@@ -87,53 +91,54 @@ public class PlayerPlatformerController : MonoBehaviour
 
     private void TakeAction()
     {
-
-        if (!m_IsOnLadder)
+        if (CheckForObstacle(obstacleForwardDistance, gulfForwardDistance))
         {
-            if (CheckForObstacle(0.5f, 0.15f))
+            if (m_CanJump)
             {
-                if (m_CanJump)
-                {
-                    Jump();
-                }
+                Jump();
             }
+        }
 
 
-            //Reduce jump speed
-            JumpAbortReduction();
+        //Reduce jump speed
+        JumpAbortReduction();
 
-            //Vertical movement
-            if (!m_CharacterController2D.IsGrounded)
-            {
-                AirborneVerticalMovement();
-            }
-            else
-            {
-                GroundedVerticalMovement();
-            }
-
-            //Set horizontal movement
-            SetHorizontalMovement(m_SpriteRenderer.flipX ? -speed : speed);
+        //Vertical movement
+        if (!m_CharacterController2D.IsGrounded)
+        {
+            AirborneVerticalMovement();
         }
         else
         {
-            SetHorizontalMovement(0);
-            if (!m_TriggerUse)
-            {
-                m_PlatformEffector2D = m_CharacterController2D.GroundColliders[0].GetComponent<PlatformEffector2D>();
-                if (m_PlatformEffector2D)
-                {
-                    m_PlatformEffector2D.rotationalOffset = 180;
-                }
-                //m_CharacterController2D.GroundColliders[0].GetComponent<PlatformEffector2D>().rotationalOffset = 
-                m_TriggerUse = true;
-                m_Animator.SetTrigger("use");
-                m_Animator.SetBool(m_HashOnLadderPara, true);
-                m_Animator.SetFloat("velocityY", climbSpeed);
-                float vy = m_CharacterController2D.GroundColliders[0].GetComponent<PlatformEffector2D>() ? -climbSpeed : climbSpeed;
-                SetVerticalMovement(vy);
-            }
+            GroundedVerticalMovement();
         }
+
+        //Set horizontal movement
+        SetHorizontalMovement(m_SpriteRenderer.flipX ? -speed : speed);
+
+        //if (!m_IsOnLadder)
+        //{
+
+        //}
+        //else
+        //{
+        //    SetHorizontalMovement(0);
+        //    if (!m_TriggerUse)
+        //    {
+        //        m_PlatformEffector2D = m_CharacterController2D.GroundColliders[0].GetComponent<PlatformEffector2D>();
+        //        if (m_PlatformEffector2D)
+        //        {
+        //            m_PlatformEffector2D.rotationalOffset = 180;
+        //        }
+        //        //m_CharacterController2D.GroundColliders[0].GetComponent<PlatformEffector2D>().rotationalOffset = 
+        //        m_TriggerUse = true;
+        //        m_Animator.SetTrigger("use");
+        //        m_Animator.SetBool(m_HashOnLadderPara, true);
+        //        m_Animator.SetFloat("velocityY", climbSpeed);
+        //        float vy = m_CharacterController2D.GroundColliders[0].GetComponent<PlatformEffector2D>() ? -climbSpeed : climbSpeed;
+        //        SetVerticalMovement(vy);
+        //    }
+        //}
 
 
         //Move
@@ -184,19 +189,19 @@ public class PlayerPlatformerController : MonoBehaviour
 
     }
 
-    private void EndClimbing()
-    {
-        m_IsOnLadder = false;
-        m_TriggerUse = false;
-        if (m_PlatformEffector2D)
-        {
-            m_PlatformEffector2D.rotationalOffset = 0;
-        }
-        m_Animator.ResetTrigger("use");
-        m_Animator.SetBool(m_HashOnLadderPara, false);
-        m_Animator.SetFloat("velocityY", 0);
-        SetVerticalMovement(0);
-    }
+    //private void EndClimbing()
+    //{
+    //    m_IsOnLadder = false;
+    //    m_TriggerUse = false;
+    //    if (m_PlatformEffector2D)
+    //    {
+    //        m_PlatformEffector2D.rotationalOffset = 0;
+    //    }
+    //    m_Animator.ResetTrigger("use");
+    //    m_Animator.SetBool(m_HashOnLadderPara, false);
+    //    m_Animator.SetFloat("velocityY", 0);
+    //    SetVerticalMovement(0);
+    //}
 
     public void SetMoveVector(Vector2 newMoveVector)
     {
@@ -259,23 +264,33 @@ public class PlayerPlatformerController : MonoBehaviour
     {
 
 
-        //we circle cast with a size sligly smaller than the collider height. That avoid to collide with very small bump on the ground
-        if (Physics2D.CircleCast(m_Collider2D.bounds.center, m_Collider2D.bounds.extents.y - 0.2f,
-                                                                    m_SpriteRenderer.flipX ? Vector2.left : Vector2.right,
-                                                                    obstacleForwardDistance, m_CharacterController2D.groundedLayerMask.value))
+        ////we circle cast with a size sligly smaller than the collider height. That avoid to collide with very small bump on the ground
+        //if (Physics2D.CircleCast(m_Collider2D.bounds.center, m_Collider2D.bounds.extents.y - 0.2f,
+        //                                                            m_SpriteRenderer.flipX ? Vector2.left : Vector2.right,
+        //                                                            obstacleForwardDistance, m_CharacterController2D.groundedLayerMask.value))
+        //{
+        //    return true;
+        //}
+        #if UNITY_EDITOR
+        Debug.DrawRay(m_Collider2D.bounds.center + Vector3.down * 0.2f, m_SpriteRenderer.flipX ? Vector2.left : Vector2.right * obstacleForwardDistance, Color.red);
+        #endif
+        if (Physics2D.Raycast(m_Collider2D.bounds.center + Vector3.down * 0.2f, m_SpriteRenderer.flipX ? Vector2.left : Vector2.right, obstacleForwardDistance, m_CharacterController2D.groundedLayerMask.value))
         {
             return true;
         }
 
-        Vector3 castingPosition = (Vector2)(m_Collider2D.bounds.center) +
-                             (m_SpriteRenderer.flipX ? Vector2.left : Vector2.right) * (m_Collider2D.bounds.extents.x + gulfForwardDistance);
-
-
-        if (!Physics2D.CircleCast(castingPosition, 0.1f, Vector2.down, m_Collider2D.bounds.extents.y + 0.2f, m_CharacterController2D.groundedLayerMask.value))
+        Vector3 castingPosition = (Vector2)(m_Collider2D.bounds.center) + (m_SpriteRenderer.flipX ? Vector2.left : Vector2.right) * (m_Collider2D.bounds.extents.x + gulfForwardDistance);
+        //if (!Physics2D.CircleCast(castingPosition, 0.1f, Vector2.down, m_Collider2D.bounds.extents.y + 0.2f, m_CharacterController2D.groundedLayerMask.value))
+        //{
+        //    return true;
+        //}
+        #if UNITY_EDITOR
+        Debug.DrawRay(castingPosition, Vector2.down * (m_Collider2D.bounds.extents.y + 0.2f), Color.red);
+        #endif
+        if (!Physics2D.Raycast(castingPosition, Vector2.down, m_Collider2D.bounds.extents.y + 0.2f, m_CharacterController2D.groundedLayerMask.value))
         {
             return true;
         }
-
         return false;
     }
 
@@ -291,17 +306,17 @@ public class PlayerPlatformerController : MonoBehaviour
             landAudioPlayer.PlayRandomSound();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag.Equals("Ladder"))
-        {
-            m_IsOnLadder = true;
-        }
-        if (collision.tag.Equals("EndLadder"))
-        {
-            EndClimbing();
-        }
-    }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.tag.Equals("Ladder"))
+    //    {
+    //        m_IsOnLadder = true;
+    //    }
+    //    if (collision.tag.Equals("EndLadder"))
+    //    {
+    //        EndClimbing();
+    //    }
+    //}
 
 
     private void SetCanJump(bool canJump)

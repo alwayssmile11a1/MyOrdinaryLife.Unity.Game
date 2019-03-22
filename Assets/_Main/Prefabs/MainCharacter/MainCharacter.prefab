@@ -303,10 +303,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startDelayTime: 1.5
-  speed: 4.3
+  speed: 4.25
   jumpSpeed: 12
-  jumpAbortSpeedReduction: 16
-  gravity: 16
+  jumpAbortSpeedReduction: 17
+  gravity: 16.5
   obstacleForwardDistance: 1.5
   gulfForwardDistance: 0.1
   footStepAudioPlayer: {fileID: 6326183730539963541}

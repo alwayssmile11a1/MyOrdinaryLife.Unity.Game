@@ -208,6 +208,11 @@ public class PlayerPlatformerController : MonoBehaviour
         m_MoveVector = newMoveVector;
     }
 
+    public Vector2 GetMoveVector()
+    {
+        return m_MoveVector;
+    }
+
     public void SetHorizontalMovement(float newHorizontalMovement)
     {
         m_MoveVector.x = newHorizontalMovement;

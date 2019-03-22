@@ -250,7 +250,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
             if(nextFrame!=null)
             {
                 nextFrame.SetCharacterOn(true);
-                
+
                 //Calculate new player position
                 float x = nextFrame.transform.position.x - nextFrame.GetComponentInChildren<SpriteRenderer>().bounds.extents.x;
                 float y = nextFrame.transform.position.y + (player.transform.position.y - transform.position.y);
@@ -259,9 +259,9 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
                 player.transform.position = new Vector3(x, y, player.transform.position.z);
 
-                ////Since OnTriggerExit can be a little bit late, we can lose a bit of player's movement progress when it's set to the new position. 
-                ////Therefore, we have to make up that lost. 
-                //player.IncrementVerticalMovement(player.jumpSpeed * 0.1f);
+                //Since OnTriggerExit can be a little bit late, we can lose a bit of player's movement progress when it's set to the new position. 
+                //Therefore, we have to make up that lost. 
+                player.IncrementVerticalMovement(player.jumpSpeed * 0.15f);
 
                 //Avoid the situation in which player just enters the frame and immediately get out of that frame for some reason. We don't want that to happen
                 StartCoroutine(DisableFrameColliderTemporarily(nextFrame));
@@ -273,6 +273,20 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         }
 
     }
+
+    //private IEnumerator StopPlayer(PlayerPlatformerController player)
+    //{
+    //    Vector2 oldMoveVector = player.GetMoveVector();
+    //    Vector2 newMoveVector = new Vector2(oldMoveVector.x, 0);
+    //    float currentX = player.transform.position.x;
+    //    while (player.transform.position.x < currentX + player.GetComponent<CapsuleCollider2D>().bounds.extents.x)
+    //    {
+    //        player.SetMoveVector(newMoveVector);
+    //        yield return null;
+    //    }
+    //    player.SetMoveVector(oldMoveVector);
+    //    //player.GetComponent<CapsuleCollider2D>().bounds.extents.y
+    //}
 
     private IEnumerator DisableFrameColliderTemporarily(Frame frame)
     {

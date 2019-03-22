@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿#if UNITY_EDITOR
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,7 +7,6 @@ using UnityEngine.Windows;
 
 public class ScreenShot : MonoBehaviour
 {
-#if UNITY_EDITOR
     private int frameToCapture = 30;
     private int frameCount = 0;
     private bool Captured = true;
@@ -16,7 +16,7 @@ public class ScreenShot : MonoBehaviour
         if (!Captured)
         {
             frameCount++;
-            if(frameCount == frameToCapture)
+            if (frameCount == frameToCapture)
             {
                 StartCapturing();
                 Captured = true;
@@ -62,5 +62,6 @@ public class ScreenShot : MonoBehaviour
             }
         }
     }
-#endif
+
 }
+#endif

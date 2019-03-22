@@ -258,7 +258,7 @@ public class LevelEditor : EditorWindow
             {
                 EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{folderIndex + 1}-{openScene}.unity");
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 EditorUtility.DisplayDialog("File not found", $"Level{openScene} does not exist in folder Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/", "OK");
             }

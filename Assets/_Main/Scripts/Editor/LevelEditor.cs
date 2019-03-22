@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -332,3 +333,5 @@ public class LevelEditor : EditorWindow
         return j;
     }
 }
+
+#endif

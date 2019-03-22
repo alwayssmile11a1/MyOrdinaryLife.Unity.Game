@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Teleport : MonoBehaviour {
+public class TeleportItem : MonoBehaviour {
     public Transform destination;
     public ParticleSystem burst;
     private AudioSource audioSource;

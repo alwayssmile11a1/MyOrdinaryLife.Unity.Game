@@ -20,7 +20,7 @@ public class LevelEditor : EditorWindow
     float dropdownWidth = 200;
     float dropdownHeight = 25;
     float labelWidth = 80;
-    string openScene = "1";
+    string textFieldNumber = "1";
     int space = 10;
     Vector2 scrollPosition = Vector2.zero;
     EditorWindow gameView;
@@ -129,33 +129,34 @@ public class LevelEditor : EditorWindow
         // Left arrow
         if (GUILayout.Button("↤", gUIStyleButton, GUILayout.Height(buttonHeight), GUILayout.Width(50)))
         {
-            int newNumber = (int.Parse(openScene) - 1);
+            int newNumber = (int.Parse(textFieldNumber) - 1);
             if (newNumber >= 1)
             {
-                openScene = newNumber.ToString();
-                ShowYesNoPopup();
+                textFieldNumber = newNumber.ToString();
+                //ShowYesNoPopup();
+                ChangeImage();
             }
         }
 
         // Textfield
         GUIStyle gUIStyle = new GUIStyle(GUI.skin.textField);
         gUIStyle.alignment = TextAnchor.MiddleLeft;
-        openScene = EditorGUILayout.TextField(openScene, gUIStyle, GUILayout.Height(buttonHeight), GUILayout.Width(100));
+        textFieldNumber = EditorGUILayout.TextField(textFieldNumber, gUIStyle, GUILayout.Height(buttonHeight), GUILayout.Width(100));
 
         // Right arrow
         if (GUILayout.Button("↦", gUIStyleButton, GUILayout.Height(buttonHeight), GUILayout.Width(50)))
         {
-            int newNumber = (int.Parse(openScene) + 1);
-            openScene = newNumber.ToString();
+            int newNumber = (int.Parse(textFieldNumber) + 1);
+            textFieldNumber = newNumber.ToString();
             ShowYesNoPopup();
         }
         EditorGUILayout.EndHorizontal();
         #endregion
 
         GUILayout.Space(space / 2);
-        if (GUILayout.Button($"Open Level {openScene}", GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth)))
+        if (GUILayout.Button($"Open Level {textFieldNumber}", GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth)))
         {
-            if (int.TryParse(openScene, out int i))
+            if (int.TryParse(textFieldNumber, out int i))
             {
                 ShowYesNoPopup();
             }
@@ -168,7 +169,7 @@ public class LevelEditor : EditorWindow
             string filePath = $"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/{sceneName}.unity";
             if (File.Exists(filePath))
             {
-                if (EditorUtility.DisplayDialog($"Delete Level{openScene} scene", $"Do you want to delete {sceneName} scene?", "Yes", "No"))
+                if (EditorUtility.DisplayDialog($"Delete Level{textFieldNumber} scene", $"Do you want to delete {sceneName} scene?", "Yes", "No"))
                 {
                     File.Delete(filePath);
 #if UNITY_EDITOR
@@ -249,18 +250,23 @@ public class LevelEditor : EditorWindow
         Repaint();
     }
 
+    private void ChangeImage()
+    {
+
+    }
+
     private void ShowYesNoPopup()
     {
-        if (EditorSceneManager.GetActiveScene().path.Equals($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{folderIndex + 1}-{openScene}")) return;
-        if (EditorUtility.DisplayDialog($"Open Level{openScene} scene", $"Do you want to open Level{openScene} scene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
+        if (EditorSceneManager.GetActiveScene().path.Equals($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{folderIndex + 1}-{textFieldNumber}")) return;
+        if (EditorUtility.DisplayDialog($"Open Level{textFieldNumber} scene", $"Do you want to open Level{textFieldNumber} scene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
         {
             try
             {
-                EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{folderIndex + 1}-{openScene}.unity");
+                EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{folderIndex + 1}-{textFieldNumber}.unity");
             }
             catch(Exception)
             {
-                EditorUtility.DisplayDialog("File not found", $"Level{openScene} does not exist in folder Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/", "OK");
+                EditorUtility.DisplayDialog("File not found", $"Level{textFieldNumber} does not exist in folder Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/", "OK");
             }
         }
     }

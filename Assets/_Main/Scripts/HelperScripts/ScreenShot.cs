@@ -1,12 +1,13 @@
-﻿#if UNITY_EDITOR
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Windows;
 
+#if UNITY_EDITOR
+using UnityEngine.Windows;
+#endif
 public class ScreenShot : MonoBehaviour
 {
+#if UNITY_EDITOR
     // Add this to ignore screen fader
     private int frameToCapture = 30;
     private int frameCount = 0;
@@ -72,6 +73,5 @@ public class ScreenShot : MonoBehaviour
             }
         }
     }
-
-}
 #endif
+}

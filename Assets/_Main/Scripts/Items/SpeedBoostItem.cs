@@ -9,10 +9,12 @@ public class SpeedBoostItem : ClickableItem {
     public float increasedSpeed = 2f;
     public float decreasedSpeed = 1f;
 
-    protected override void OnClick(PlayerPlatformerController player)
+    protected override bool OnClick(PlayerPlatformerController player)
     {
+        CameraShaker.Shake(0.2f, 0.2f);
         player.GetComponent<Animator>().SetBool(player.m_HashRunFastPara, true);
         StartCoroutine(Boost(player));
+        return true;
     }
 
     private IEnumerator Boost(PlayerPlatformerController player)

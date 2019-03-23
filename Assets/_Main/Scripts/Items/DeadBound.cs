@@ -14,9 +14,9 @@ public class DeadBound : MonoBehaviour {
 
     private int HashDeadEffect;
 
-    private void Awake()
+    private void Start()
     {
-        player = FindObjectOfType<PlayerPlatformerController>();
+        player = GameManager.Instance.GetPlayer();
         HashDeadEffect = VFXController.StringToHash(deadEffect);
     }
 

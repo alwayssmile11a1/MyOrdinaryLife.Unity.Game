@@ -35,13 +35,16 @@ public class PlayerPlatformerController : MonoBehaviour
     public readonly int m_HashRunFastPara = Animator.StringToHash("RunFast");
     public readonly int m_HashJumpPara = Animator.StringToHash("Jump");
     public readonly int m_HashHurtPara = Animator.StringToHash("Hurt");
-    public readonly int m_HashOnLadderPara = Animator.StringToHash("OnLadder");
+    public readonly int m_HashAttack3Para = Animator.StringToHash("Attack3");
+    public readonly int m_HashJumpAttack3Para = Animator.StringToHash("JumpAttack3");
+    //public readonly int m_HashOnLadderPara = Animator.StringToHash("OnLadder");
 
     private bool m_CanAct = false;
     private bool m_DontStartDelay = false;
     //private bool m_IsOnLadder = false;
-    private bool m_TriggerUse = false;
+    //private bool m_TriggerUse = false;
     private bool m_CanJump = true;
+    private bool m_CanRun = true;
 
     private const float k_GroundedStickingVelocityMultiplier = 3f;    // This is to help the character stick to vertically moving platforms.
 
@@ -51,6 +54,7 @@ public class PlayerPlatformerController : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_CharacterController2D = GetComponent<CharacterController2D>();
         m_Collider2D = GetComponent<Collider2D>();
+        GameManager.Instance.RegisterPlayer(this);
     }
 
     private void Start()
@@ -113,8 +117,14 @@ public class PlayerPlatformerController : MonoBehaviour
             GroundedVerticalMovement();
         }
 
-        //Set horizontal movement
-        SetHorizontalMovement(m_SpriteRenderer.flipX ? -speed : speed);
+        if (m_CanRun)
+        {
+            SetHorizontalMovement(m_SpriteRenderer.flipX ? -speed : speed);
+        }
+        else
+        {
+            SetHorizontalMovement(0);
+        }
 
         //if (!m_IsOnLadder)
         //{
@@ -323,10 +333,32 @@ public class PlayerPlatformerController : MonoBehaviour
     //    }
     //}
 
-
-    private void SetCanJump(bool canJump)
+    
+    public bool Attack3()
     {
-        m_CanJump = canJump;
+        if(m_CharacterController2D.IsGrounded)
+        {
+            m_Animator.SetTrigger(m_HashAttack3Para);
+            m_CanRun = false;
+            return true;
+        }
+        return false;
+        //else
+        //{
+        //    m_Animator.SetTrigger(m_HashJumpAttack3Para);
+        //}
     }
+
+    public void EndAttack()
+    {
+        m_CanRun = true;
+        //StartCoroutine(InternalEndAttack());
+    }
+
+    //private IEnumerator InternalEndAttack()
+    //{
+    //    yield return new WaitForSeconds(0.1f);
+    //    m_CanAct = true;
+    //}
 
 }

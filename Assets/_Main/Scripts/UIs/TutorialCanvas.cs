@@ -12,7 +12,7 @@ public class TutorialCanvas : MonoBehaviour {
 
     public void ResumeGame()
     {
-        StartCoroutine(FindObjectOfType<PlayerPlatformerController>().StartDelay());
+        StartCoroutine(GameManager.Instance.GetPlayer().StartDelay());
     }
 
 }

@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour {
     private int m_StarsCount = 0;
     private IngameFadeCanvas m_IngameFadeCanvas;
     private WaitForSeconds m_FadeDurationSeconds;
+    private PlayerPlatformerController m_Player;
 
     private void Awake()
     {
@@ -158,6 +159,16 @@ public class GameManager : MonoBehaviour {
     public void RegisterIngameFadeCanvas(IngameFadeCanvas ingameFadeCanvas)
     {
         m_IngameFadeCanvas = ingameFadeCanvas;
+    }
+
+    public void RegisterPlayer(PlayerPlatformerController player)
+    {
+        m_Player = player;
+    }
+
+    public PlayerPlatformerController GetPlayer()
+    {
+        return m_Player;
     }
     
 }

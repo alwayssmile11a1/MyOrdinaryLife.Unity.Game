@@ -64,11 +64,13 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
         m_ObjectsSortingGroup = GetComponentInChildren<SortingGroup>();
 
-        m_Player = FindObjectOfType<PlayerPlatformerController>();
+        
     }
 
     private void Start()
     {
+        m_Player = GameManager.Instance.GetPlayer();
+
         if (FrameContainsPosition(m_Player.transform.position))
         {
             SetCharacterOn(true);

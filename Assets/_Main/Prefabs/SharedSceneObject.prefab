@@ -182,6 +182,7 @@ GameObject:
   - component: {fileID: 9125689900355333969}
   - component: {fileID: 9125689900355333970}
   - component: {fileID: 9174642866582406300}
+  - component: {fileID: 1930049216}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -271,6 +272,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bff6a019e023feb46a0e5fc231a57d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1930049216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9125689900355333971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 446ae323a11534c4d9f60ebbe9c6e85f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5491469112911941192
@@ -389,11 +402,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3164521359699473958, guid: fd6cea6e87659d7418b847bf25f86d91,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fd6cea6e87659d7418b847bf25f86d91, type: 3}

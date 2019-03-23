@@ -31,15 +31,24 @@ public class ScreenShot : MonoBehaviour
         string[] strSplit = SceneManager.GetActiveScene().path.Split('/');
         string sceneName = strSplit[strSplit.Length - 1].Split('.')[0];
         string folder = strSplit[strSplit.Length - 2];
-        string directory = $"{Application.dataPath}/_Main/Editor/Screenshots/{folder}";
-        if (!Directory.Exists(directory))
+        //consider using Path.Combine for multiple platforms support (maybe)
+        //consider putting screenshorts folder outsite Assets directory for build time reduction (maybe) and avoid AssetDatabase importing 
+        //example: string screenshotsDirectory = $"../{Application.dataPath}/Screenshots/";
+        //consider using AssetDatabase for importing, creating or moving data around inside Assets folder (maybe not a good idea in runtime but worth a try)
+        string screenshotsDirectory = $"{Application.dataPath}/_Main/Editor/Screenshots/";
+        string levelDirectory = $"{screenshotsDirectory}{folder}";
+        if (!Directory.Exists(screenshotsDirectory))
         {
-            Directory.CreateDirectory(directory);
-            StartCoroutine(DoScreenShot(sceneName, directory));
+            Directory.CreateDirectory(screenshotsDirectory);
+        }
+        if (!Directory.Exists(levelDirectory))
+        {
+            Directory.CreateDirectory(levelDirectory);
+            StartCoroutine(DoScreenShot(sceneName, levelDirectory));
         }
         else
         {
-            StartCoroutine(DoScreenShot(sceneName, directory));
+            StartCoroutine(DoScreenShot(sceneName, levelDirectory));
         }
     }
 

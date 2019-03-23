@@ -7,9 +7,10 @@ using UnityEngine.Windows;
 
 public class ScreenShot : MonoBehaviour
 {
+    // Add this to ignore screen fader
     private int frameToCapture = 30;
     private int frameCount = 0;
-    private bool Captured = true;
+    private bool Captured = false;
 
     private void Update()
     {

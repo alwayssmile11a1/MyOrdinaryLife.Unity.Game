@@ -13,7 +13,6 @@ using File = UnityEngine.Windows.File;
 
 public class LevelEditor : EditorWindow
 {
-    bool editExistingLevel = false;
     bool deleteScene = false;
     float buttonWidth = 200;
     float buttonHeight = 25;
@@ -23,12 +22,17 @@ public class LevelEditor : EditorWindow
     string textFieldNumber = "1";
     int space = 10;
     Vector2 scrollPosition = Vector2.zero;
-    EditorWindow gameView;
-    static Texture2D screenCapture = null;
-    float timeCount = 0;
-    static bool startTimeCount;
+    static Texture2D imageOfLevel;
+    bool imageExist;
 
-    string test;
+    /// <summary>
+    /// not using any more
+    /// </summary>
+    static bool startTimeCount;
+    float timeCount = 0;
+    EditorWindow gameView;
+    ////////////////////////////////
+    
     int popupIndex = 0;
     int folderIndex = 0;
     int newSceneIndex;
@@ -37,30 +41,14 @@ public class LevelEditor : EditorWindow
 
     static LevelEditor()
     {
-        EditorSceneManager.sceneOpened += SceneOpened;
+        //  EditorSceneManager.sceneOpened += SceneOpened;
     }
 
     [MenuItem("Tool/Level Editor %#O")]
     static void OpenLevelEditor()
     {
         LevelEditor levelEditor = GetWindow<LevelEditor>();
-        EditorSceneManager.sceneOpened += SceneOpened;
-    }
-
-    private static void SceneOpened(Scene scene, OpenSceneMode mode)
-    {
-        //string[] strSplit = EditorSceneManager.GetActiveScene().path.Split('/');
-        //string sceneName = strSplit[strSplit.Length - 1].Split('.')[0];
-        //string folder = strSplit[strSplit.Length - 2];
-        //string path = $"Assets/_Main/Editor/ScreenShots/{folder}/{sceneName}.png";
-        //if (File.Exists(path))
-        //{
-        //    screenCapture = AssetDatabase.LoadAssetAtPath(path, typeof(Texture2D)) as Texture2D;
-        //}
-
-        //var activeWindow = EditorWindow.focusedWindow;
-
-        startTimeCount = true;
+        imageOfLevel = new Texture2D(Screen.width - 25, 300);
     }
 
     private void OnEnable()
@@ -73,8 +61,7 @@ public class LevelEditor : EditorWindow
         #region ScrollView
         scrollPosition = GUILayout.BeginScrollView(scrollPosition);
         GUILayout.Space(space);
-
-        GUI.enabled = !editExistingLevel;
+        
         if (GUILayout.Button("Create new level", GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth)))
         {
             newSceneIndex = FindAppropriateIndex();
@@ -111,14 +98,13 @@ public class LevelEditor : EditorWindow
 
         GUILayout.BeginHorizontal();
         GUILayout.Label("Scene Folder", GUILayout.Width(labelWidth));
+        GUI.SetNextControlName("dropdownFolderName");
         folderIndex = EditorGUILayout.Popup(folderIndex, levelEditorSO.sceneFolderName, GUILayout.Height(dropdownHeight), GUILayout.Width(dropdownWidth));
         GUILayout.EndHorizontal();
 
         GUI.enabled = true;
 
         #region Edit existing level
-        // Toggle (checkbox)
-        //editExistingLevel = EditorGUILayout.Toggle("Edit existing level", editExistingLevel, GUILayout.Width(buttonWidth));
 
 
         #region Textfield && Arrows
@@ -135,6 +121,7 @@ public class LevelEditor : EditorWindow
                 textFieldNumber = newNumber.ToString();
                 //ShowYesNoPopup();
                 ChangeImage();
+                GUI.FocusControl("dropdownFolderName");
             }
         }
 
@@ -148,17 +135,22 @@ public class LevelEditor : EditorWindow
         {
             int newNumber = (int.Parse(textFieldNumber) + 1);
             textFieldNumber = newNumber.ToString();
-            ShowYesNoPopup();
+            //ShowYesNoPopup();
+            ChangeImage();
+            GUI.FocusControl("dropdownFolderName");
         }
         EditorGUILayout.EndHorizontal();
         #endregion
-
+        
         GUILayout.Space(space / 2);
+
+        
         if (GUILayout.Button($"Open Level {textFieldNumber}", GUILayout.Height(buttonHeight), GUILayout.Width(buttonWidth)))
         {
             if (int.TryParse(textFieldNumber, out int i))
             {
                 ShowYesNoPopup();
+                ChangeImage();
             }
         }
         deleteScene = EditorGUILayout.BeginToggleGroup("Delete current scene", deleteScene);
@@ -199,30 +191,19 @@ public class LevelEditor : EditorWindow
 
         GUI.enabled = true;
         GUILayout.Space(space / 2);
-        if (screenCapture == null)
+        if (!imageExist)
         {
-            GUILayout.Label("Open scene to see image!");
+            GUILayout.Label("Image does not exists in folder");
         }
         else
         {
-            GUILayout.Label(screenCapture, GUILayout.Width(Screen.width - 10));
+            GUILayout.Label(imageOfLevel, GUILayout.Width(Screen.width - 25));
         }
         GUILayout.EndScrollView();
         #endregion end ScrollView
     }
 
-    private void Update()
-    {
-        if (startTimeCount)
-        {
-            timeCount += 0.01f;
-            if (timeCount > 0.1f)
-            {
-                CaptureGameView();
-            }
-        }
-    }
-
+    #region Capture a specific position on screen
     private void CaptureGameView()
     {
         if (gameView == null)
@@ -240,19 +221,30 @@ public class LevelEditor : EditorWindow
         // Take Screenshot at given position sizes
         var colors = InternalEditorUtility.ReadScreenPixel(vec2Position, (int)sizeX, (int)sizeY);
 
-        screenCapture = new Texture2D((int)sizeX, (int)sizeY);
-        screenCapture.SetPixels(colors);
-        screenCapture.Apply();
+        imageOfLevel = new Texture2D((int)sizeX, (int)sizeY);
+        imageOfLevel.SetPixels(colors);
+        imageOfLevel.Apply();
 
         timeCount = 0;
         startTimeCount = false;
 
         Repaint();
     }
+    #endregion
 
     private void ChangeImage()
     {
-
+        string imagePath = $"Assets/_Main/Editor/ScreenShots/{levelEditorSO.sceneFolderName[folderIndex]}/Level{folderIndex + 1}-{textFieldNumber}.png";
+        if (File.Exists(imagePath))
+        {
+            imageOfLevel = new Texture2D(Screen.width - 25, 300);
+            imageOfLevel.LoadImage(File.ReadAllBytes(imagePath));
+            imageExist = true;
+        }
+        else
+        {
+            imageExist = false;
+        }
     }
 
     private void ShowYesNoPopup()

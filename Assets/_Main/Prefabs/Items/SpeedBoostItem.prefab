@@ -132,7 +132,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -230,9 +230,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: f39203fd913316d41bab84c97d42a130, type: 3}
+  - {fileID: 8300000, guid: 2d31d651a6b85ec4ba29e722ef87d01b, type: 3}
   overrides: []
-  randomizePitch: 1
+  randomizePitch: 0
   pitchRange: 0.2
 --- !u!114 &1893350716740278123
 MonoBehaviour:

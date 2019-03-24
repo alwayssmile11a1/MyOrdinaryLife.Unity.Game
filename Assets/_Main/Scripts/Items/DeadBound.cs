@@ -17,7 +17,7 @@ public class DeadBound : MonoBehaviour {
 
     private void Update()
     {
-        if(player.transform.position.y - transform.position.y < -0.5f)
+        if (player.transform.position.y - transform.position.y < -0.5f)
         {
             gameObject.SetActive(false);
         }
@@ -27,13 +27,14 @@ public class DeadBound : MonoBehaviour {
     {
 
         PlayerPlatformerController player = collision.GetComponent<PlayerPlatformerController>();
-        
+
         //check to see if it's player and the player collided from above
-        if(player!=null && player.transform.position.y > transform.position.y)
+        if (player != null && player.transform.position.y > transform.position.y)
         {
+
             player.Die();
             deadAudio.PlayRandomSound();
         }
-    }
 
+    }
 }

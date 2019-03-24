@@ -18,12 +18,15 @@ public class PlayerPlatformerController : MonoBehaviour
     public float gulfForwardDistance = 0.1f;
 
     [Header("Audio")]
-    public RandomAudioPlayer footStepAudioPlayer;
-    public RandomAudioPlayer landAudioPlayer;
+    public string footStepAudioPlayer;
+    public string deadAudioPlayer;
 
     [Header("Effect")]
+    public string appearingEffect = "AppearingEffect";
     public string deadEffect = "DeadEffect";
 
+    [Header("Misc")]
+    public GameObject shadow;
 
     private CharacterController2D m_CharacterController2D;
     private Collider2D m_Collider2D;
@@ -40,9 +43,14 @@ public class PlayerPlatformerController : MonoBehaviour
     public readonly int m_HashHurtPara = Animator.StringToHash("Hurt");
     public readonly int m_HashAttack3Para = Animator.StringToHash("Attack3");
     public readonly int m_HashJumpAttack3Para = Animator.StringToHash("JumpAttack3");
+    public readonly int m_HashDeadPara = Animator.StringToHash("Dead");
     //public readonly int m_HashOnLadderPara = Animator.StringToHash("OnLadder");
 
     private int m_HashDeadEffect;
+    private int m_HashAppearingEffect;
+
+    private int m_HashFootStepAudioPlayer;
+    private int m_HashDeadAudioPlayer;
 
     private bool m_CanAct = false;
     private bool m_DontStartDelay = false;
@@ -56,12 +64,19 @@ public class PlayerPlatformerController : MonoBehaviour
 
     private void Awake()
     {
-        m_SpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        m_SpriteRenderer = GetComponent<SpriteRenderer>();
         m_Animator = GetComponent<Animator>();
         m_CharacterController2D = GetComponent<CharacterController2D>();
         m_Collider2D = GetComponent<Collider2D>();
 
         m_HashDeadEffect = VFXController.StringToHash(deadEffect);
+        m_HashAppearingEffect = VFXController.StringToHash(appearingEffect);
+
+        m_HashFootStepAudioPlayer = AudioPlayerController.StringToHash(footStepAudioPlayer);
+        m_HashDeadAudioPlayer = AudioPlayerController.StringToHash(deadAudioPlayer);
+
+        m_SpriteRenderer.enabled = false;
+        shadow.SetActive(false);
 
         GameManager.Instance.RegisterPlayer(this);
     }
@@ -77,6 +92,11 @@ public class PlayerPlatformerController : MonoBehaviour
     public IEnumerator StartDelay()
     {
         m_CanAct = false;
+        yield return new WaitForSeconds(0.3f);
+        VFXController.Instance.Trigger(m_HashAppearingEffect, transform.position, 0, false, null);
+        yield return new WaitForSeconds(1f);
+        m_SpriteRenderer.enabled = true;
+        shadow.SetActive(true);
         yield return new WaitForSeconds(startDelayTime);
         m_CanAct = true;
     }
@@ -321,14 +341,12 @@ public class PlayerPlatformerController : MonoBehaviour
 
     public void PlayFootStepAudioPlayer()
     {
-        if (footStepAudioPlayer != null)
-            footStepAudioPlayer.PlayRandomSound();
+        AudioPlayerController.Instance.PlayRandomSound(m_HashFootStepAudioPlayer);
     }
 
-    public void PlayLandAudioPlayer()
+    public void PlayDeadAudioPlayer()
     {
-        if (landAudioPlayer != null)
-            landAudioPlayer.PlayRandomSound();
+        AudioPlayerController.Instance.PlayRandomSound(m_HashDeadAudioPlayer);
     }
 
     //private void OnTriggerEnter2D(Collider2D collision)
@@ -343,7 +361,7 @@ public class PlayerPlatformerController : MonoBehaviour
     //    }
     //}
 
-    
+
     public bool Attack3()
     {
         if(m_CharacterController2D.IsGrounded)
@@ -367,15 +385,18 @@ public class PlayerPlatformerController : MonoBehaviour
         //StartCoroutine(InternalEndAttack());
     }
 
-    private IEnumerator InternalEndAttack(float time)
-    {
-        yield return new WaitForSeconds(time);
-        m_CanRun = true;
-    }
+    //private IEnumerator InternalEndAttack(float time)
+    //{
+    //    yield return new WaitForSeconds(time);
+    //    m_CanRun = true;
+    //}
 
     public void Die()
     {
-        gameObject.SetActive(false);
+        m_CanAct = false;
+        m_IsDead = true;
+
+        m_Animator.SetTrigger(m_HashDeadPara);
 
         TimeManager.ChangeTimeBackToNormal();
 
@@ -383,7 +404,17 @@ public class PlayerPlatformerController : MonoBehaviour
 
         GameManager.Instance.StartCoroutine(GameManager.Instance.RestartLevelWithDelay(2f));
 
-        m_IsDead = true;
+        PlayDeadAudioPlayer();
+    }
+
+    public void PushBack()
+    {
+        m_CharacterController2D.Move(new Vector2(-10f, -10f) * Time.deltaTime);
+    }
+
+    public void Disable()
+    {
+        gameObject.SetActive(false);
     }
 
     public bool IsDead()

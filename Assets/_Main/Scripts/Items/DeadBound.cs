@@ -6,8 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class DeadBound : MonoBehaviour {
 
-    public RandomAudioPlayer deadAudio;
-
     private PlayerPlatformerController player;
 
     private void Start()
@@ -31,9 +29,7 @@ public class DeadBound : MonoBehaviour {
         //check to see if it's player and the player collided from above
         if (player != null && player.transform.position.y > transform.position.y)
         {
-
             player.Die();
-            deadAudio.PlayRandomSound();
         }
 
     }

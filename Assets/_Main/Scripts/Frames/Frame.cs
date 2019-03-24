@@ -29,7 +29,8 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     private Camera m_MainCamera;
     private Vector3 m_TargetMovePosition;
     private Vector3 offsetFromMouse;
-    private Transform graphics;
+    private Transform m_Graphics;
+    private SpriteMask m_Mask;
     private Vector3 m_OriginalScale;
     private Vector3 m_MouseDownScale;
     private bool m_NeedToMove;
@@ -50,8 +51,9 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         //Shouldn't use string comparation for performance purpose
         //graphics = transform.Find("Graphics");
         //The best way is to use public reference, but we do this for now (might be refactor later)
-        graphics = transform.GetComponentInChildren<SpriteMask>().transform.parent;
-        m_OriginalScale = graphics.localScale;
+        m_Mask = transform.GetComponentInChildren<SpriteMask>();
+        m_Graphics = m_Mask.transform.parent;
+        m_OriginalScale = m_Graphics.localScale;
         m_MouseDownScale = new Vector3(m_OriginalScale.x + 1, m_OriginalScale.y + 1, 1);
 
         //Collect all colliders except CompositeCollider2D
@@ -196,7 +198,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     {
         animator.SetBool(HashActive, true);
 
-        graphics.localScale = m_MouseDownScale;
+        m_Graphics.localScale = m_MouseDownScale;
 
         m_ObjectsSortingGroup.sortingOrder = 15;
 
@@ -242,6 +244,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        if (Disabled) return;
 
         PlayerPlatformerController player = collision.GetComponent<PlayerPlatformerController>();
 
@@ -304,12 +307,14 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         m_ObjectsSortingGroup.sortingOrder = 2;
         IsBeingDragged = false;
         Disabled = true;
+        m_Mask.enabled = false;
+        SetCollidersActive(false);
     }
 
     public void ResetScale()
     {
-        if (graphics.localScale != m_OriginalScale)
-            graphics.localScale = m_OriginalScale;
+        if (m_Graphics.localScale != m_OriginalScale)
+            m_Graphics.localScale = m_OriginalScale;
     }
 
     public void SetCharacterOn(bool characterOn)

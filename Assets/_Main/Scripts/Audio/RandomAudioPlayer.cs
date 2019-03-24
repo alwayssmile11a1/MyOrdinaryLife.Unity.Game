@@ -8,55 +8,53 @@ namespace Gamekit2D
     [RequireComponent(typeof(AudioSource))]
     public class RandomAudioPlayer : MonoBehaviour
     {
-        [System.Serializable]
-        public struct TileOverride
-        {
-            public TileBase tile;
-            public AudioClip[] clips;
-        }
+        //[System.Serializable]
+        //public struct TileOverride
+        //{
+        //    public TileBase tile;
+        //    public AudioClip[] clips;
+        //}
+        //public TileOverride[] overrides;
 
         public AudioClip[] clips;
-
-        public TileOverride[] overrides;
-
         public bool randomizePitch = false;
         public float pitchRange = 0.2f;
 
 
         protected AudioSource m_Source;
         protected float m_OriginalPitch;
-        protected Dictionary<TileBase, AudioClip[]> m_LookupOverride;
+        //protected Dictionary<TileBase, AudioClip[]> m_LookupOverride;
 
         private void Awake()
         {
             m_Source = GetComponent<AudioSource>();
             m_OriginalPitch = m_Source.pitch;
-            m_LookupOverride = new Dictionary<TileBase, AudioClip[]>();
 
-            for(int i = 0; i < overrides.Length; ++i)
-            {
-                if (overrides[i].tile == null)
-                    continue;
+            //m_LookupOverride = new Dictionary<TileBase, AudioClip[]>();
+            //for(int i = 0; i < overrides.Length; ++i)
+            //{
+            //    if (overrides[i].tile == null)
+            //        continue;
 
-                m_LookupOverride[overrides[i].tile] = overrides[i].clips;
-            }
+            //    m_LookupOverride[overrides[i].tile] = overrides[i].clips;
+            //}
         }
 
-        public void PlayRandomSound(TileBase surface)
-        {
-            AudioClip[] source = clips;
+        //public void PlayRandomSound(TileBase surface)
+        //{
+        //    AudioClip[] source = clips;
 
-            AudioClip[] temp;
-            if (surface != null && m_LookupOverride.TryGetValue(surface, out temp))
-                source = temp;
+        //    AudioClip[] temp;
+        //    if (surface != null && m_LookupOverride.TryGetValue(surface, out temp))
+        //        source = temp;
 
-            int choice = Random.Range(0, source.Length);
+        //    int choice = Random.Range(0, source.Length);
 
-            if(randomizePitch)
-                m_Source.pitch = Random.Range(m_OriginalPitch - pitchRange, m_OriginalPitch + pitchRange);
+        //    if(randomizePitch)
+        //        m_Source.pitch = Random.Range(m_OriginalPitch - pitchRange, m_OriginalPitch + pitchRange);
 
-            m_Source.PlayOneShot(source[choice]);
-        }
+        //    m_Source.PlayOneShot(source[choice]);
+        //}
 
 
         public void PlayRandomSound()

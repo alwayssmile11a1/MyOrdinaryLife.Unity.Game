@@ -82,7 +82,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected void Update()
     {
-        if(!m_IsAttacking && IsPlayerVisible())
+        if(!m_IsAttacking && !m_Player.IsDead() && IsPlayerVisible())
         {
             OnSpotPlayer();
         }

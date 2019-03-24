@@ -6,7 +6,10 @@ public class StarCounter : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        GameManager.Instance.AddOneStar();
+        if (collision.GetComponent<PlayerPlatformerController>() != null)
+        {
+            GameManager.Instance.AddOneStar();
+        }
     }
 
 }

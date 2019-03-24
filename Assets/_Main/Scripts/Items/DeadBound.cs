@@ -36,17 +36,22 @@ public class DeadBound : MonoBehaviour {
         //check to see if it's player and the player collided from above
         if(player!=null && player.transform.position.y > transform.position.y)
         {
-            player.gameObject.SetActive(false);
-
-            TimeManager.ChangeTimeBackToNormal();
-
-            VFXController.Instance.Trigger(HashDeadEffect, player.transform.position, 0, false, null);
-
-            deadAudio.PlayRandomSound();
-
-            StartCoroutine(PlayerDie());
+            OnPlayerDie(player);
 
         }
+    }
+
+    public void OnPlayerDie(PlayerPlatformerController player)
+    {
+        player.gameObject.SetActive(false);
+
+        TimeManager.ChangeTimeBackToNormal();
+
+        VFXController.Instance.Trigger(HashDeadEffect, player.transform.position, 0, false, null);
+
+        deadAudio.PlayRandomSound();
+
+        StartCoroutine(PlayerDie());
     }
 
     private IEnumerator PlayerDie()

@@ -9,8 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7033083581007786917}
-  - component: {fileID: 7033083581007786914}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,26 +31,6 @@ Transform:
   m_Father: {fileID: 7033083581773773665}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7033083581007786914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7033083581007786916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee28426bf7d007e499443f4d73a0b72e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  origin: {fileID: 0}
-  originOffset: 0.4
-  offset: -0.1
-  maxHeight: 3
-  spriteRenderer: {fileID: 7033083581056588141}
-  levelLayermask:
-    serializedVersion: 2
-    m_Bits: 256
 --- !u!1 &7033083581056588143
 GameObject:
   m_ObjectHideFlags: 0
@@ -62,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7033083581056588140}
   - component: {fileID: 7033083581056588141}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,10 +122,7 @@ GameObject:
   - component: {fileID: 7033083581773771934}
   - component: {fileID: 7033083581773771935}
   - component: {fileID: 7033083581773771932}
-  - component: {fileID: 7033083581773771931}
-  - component: {fileID: 7033083581773771930}
-  - component: {fileID: 7033083581773771928}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Orc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -246,82 +222,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: Gamekit2D.Damageable+DamageEvent, Assembly-CSharp, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!50 &7033083581773771931
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7033083581773773664}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
---- !u!114 &7033083581773771930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7033083581773773664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30989a6012812a24f8b393f48fce4f40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundedLayerMask:
-    serializedVersion: 2
-    m_Bits: 256
-  groundedRaycastDistance: 0.1
---- !u!114 &7033083581773771928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7033083581773773664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0a52473fb0eff54b98043dba2e81236, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteFaceLeft: 0
-  deactiveOnDie: 1
-  speed: 2
-  runSpeed: 5
-  viewDirection: 0
-  viewFov: 132
-  viewDistance: 2
-  timeBeforeTargetLost: 0
-  meleeRange: 0
-  meleeDamager: {fileID: 7033083582804884641}
-  attackDash: 0
-  attackForce: {x: 0, y: 0}
-  meleeAttackTransitionName: MeleeAttack
-  rangeAttackTransitionName: Shooting
-  patrollingTransitionName: Patrolling
-  runTransitionName: Run
-  deathTransitionName: Dead
-  hitTransitionName: Hit
-  shootingAudio: {fileID: 0}
-  meleeAttackAudio: {fileID: 0}
-  dieAudio: {fileID: 0}
-  hitAudio: {fileID: 0}
-  footStepAudio: {fileID: 0}
-  flickeringDuration: 0.1
-  flickerColor: {r: 1, g: 0.39215687, b: 0.39215687, a: 1}
-  hitEffectName: HitEffect
-  deadEffectName: DeadEffect
 --- !u!1 &7033083582572237459
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,7 +233,8 @@ GameObject:
   - component: {fileID: 7033083582572237454}
   - component: {fileID: 7033083582572237457}
   - component: {fileID: 7033083582572237456}
-  m_Layer: 0
+  - component: {fileID: 3898186504949298227}
+  m_Layer: 11
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,6 +322,31 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3898186504949298227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7033083582572237459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9004e56e2529d641961410b736ef4af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteFaceLeft: 0
+  viewDirection: 0
+  viewFov: 152
+  viewDistance: 3
+  meleeDamager: {fileID: 7033083582804884641}
+  meleeAttackTransitionName: MeleeAttack
+  deathTransitionName: Dead
+  hitTransitionName: Hit
+  meleeAttackAudio: {fileID: 0}
+  dieAudio: {fileID: 0}
+  hitAudio: {fileID: 0}
+  hitEffectName: HitEffect
+  deadEffectName: DeadEffect
 --- !u!1 &7033083582804884643
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,13 +358,13 @@ GameObject:
   - component: {fileID: 7033083582804884640}
   - component: {fileID: 7033083582804884702}
   - component: {fileID: 7033083582804884641}
-  m_Layer: 0
-  m_Name: DamageArea
+  m_Layer: 11
+  m_Name: MeleeDamager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7033083582804884640
 Transform:
   m_ObjectHideFlags: 0
@@ -463,7 +389,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -1.6031007, y: -0.09217167}
@@ -496,7 +422,7 @@ MonoBehaviour:
   size: {x: 2.5, y: 1}
   offsetBasedOnSpriteFacing: 0
   spriteRenderer: {fileID: 0}
-  enableDamageOnAwake: 1
+  enableDamageOnAwake: 0
   canHitTriggers: 0
   disableDamageAfterHit: 0
   receiveOnHitEventOnInvincibleObject: 0

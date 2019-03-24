@@ -250,7 +250,7 @@ MonoBehaviour:
   countdownTime: -1
   effect: ImpactEffect
   speed: 9
-  increasedSpeed: 10
+  increasedSpeed: 20
   decreasedSpeed: 1.5
 --- !u!1 &1893350717932022298
 GameObject:

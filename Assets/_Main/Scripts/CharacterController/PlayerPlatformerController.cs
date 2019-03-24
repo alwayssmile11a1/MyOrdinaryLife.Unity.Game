@@ -21,6 +21,9 @@ public class PlayerPlatformerController : MonoBehaviour
     public RandomAudioPlayer footStepAudioPlayer;
     public RandomAudioPlayer landAudioPlayer;
 
+    [Header("Effect")]
+    public string deadEffect = "DeadEffect";
+
 
     private CharacterController2D m_CharacterController2D;
     private Collider2D m_Collider2D;
@@ -39,12 +42,15 @@ public class PlayerPlatformerController : MonoBehaviour
     public readonly int m_HashJumpAttack3Para = Animator.StringToHash("JumpAttack3");
     //public readonly int m_HashOnLadderPara = Animator.StringToHash("OnLadder");
 
+    private int m_HashDeadEffect;
+
     private bool m_CanAct = false;
     private bool m_DontStartDelay = false;
     //private bool m_IsOnLadder = false;
     //private bool m_TriggerUse = false;
     private bool m_CanJump = true;
     private bool m_CanRun = true;
+    private bool m_IsDead = false;
 
     private const float k_GroundedStickingVelocityMultiplier = 3f;    // This is to help the character stick to vertically moving platforms.
 
@@ -54,6 +60,9 @@ public class PlayerPlatformerController : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_CharacterController2D = GetComponent<CharacterController2D>();
         m_Collider2D = GetComponent<Collider2D>();
+
+        m_HashDeadEffect = VFXController.StringToHash(deadEffect);
+
         GameManager.Instance.RegisterPlayer(this);
     }
 
@@ -189,6 +198,7 @@ public class PlayerPlatformerController : MonoBehaviour
         if (m_CharacterController2D.IsGrounded)
         {
             SetVerticalMovement(jumpSpeed);
+            m_CanRun = true;
         }
     }
 
@@ -340,6 +350,8 @@ public class PlayerPlatformerController : MonoBehaviour
         {
             m_Animator.SetTrigger(m_HashAttack3Para);
             m_CanRun = false;
+            //StartCoroutine(InternalEndAttack(0.7f));
+
             return true;
         }
         return false;
@@ -355,10 +367,28 @@ public class PlayerPlatformerController : MonoBehaviour
         //StartCoroutine(InternalEndAttack());
     }
 
-    //private IEnumerator InternalEndAttack()
-    //{
-    //    yield return new WaitForSeconds(0.1f);
-    //    m_CanAct = true;
-    //}
+    private IEnumerator InternalEndAttack(float time)
+    {
+        yield return new WaitForSeconds(time);
+        m_CanRun = true;
+    }
+
+    public void Die()
+    {
+        gameObject.SetActive(false);
+
+        TimeManager.ChangeTimeBackToNormal();
+
+        VFXController.Instance.Trigger(m_HashDeadEffect, transform.position, 0, false, null);
+
+        GameManager.Instance.StartCoroutine(GameManager.Instance.RestartLevelWithDelay(2f));
+
+        m_IsDead = true;
+    }
+
+    public bool IsDead()
+    {
+        return m_IsDead;
+    }
 
 }

@@ -6,18 +6,13 @@ using UnityEngine.SceneManagement;
 
 public class DeadBound : MonoBehaviour {
 
-    public string deadEffect = "DeadEffect";
     public RandomAudioPlayer deadAudio;
 
     private PlayerPlatformerController player;
 
-
-    private int HashDeadEffect;
-
     private void Start()
     {
         player = GameManager.Instance.GetPlayer();
-        HashDeadEffect = VFXController.StringToHash(deadEffect);
     }
 
     private void Update()
@@ -36,23 +31,9 @@ public class DeadBound : MonoBehaviour {
         //check to see if it's player and the player collided from above
         if(player!=null && player.transform.position.y > transform.position.y)
         {
-            player.gameObject.SetActive(false);
-
-            TimeManager.ChangeTimeBackToNormal();
-
-            VFXController.Instance.Trigger(HashDeadEffect, player.transform.position, 0, false, null);
-
+            player.Die();
             deadAudio.PlayRandomSound();
-
-            StartCoroutine(PlayerDie());
-
         }
-    }
-
-    private IEnumerator PlayerDie()
-    {
-        yield return new WaitForSeconds(2f);
-        StartCoroutine(GameManager.Instance.RestartLevel());
     }
 
 }

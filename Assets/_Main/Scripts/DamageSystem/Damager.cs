@@ -52,10 +52,8 @@ namespace Gamekit2D
             m_AttackContactFilter.layerMask = hittableLayers;
             m_AttackContactFilter.useLayerMask = true;
             m_AttackContactFilter.useTriggers = canHitTriggers;
-
             if (offsetBasedOnSpriteFacing && spriteRenderer != null)
                 m_SpriteOriginallyFlipped = spriteRenderer.flipX;
-
             m_DamagerTransform = transform;
             m_CanDamage = enableDamageOnAwake;
         }

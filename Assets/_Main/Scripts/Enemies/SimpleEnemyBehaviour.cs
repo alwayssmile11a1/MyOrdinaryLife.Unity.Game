@@ -185,7 +185,6 @@ public class SimpleEnemyBehaviour : MonoBehaviour
 
     private void Start()
     {
-
         m_LocalBounds = new Bounds();
         int count = m_CharacterController2D.Rigidbody2D.GetAttachedColliders(s_ColliderCache);
 
@@ -204,6 +203,7 @@ public class SimpleEnemyBehaviour : MonoBehaviour
         if (meleeDamager)
             m_LocalDamagerPosition = meleeDamager.transform.localPosition;
 
+        targetToTrack = GameManager.Instance.GetPlayer().gameObject;
     }
 
     void FixedUpdate()

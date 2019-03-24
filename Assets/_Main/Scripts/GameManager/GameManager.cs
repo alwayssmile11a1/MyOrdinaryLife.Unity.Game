@@ -97,6 +97,12 @@ public class GameManager : MonoBehaviour {
         m_StarsCount = 0;
     }
 
+    public IEnumerator RestartLevelWithDelay(float delaytime)
+    {
+        yield return new WaitForSeconds(delaytime);
+        StartCoroutine(GameManager.Instance.RestartLevel());
+    }
+
     public IEnumerator RestartLevel()
     {
         FadeSceneOut();

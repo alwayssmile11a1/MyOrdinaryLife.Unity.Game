@@ -13,7 +13,7 @@ public class BulletScript : MonoBehaviour
         PlayerPlatformerController player = collision.gameObject.GetComponent<PlayerPlatformerController>();
         if (player != null)
         {
-            deadBound.OnPlayerDie(player);
+            player.Die();
         }
     }
 

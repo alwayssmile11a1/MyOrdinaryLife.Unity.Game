@@ -9,7 +9,6 @@ public class ExoticPlant : MonoBehaviour
     public int numberOfBullet;
     public float bulletSpeed;
     public AudioSource shootAudio;
-    public DeadBound deadBound;
 
     private BulletPool bulletPool;
     void Awake()
@@ -20,7 +19,6 @@ public class ExoticPlant : MonoBehaviour
     public void Shoot()
     {
         BulletObject bulletObject = bulletPool.Pop(transform.position + transform.up * 0.8f);
-        bulletObject.bullet.GetComponent<BulletScript>().deadBound = this.deadBound;
         bulletObject.transform.RotateToDirection(-transform.up);
         bulletObject.rigidbody2D.velocity = bulletSpeed * transform.up;
         shootAudio.Play();

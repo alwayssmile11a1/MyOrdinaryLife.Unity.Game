@@ -211,7 +211,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 3.125, y: 2.3125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -309,7 +309,9 @@ MonoBehaviour:
   obstacleForwardDistance: 1.5
   gulfForwardDistance: 0.1
   footStepAudioPlayer: PlayerFootStepAudio
+  hitAudioPlayer: PlayerHitAudio
   deadAudioPlayer: PlayerDeadAudio
+  appearingAudioPlayer: PlayerAppearingAudio
   appearingEffect: ParticleRevolver
   deadEffect: PlayerDeadEffect
   shadow: {fileID: 415903198}

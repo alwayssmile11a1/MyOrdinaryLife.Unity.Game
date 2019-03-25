@@ -251,7 +251,7 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
         PlayerPlatformerController player = collision.GetComponent<PlayerPlatformerController>();
 
-        if (player != null)
+        if (player != null && !player.IsDead())
         {
             Frame nextFrame = FrameCollection.Instance.GetNextFrame(this);
 

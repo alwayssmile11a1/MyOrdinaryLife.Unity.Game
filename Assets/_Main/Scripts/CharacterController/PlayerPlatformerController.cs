@@ -8,7 +8,6 @@ public class PlayerPlatformerController : MonoBehaviour
 {
     public float startDelayTime = 1f;
     public float speed = 5f;
-    //public float climbSpeed = 2;
     public float jumpSpeed = 8.5f;
     public float jumpAbortSpeedReduction = 20f;
     public float gravity = 15f;
@@ -19,7 +18,9 @@ public class PlayerPlatformerController : MonoBehaviour
 
     [Header("Audio")]
     public string footStepAudioPlayer;
+    public string hitAudioPlayer;
     public string deadAudioPlayer;
+    public string appearingAudioPlayer;
 
     [Header("Effect")]
     public string appearingEffect = "AppearingEffect";
@@ -44,21 +45,21 @@ public class PlayerPlatformerController : MonoBehaviour
     public readonly int m_HashAttack3Para = Animator.StringToHash("Attack3");
     public readonly int m_HashJumpAttack3Para = Animator.StringToHash("JumpAttack3");
     public readonly int m_HashDeadPara = Animator.StringToHash("Dead");
-    //public readonly int m_HashOnLadderPara = Animator.StringToHash("OnLadder");
 
     private int m_HashDeadEffect;
     private int m_HashAppearingEffect;
 
     private int m_HashFootStepAudioPlayer;
     private int m_HashDeadAudioPlayer;
+    private int m_HashHitAudioPlayer;
+    private int m_HashAppearingAudioPlayer;
 
     private bool m_CanAct = false;
     private bool m_DontStartDelay = false;
-    //private bool m_IsOnLadder = false;
-    //private bool m_TriggerUse = false;
     private bool m_CanJump = true;
     private bool m_CanRun = true;
     private bool m_IsDead = false;
+    private Vector2 m_DamagedVector = Vector2.zero;
 
     private const float k_GroundedStickingVelocityMultiplier = 3f;    // This is to help the character stick to vertically moving platforms.
 
@@ -73,7 +74,9 @@ public class PlayerPlatformerController : MonoBehaviour
         m_HashAppearingEffect = VFXController.StringToHash(appearingEffect);
 
         m_HashFootStepAudioPlayer = AudioPlayerController.StringToHash(footStepAudioPlayer);
+        m_HashHitAudioPlayer = AudioPlayerController.StringToHash(hitAudioPlayer);
         m_HashDeadAudioPlayer = AudioPlayerController.StringToHash(deadAudioPlayer);
+        m_HashAppearingAudioPlayer = AudioPlayerController.StringToHash(appearingAudioPlayer);
 
         m_SpriteRenderer.enabled = false;
         shadow.SetActive(false);
@@ -94,6 +97,7 @@ public class PlayerPlatformerController : MonoBehaviour
         m_CanAct = false;
         yield return new WaitForSeconds(0.3f);
         VFXController.Instance.Trigger(m_HashAppearingEffect, transform.position, 0, false, null);
+        AudioPlayerController.Instance.Trigger(m_HashAppearingAudioPlayer);
         yield return new WaitForSeconds(1f);
         m_SpriteRenderer.enabled = true;
         shadow.SetActive(true);
@@ -117,7 +121,12 @@ public class PlayerPlatformerController : MonoBehaviour
         {
             TakeAction();
         }
-        Face();
+
+        if (m_CanRun)
+        {
+            Face();
+        }
+
         Animate();
 
     }
@@ -155,30 +164,11 @@ public class PlayerPlatformerController : MonoBehaviour
             SetHorizontalMovement(0);
         }
 
-        //if (!m_IsOnLadder)
-        //{
-
-        //}
-        //else
-        //{
-        //    SetHorizontalMovement(0);
-        //    if (!m_TriggerUse)
-        //    {
-        //        m_PlatformEffector2D = m_CharacterController2D.GroundColliders[0].GetComponent<PlatformEffector2D>();
-        //        if (m_PlatformEffector2D)
-        //        {
-        //            m_PlatformEffector2D.rotationalOffset = 180;
-        //        }
-        //        //m_CharacterController2D.GroundColliders[0].GetComponent<PlatformEffector2D>().rotationalOffset = 
-        //        m_TriggerUse = true;
-        //        m_Animator.SetTrigger("use");
-        //        m_Animator.SetBool(m_HashOnLadderPara, true);
-        //        m_Animator.SetFloat("velocityY", climbSpeed);
-        //        float vy = m_CharacterController2D.GroundColliders[0].GetComponent<PlatformEffector2D>() ? -climbSpeed : climbSpeed;
-        //        SetVerticalMovement(vy);
-        //    }
-        //}
-
+        if(m_DamagedVector != Vector2.zero)
+        {
+            SetMoveVector(m_DamagedVector);
+            m_DamagedVector.y = 0;
+        }
 
         //Move
         Move();
@@ -228,20 +218,6 @@ public class PlayerPlatformerController : MonoBehaviour
         SetVerticalMovement(jump);
 
     }
-
-    //private void EndClimbing()
-    //{
-    //    m_IsOnLadder = false;
-    //    m_TriggerUse = false;
-    //    if (m_PlatformEffector2D)
-    //    {
-    //        m_PlatformEffector2D.rotationalOffset = 0;
-    //    }
-    //    m_Animator.ResetTrigger("use");
-    //    m_Animator.SetBool(m_HashOnLadderPara, false);
-    //    m_Animator.SetFloat("velocityY", 0);
-    //    SetVerticalMovement(0);
-    //}
 
     public void SetMoveVector(Vector2 newMoveVector)
     {
@@ -341,25 +317,19 @@ public class PlayerPlatformerController : MonoBehaviour
 
     public void PlayFootStepAudioPlayer()
     {
-        AudioPlayerController.Instance.PlayRandomSound(m_HashFootStepAudioPlayer);
+        AudioPlayerController.Instance.Trigger(m_HashFootStepAudioPlayer);
     }
 
     public void PlayDeadAudioPlayer()
     {
-        AudioPlayerController.Instance.PlayRandomSound(m_HashDeadAudioPlayer);
+        AudioPlayerController.Instance.Trigger(m_HashDeadAudioPlayer);
     }
 
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    if (collision.tag.Equals("Ladder"))
-    //    {
-    //        m_IsOnLadder = true;
-    //    }
-    //    if (collision.tag.Equals("EndLadder"))
-    //    {
-    //        EndClimbing();
-    //    }
-    //}
+    public void PlayHitAudioPlayer()
+    {
+        AudioPlayerController.Instance.Trigger(m_HashHitAudioPlayer);
+    }
+
 
 
     public bool Attack3()
@@ -393,23 +363,31 @@ public class PlayerPlatformerController : MonoBehaviour
 
     public void Die()
     {
-        m_CanAct = false;
-        m_IsDead = true;
+        if (!m_IsDead)
+        {
+            m_IsDead = true;
+            m_CanRun = false;
+            m_CanJump = false;
 
-        m_Animator.SetTrigger(m_HashDeadPara);
+            m_DamagedVector = new Vector2(-4f, 30f);
 
-        TimeManager.ChangeTimeBackToNormal();
+            m_Animator.SetTrigger(m_HashDeadPara);
 
-        VFXController.Instance.Trigger(m_HashDeadEffect, transform.position, 0, false, null);
+            TimeManager.ChangeTimeBackToNormal();
 
-        GameManager.Instance.StartCoroutine(GameManager.Instance.RestartLevelWithDelay(2f));
+            CameraShaker.Shake(0.3f, 0.3f);
 
-        PlayDeadAudioPlayer();
+            GameManager.Instance.StartCoroutine(GameManager.Instance.RestartLevelWithDelay(2f));
+
+            PlayHitAudioPlayer();
+        }
     }
 
-    public void PushBack()
+    public void PlayDeadEffect()
     {
-        m_CharacterController2D.Move(new Vector2(-10f, -10f) * Time.deltaTime);
+        m_DamagedVector = Vector2.zero;
+        VFXController.Instance.Trigger(m_HashDeadEffect, transform.position - Vector3.one * 0.5f, 0, false, null);
+        PlayDeadAudioPlayer();
     }
 
     public void Disable()

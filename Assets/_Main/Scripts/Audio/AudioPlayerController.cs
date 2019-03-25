@@ -56,7 +56,7 @@ namespace Gamekit2D
 
         }
 
-        public void PlayRandomSound(int hash)
+        public void Trigger(int hash)
         {
             RandomAudioPlayer randomAudioPlayer;
             if (m_AudioSourceDictionary.TryGetValue(hash, out randomAudioPlayer))
@@ -65,7 +65,9 @@ namespace Gamekit2D
             }
             else
             {
+                #if UNITY_EDITOR
                 Debug.LogWarning("Audio does not exist.");
+                #endif
             }
         }
 

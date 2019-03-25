@@ -175,7 +175,9 @@ namespace Gamekit2D
             VFX vfx;
             if (!m_FxPools.TryGetValue(hash, out vfx))
             {
+                #if UNITY_EDITOR
                 Debug.LogWarning("VFX does not exist.");
+                #endif
             }
             else
             {

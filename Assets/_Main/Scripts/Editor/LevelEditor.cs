@@ -189,6 +189,76 @@ public class LevelEditor : EditorWindow
         EditorGUILayout.EndToggleGroup();
         #endregion
 
+        #region Intro, Menu, Menu Select Scene
+        int minus = 30;
+        GUILayout.Space(space);
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Open Menu Select Level", GUILayout.Width(buttonWidth - minus), GUILayout.Height(buttonHeight)))
+        {
+            if (EditorUtility.DisplayDialog("Open MenuSelectLevel", "Do you want to open MenuSelectLevel? Unsaved changes in this scene will be discarded.", "Yes", "No"))
+            {
+                try
+                {
+                    EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/MenuSelectLevel{folderIndex + 1}.unity");
+                }
+                catch (Exception)
+                {
+                    EditorUtility.DisplayDialog("File not found", $"Can not find MenuSelectLevel{folderIndex + 1} in folder Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}", "OK");
+                }
+            }
+        }
+        
+        if (GUILayout.Button("Open Intro Scene", GUILayout.Width(buttonWidth -minus), GUILayout.Height(buttonHeight)))
+        {
+            if (EditorUtility.DisplayDialog("Open IntroScene", "Do you want to open IntroScene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
+            {
+                try
+                {
+                    EditorSceneManager.OpenScene("Assets/_Main/_Scenes/IntroScene.unity");
+                }
+                catch (Exception)
+                {
+                    EditorUtility.DisplayDialog("File not found", "Can not find IntroScene in folder Assets/_Main/_Scenes/", "OK");
+                }
+            }
+        }
+        GUILayout.EndHorizontal();
+
+        GUILayout.Space(space);
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Open Menu Scene", GUILayout.Width(buttonWidth -minus), GUILayout.Height(buttonHeight)))
+        {
+            if (EditorUtility.DisplayDialog("Open MenuScene", "Do you want to open MenuScene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
+            {
+                try
+                {
+                    EditorSceneManager.OpenScene("Assets/_Main/_Scenes/MenuScene.unity");
+                }
+                catch (Exception)
+                {
+                    EditorUtility.DisplayDialog("File not found", "Can not find MenuScene in folder Assets/_Main/_Scenes/", "OK");
+                }
+            }
+        }
+        
+        if (GUILayout.Button("Open Menu Select Episode", GUILayout.Width(buttonWidth - minus), GUILayout.Height(buttonHeight)))
+        {
+            if (EditorUtility.DisplayDialog("Open MenuSelectEpisode", "Do you want to open MenuSelectEpisode? Unsaved changes in this scene will be discarded.", "Yes", "No"))
+            {
+                try
+                {
+                    EditorSceneManager.OpenScene("Assets/_Main/_Scenes/MenuSelectEpisode.unity");
+                }
+                catch (Exception)
+                {
+                    EditorUtility.DisplayDialog("File not found", "Can not find MenuSelectEpisode in folder Assets/_Main/_Scenes/", "OK");
+                }
+            }
+        }
+        GUILayout.EndHorizontal();
+        #endregion
+
+        #region Scene Image
         GUI.enabled = true;
         GUILayout.Space(space / 2);
         if (!imageExist)
@@ -199,6 +269,8 @@ public class LevelEditor : EditorWindow
         {
             GUILayout.Label(imageOfLevel, GUILayout.Width(Screen.width - 25));
         }
+        #endregion
+
         GUILayout.EndScrollView();
         #endregion end ScrollView
     }

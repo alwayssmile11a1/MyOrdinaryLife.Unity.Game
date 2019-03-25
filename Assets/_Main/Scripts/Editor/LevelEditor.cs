@@ -13,17 +13,22 @@ using File = UnityEngine.Windows.File;
 
 public class LevelEditor : EditorWindow
 {
-    bool deleteScene = false;
-    float buttonWidth = 200;
-    float buttonHeight = 25;
-    float dropdownWidth = 200;
-    float dropdownHeight = 25;
-    float labelWidth = 80;
-    string textFieldNumber = "1";
-    int space = 10;
-    Vector2 scrollPosition = Vector2.zero;
-    static Texture2D imageOfLevel;
-    bool imageExist;
+    bool                    deleteScene         = false;
+    float                   buttonWidth         = 200;
+    float                   buttonHeight        = 25;
+    float                   dropdownWidth       = 200;
+    float                   dropdownHeight      = 25;
+    float                   labelWidth          = 80;
+    string                  textFieldNumber     = "1";
+    int                     space               = 10;
+    int                     popupIndex          = 0;
+    int                     folderIndex         = 0;
+    Vector2                 scrollPosition      = Vector2.zero;
+
+    int                     newSceneIndex;
+    static Texture2D        imageOfLevel;
+    bool                    imageExist;
+    LevelEditorSO           levelEditorSO;
 
     /// <summary>
     /// not using any more
@@ -33,12 +38,6 @@ public class LevelEditor : EditorWindow
     EditorWindow gameView;
     ////////////////////////////////
     
-    int popupIndex = 0;
-    int folderIndex = 0;
-    int newSceneIndex;
-
-    LevelEditorSO levelEditorSO;
-
     static LevelEditor()
     {
         //  EditorSceneManager.sceneOpened += SceneOpened;
@@ -193,9 +192,9 @@ public class LevelEditor : EditorWindow
         int minus = 30;
         GUILayout.Space(space);
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("Open Menu Select Level", GUILayout.Width(buttonWidth - minus), GUILayout.Height(buttonHeight)))
+        if (GUILayout.Button($"Open {levelEditorSO.sceneFolderName[folderIndex]} Select Level", GUILayout.Width(buttonWidth - minus), GUILayout.Height(buttonHeight)))
         {
-            if (EditorUtility.DisplayDialog("Open MenuSelectLevel", "Do you want to open MenuSelectLevel? Unsaved changes in this scene will be discarded.", "Yes", "No"))
+            if (EditorUtility.DisplayDialog($"Open MenuSelectLevel{folderIndex + 1}", $"Do you want to open MenuSelectLevel{folderIndex + 1}? Unsaved changes in this scene will be discarded.", "Yes", "No"))
             {
                 try
                 {

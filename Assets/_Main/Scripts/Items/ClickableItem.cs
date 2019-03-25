@@ -24,7 +24,7 @@ public abstract class ClickableItem : MonoBehaviour
     protected int m_CurrentCount = 0;
     protected float m_CurrentCountdownTime = 0;
 
-    private void Awake()
+    protected void Awake()
     {
         m_Button = GetComponent<Button>();
         m_Button.onClick.AddListener(OnClick);
@@ -35,7 +35,7 @@ public abstract class ClickableItem : MonoBehaviour
         m_Audio = GetComponent<RandomAudioPlayer>();
     }
 
-    private void Start()
+    protected void Start()
     {
         m_Player = GameManager.Instance.GetPlayer();
     }

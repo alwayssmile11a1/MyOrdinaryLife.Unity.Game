@@ -70,7 +70,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300022, guid: 080322f6f83b1d743bf817e18887e4f7, type: 3}
+  m_Sprite: {fileID: 21300196, guid: 080322f6f83b1d743bf817e18887e4f7, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -230,8 +230,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   clips:
-  - {fileID: 8300000, guid: 2d31d651a6b85ec4ba29e722ef87d01b, type: 3}
-  overrides: []
+  - {fileID: 8300000, guid: 8336b8fc3a55e1844a6c870842b3bce4, type: 3}
   randomizePitch: 0
   pitchRange: 0.2
 --- !u!114 &3007035251469096873
@@ -247,8 +246,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   count: 1
-  countdownTime: 2
-  effect: Effect
+  countdownTime: -1
+  effect: ShieldEffect
+  shieldEffect: {fileID: 2464825843832165144, guid: 6304fd8f8a634f74b8271f38e5a3eb29,
+    type: 3}
 --- !u!1 &3007035252837930585
 GameObject:
   m_ObjectHideFlags: 0

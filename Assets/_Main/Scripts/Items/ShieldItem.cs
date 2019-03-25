@@ -5,13 +5,19 @@ using UnityEngine;
 
 public class ShieldItem : ClickableItem
 {
-    public GameObject shieldEffect;
+    public      GameObject      shieldEffect;
+
+    private     GameObject      shieldEffectClone;
+
+    new void Start()
+    {
+        base.Start();
+        shieldEffectClone = Instantiate(shieldEffect, GameManager.Instance.GetPlayer().transform);
+    }
 
     protected override bool OnClick(PlayerPlatformerController player)
     {
-        //throw new System.NotImplementedException();
-        //VFXController.Instance
-        shieldEffect.SetActive(true);
+        shieldEffectClone.SetActive(true);
         return true;
     }
 }

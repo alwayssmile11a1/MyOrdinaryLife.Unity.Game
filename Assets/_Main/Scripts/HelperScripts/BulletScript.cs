@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    [HideInInspector] public DeadBound deadBound;
-    [SerializeField] private Bullet bullet;
+    [HideInInspector]
+    public      DeadBound       deadBound;
+    [SerializeField]
+    private     Bullet          bullet;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

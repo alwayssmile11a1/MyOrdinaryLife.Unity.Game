@@ -27,6 +27,7 @@ public class ExoticPlant : MonoBehaviour
     public void Shoot()
     {
         BulletObject bulletObject = bulletPool.Pop(transform.position + transform.up * 0.8f);
+        bulletObject.transform.SetParent(this.transform);
         bulletObject.transform.RotateToDirection(-transform.up);
         bulletObject.rigidbody2D.velocity = bulletSpeed * transform.up;
         shootAudio.Play();

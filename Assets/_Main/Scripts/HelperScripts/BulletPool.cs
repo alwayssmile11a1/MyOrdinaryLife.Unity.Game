@@ -55,7 +55,7 @@ namespace Gamekit2D
             if (bullet != null)
             {
                 bullet.bulletPoolObject = this;
-                bullet.mainCamera = Object.FindObjectOfType<Camera>();
+                bullet.mainCamera = Camera.main;
             }
         }
 

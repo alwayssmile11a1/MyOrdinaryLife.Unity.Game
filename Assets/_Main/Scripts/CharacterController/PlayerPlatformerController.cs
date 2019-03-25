@@ -27,6 +27,7 @@ public class PlayerPlatformerController : MonoBehaviour
     public string deadEffect = "DeadEffect";
 
     [Header("Misc")]
+    public GameObject slashPrefab;
     public GameObject shadow;
 
     private CharacterController2D m_CharacterController2D;
@@ -45,6 +46,8 @@ public class PlayerPlatformerController : MonoBehaviour
     public readonly int m_HashAttack3Para = Animator.StringToHash("Attack3");
     public readonly int m_HashJumpAttack3Para = Animator.StringToHash("JumpAttack3");
     public readonly int m_HashDeadPara = Animator.StringToHash("Dead");
+
+    private BulletPool m_SlashPool;
 
     private int m_HashDeadEffect;
     private int m_HashAppearingEffect;
@@ -77,6 +80,8 @@ public class PlayerPlatformerController : MonoBehaviour
         m_HashHitAudioPlayer = AudioPlayerController.StringToHash(hitAudioPlayer);
         m_HashDeadAudioPlayer = AudioPlayerController.StringToHash(deadAudioPlayer);
         m_HashAppearingAudioPlayer = AudioPlayerController.StringToHash(appearingAudioPlayer);
+
+        m_SlashPool = BulletPool.GetObjectPool(slashPrefab, 1);
 
         m_SpriteRenderer.enabled = false;
         shadow.SetActive(false);
@@ -398,6 +403,11 @@ public class PlayerPlatformerController : MonoBehaviour
     public bool IsDead()
     {
         return m_IsDead;
+    }
+
+    public void InstantiateSlashPrefab()
+    {
+        m_SlashPool.Pop(transform.position + Vector3.right * 0.5f);
     }
 
 }

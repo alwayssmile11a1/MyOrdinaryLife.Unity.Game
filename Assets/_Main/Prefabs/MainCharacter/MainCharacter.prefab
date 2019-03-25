@@ -314,6 +314,8 @@ MonoBehaviour:
   appearingAudioPlayer: PlayerAppearingAudio
   appearingEffect: ParticleRevolver
   deadEffect: PlayerDeadEffect
+  slashPrefab: {fileID: 6484840174315285182, guid: 205d671ccc655a943b1aad15247c4db2,
+    type: 3}
   shadow: {fileID: 415903198}
 --- !u!114 &114888817
 MonoBehaviour:

@@ -5,15 +5,23 @@ using Gamekit2D;
 
 public class ExoticPlant : MonoBehaviour
 {
-    public GameObject bullet;
-    public int numberOfBullet;
-    public float bulletSpeed;
-    public AudioSource shootAudio;
+    public              GameObject      bullet;
+    public              int             numberOfBullet;
+    public              float           bulletSpeed;
+    public              AudioSource     shootAudio;
 
-    private BulletPool bulletPool;
+    private             BulletPool      bulletPool;
+    private             Frame           frame;
+    private             Animator        animator;
+
+    private readonly    int             HashAttack = Animator.StringToHash("Attack");
+
     void Awake()
     {
         bulletPool = BulletPool.GetObjectPool(bullet, 5);
+        animator = GetComponent<Animator>();
+        frame = transform.parent.GetComponentInParent<Frame>();
+        frame.onPlayerExitFrame.AddListener(OnPlayerExitFrame);
     }
 
     public void Shoot()
@@ -22,5 +30,10 @@ public class ExoticPlant : MonoBehaviour
         bulletObject.transform.RotateToDirection(-transform.up);
         bulletObject.rigidbody2D.velocity = bulletSpeed * transform.up;
         shootAudio.Play();
+    }
+
+    private void OnPlayerExitFrame()
+    {
+        animator.SetBool(HashAttack, false);
     }
 }

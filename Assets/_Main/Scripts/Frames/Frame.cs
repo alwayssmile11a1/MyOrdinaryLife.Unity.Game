@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
@@ -14,6 +15,8 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     public Rect startRect;
     [HideInInspector]
     public Animator animator;
+    [HideInInspector]
+    public UnityEvent onPlayerExitFrame;
 
 
     private readonly int HashActive = Animator.StringToHash("Active");
@@ -270,6 +273,11 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
                 //Avoid the situation in which player just enters the frame and immediately get out of that frame for some reason. We don't want that to happen
                 StartCoroutine(DisableFrameColliderTemporarily(nextFrame));
+
+                if (onPlayerExitFrame != null)
+                {
+                    onPlayerExitFrame.Invoke();
+                }
 
                 nextFrame.ResetScale();
                 this.Disable();

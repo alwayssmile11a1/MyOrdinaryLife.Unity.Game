@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
-public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
+public class Frame : MonoBehaviour
 {
 
     [HideInInspector]
@@ -23,6 +23,8 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     private readonly int HashHoverOn = Animator.StringToHash("HoverOn");
     private readonly int HashDisabled = Animator.StringToHash("Disabled");
     private readonly int HashCharacterOn = Animator.StringToHash("CharacterOn");
+
+    private readonly int HashGrabSound = Gamekit2D.AudioPlayerController.StringToHash("FrameGrabAudio");
 
     private RectTransform rectTransfrom;
     private PlayerPlatformerController m_Player;
@@ -105,10 +107,11 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
     //    ResetScale();
     //}
 
-    public void OnBeginDrag(PointerEventData eventData)
+    public void OnMouseDown()
+    //public void OnBeginDrag(PointerEventData eventData)
     {
 
-        if (Disabled || CharacterOn) return;
+        if (Disabled || CharacterOn || m_Player.IsDead()) return;
 
         if(FrameContainsPosition(m_Player.transform.position))
         {
@@ -128,8 +131,8 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         EnableDragEssentials();
     }
 
-
-    public void OnDrag(PointerEventData eventData)
+    public void OnMouseDrag()
+    //public void OnDrag(PointerEventData eventData)
     {
 
         if (!IsBeingDragged) return;
@@ -170,7 +173,8 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
 
     }
 
-    public void OnEndDrag(PointerEventData eventData)
+    public void OnMouseUp()
+    //public void OnEndDrag(PointerEventData eventData)
     {
 
         if (!IsBeingDragged) return;
@@ -208,6 +212,8 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         //Avoid player jump on being-dragged colliders
         SetCollidersActive(false);
 
+        Gamekit2D.AudioPlayerController.Instance.Trigger(HashGrabSound);
+
         TimeManager.SlowdownTime(0f, -1f);
     }
 
@@ -222,6 +228,8 @@ public class Frame : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHan
         SetCollidersActive(true);
 
         TimeManager.ChangeTimeBackToNormal();
+
+        Gamekit2D.AudioPlayerController.Instance.Trigger(HashGrabSound);
     }
 
     public bool FrameContainsPosition(Vector3 position)

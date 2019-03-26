@@ -131,8 +131,8 @@ namespace Gamekit2D
                     //m_RaycastPositions[0] = raycastStartBottomCentre + Vector2.left * m_Capsule.size.x * 0.5f;
                     //m_RaycastPositions[1] = raycastStartBottomCentre;
                     //m_RaycastPositions[2] = raycastStartBottomCentre + Vector2.right * m_Capsule.size.x * 0.5f;
-                    m_RaycastPositions[0] = raycastStartBottomCentre + Vector2.left * m_Capsule.size.x * 0.5f;
-                    m_RaycastPositions[1] = raycastStartBottomCentre + Vector2.right * m_Capsule.size.x * 0.5f;
+                    m_RaycastPositions[0] = raycastStartBottomCentre + Vector2.left * m_Capsule.size.x * 0.48f;
+                    m_RaycastPositions[1] = raycastStartBottomCentre + Vector2.right * m_Capsule.size.x * 0.48f;
                 }
                 else
                 {
@@ -142,8 +142,8 @@ namespace Gamekit2D
                     //m_RaycastPositions[0] = raycastStartTopCentre + Vector2.left * m_Capsule.size.x * 0.5f;
                     //m_RaycastPositions[1] = raycastStartTopCentre;
                     //m_RaycastPositions[2] = raycastStartTopCentre + Vector2.right * m_Capsule.size.x * 0.5f;
-                    m_RaycastPositions[0] = raycastStartTopCentre + Vector2.left * m_Capsule.size.x * 0.5f;
-                    m_RaycastPositions[1] = raycastStartTopCentre + Vector2.right * m_Capsule.size.x * 0.5f;
+                    m_RaycastPositions[0] = raycastStartTopCentre + Vector2.left * m_Capsule.size.x * 0.48f;
+                    m_RaycastPositions[1] = raycastStartTopCentre + Vector2.right * m_Capsule.size.x * 0.48f;
                 }
             }
 

@@ -148,7 +148,7 @@ public class LevelEditor : EditorWindow
         {
             if (int.TryParse(textFieldNumber, out int i))
             {
-                ShowYesNoPopup();
+                ShowUnSavePopup();
                 ChangeImage();
             }
         }
@@ -194,7 +194,7 @@ public class LevelEditor : EditorWindow
         GUILayout.BeginHorizontal();
         if (GUILayout.Button($"Open {levelEditorSO.sceneFolderName[folderIndex]} Select Level", GUILayout.Width(buttonWidth - minus), GUILayout.Height(buttonHeight)))
         {
-            if (EditorUtility.DisplayDialog($"Open MenuSelectLevel{folderIndex + 1}", $"Do you want to open MenuSelectLevel{folderIndex + 1}? Unsaved changes in this scene will be discarded.", "Yes", "No"))
+            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
             {
                 try
                 {
@@ -209,7 +209,7 @@ public class LevelEditor : EditorWindow
         
         if (GUILayout.Button("Open Intro Scene", GUILayout.Width(buttonWidth -minus), GUILayout.Height(buttonHeight)))
         {
-            if (EditorUtility.DisplayDialog("Open IntroScene", "Do you want to open IntroScene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
+            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
             {
                 try
                 {
@@ -227,7 +227,7 @@ public class LevelEditor : EditorWindow
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Open Menu Scene", GUILayout.Width(buttonWidth -minus), GUILayout.Height(buttonHeight)))
         {
-            if (EditorUtility.DisplayDialog("Open MenuScene", "Do you want to open MenuScene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
+            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
             {
                 try
                 {
@@ -242,7 +242,7 @@ public class LevelEditor : EditorWindow
         
         if (GUILayout.Button("Open Menu Select Episode", GUILayout.Width(buttonWidth - minus), GUILayout.Height(buttonHeight)))
         {
-            if (EditorUtility.DisplayDialog("Open MenuSelectEpisode", "Do you want to open MenuSelectEpisode? Unsaved changes in this scene will be discarded.", "Yes", "No"))
+            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
             {
                 try
                 {
@@ -318,16 +318,17 @@ public class LevelEditor : EditorWindow
         }
     }
 
-    private void ShowYesNoPopup()
+    private void ShowUnSavePopup()
     {
         if (EditorSceneManager.GetActiveScene().path.Equals($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{folderIndex + 1}-{textFieldNumber}")) return;
-        if (EditorUtility.DisplayDialog($"Open Level{textFieldNumber} scene", $"Do you want to open Level{textFieldNumber} scene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
+
+        if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
         {
             try
             {
                 EditorSceneManager.OpenScene($"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{folderIndex + 1}-{textFieldNumber}.unity");
             }
-            catch(Exception)
+            catch (Exception)
             {
                 EditorUtility.DisplayDialog("File not found", $"Level{textFieldNumber} does not exist in folder Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/", "OK");
             }

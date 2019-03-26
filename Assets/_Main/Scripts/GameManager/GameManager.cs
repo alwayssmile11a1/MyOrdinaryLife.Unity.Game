@@ -176,5 +176,5 @@ public class GameManager : MonoBehaviour {
     {
         return m_Player;
     }
-    
+
 }

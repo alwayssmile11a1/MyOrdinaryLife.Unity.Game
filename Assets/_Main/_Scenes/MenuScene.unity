@@ -5823,11 +5823,13 @@ MonoBehaviour:
   obstacleForwardDistance: 1.5
   gulfForwardDistance: 0.1
   footStepAudioPlayer: PlayerFootStepAudio
+  landAudioPlayer: 
   hitAudioPlayer: 
   deadAudioPlayer: 
   appearingAudioPlayer: PlayerAppearingAudio
   appearingEffect: ParticleRevolver
   deadEffect: DeadEffect
+  dustEffect: Dust
   slashPrefab: {fileID: 6484840174315285182, guid: 205d671ccc655a943b1aad15247c4db2,
     type: 3}
   shadow: {fileID: 1870804818}

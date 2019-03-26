@@ -18,6 +18,8 @@ public class PlayerPlatformerController : MonoBehaviour
 
     [Header("Audio")]
     public string footStepAudioPlayer;
+    public string startJumpingAudioPlayer;
+    public string landAudioPlayer;
     public string hitAudioPlayer;
     public string deadAudioPlayer;
     public string appearingAudioPlayer;
@@ -25,10 +27,12 @@ public class PlayerPlatformerController : MonoBehaviour
     [Header("Effect")]
     public string appearingEffect = "AppearingEffect";
     public string deadEffect = "DeadEffect";
+    public string dustEffect = "Dust";
 
     [Header("Misc")]
     public GameObject slashPrefab;
     public GameObject shadow;
+    public TrailRenderer trailRenderer;
 
     private CharacterController2D m_CharacterController2D;
     private Collider2D m_Collider2D;
@@ -51,11 +55,14 @@ public class PlayerPlatformerController : MonoBehaviour
 
     private int m_HashDeadEffect;
     private int m_HashAppearingEffect;
+    private int m_HashDustEffect;
 
     private int m_HashFootStepAudioPlayer;
     private int m_HashDeadAudioPlayer;
     private int m_HashHitAudioPlayer;
     private int m_HashAppearingAudioPlayer;
+    private int m_HashLandAudioPlayer;
+    private int m_HashStartJumpingAudioPlayer;
 
     private bool m_CanAct = false;
     private bool m_DontStartDelay = false;
@@ -75,11 +82,14 @@ public class PlayerPlatformerController : MonoBehaviour
 
         m_HashDeadEffect = VFXController.StringToHash(deadEffect);
         m_HashAppearingEffect = VFXController.StringToHash(appearingEffect);
+        m_HashDustEffect = VFXController.StringToHash(dustEffect);
 
         m_HashFootStepAudioPlayer = AudioPlayerController.StringToHash(footStepAudioPlayer);
         m_HashHitAudioPlayer = AudioPlayerController.StringToHash(hitAudioPlayer);
         m_HashDeadAudioPlayer = AudioPlayerController.StringToHash(deadAudioPlayer);
         m_HashAppearingAudioPlayer = AudioPlayerController.StringToHash(appearingAudioPlayer);
+        m_HashLandAudioPlayer = AudioPlayerController.StringToHash(landAudioPlayer);
+        m_HashStartJumpingAudioPlayer = AudioPlayerController.StringToHash(startJumpingAudioPlayer);
 
         m_SlashPool = BulletPool.GetObjectPool(slashPrefab, 1);
 
@@ -325,6 +335,11 @@ public class PlayerPlatformerController : MonoBehaviour
         AudioPlayerController.Instance.Trigger(m_HashFootStepAudioPlayer);
     }
 
+    public void InstantiateDustEffect()
+    {
+        VFXController.Instance.Trigger(m_HashDustEffect, transform.position + Vector3.down + Vector3.right * Random.Range(0.5f, 0.7f) * (m_SpriteRenderer.flipX ?-1 : 1), 0, false, null);
+    }
+
     public void PlayDeadAudioPlayer()
     {
         AudioPlayerController.Instance.Trigger(m_HashDeadAudioPlayer);
@@ -335,6 +350,20 @@ public class PlayerPlatformerController : MonoBehaviour
         AudioPlayerController.Instance.Trigger(m_HashHitAudioPlayer);
     }
 
+    public void PlayLandAudioPlayer()
+    {
+        AudioPlayerController.Instance.Trigger(m_HashLandAudioPlayer);
+    }
+
+    public void PlayStartJumpingAudioPlayer()
+    {
+        AudioPlayerController.Instance.Trigger(m_HashStartJumpingAudioPlayer);
+    }
+
+    public void ResetTrail()
+    {
+        trailRenderer.Clear();
+    }
 
 
     public bool Attack3()
@@ -376,6 +405,8 @@ public class PlayerPlatformerController : MonoBehaviour
 
             m_DamagedVector = new Vector2(-4f, 30f);
 
+            trailRenderer.enabled = false;
+
             m_Animator.SetTrigger(m_HashDeadPara);
 
             TimeManager.ChangeTimeBackToNormal();
@@ -407,7 +438,9 @@ public class PlayerPlatformerController : MonoBehaviour
 
     public void InstantiateSlashPrefab()
     {
-        m_SlashPool.Pop(transform.position + Vector3.right * 0.5f);
+        BulletObject slash = m_SlashPool.Pop(transform.position + (m_SpriteRenderer.flipX ? Vector3.left * 0.5f : Vector3.right * 0.5f));
+        PlayerSlash playerSlash = slash.transform.GetComponent<PlayerSlash>();
+        playerSlash.speed = Mathf.Abs(playerSlash.speed) * (m_SpriteRenderer.flipX ? -1 : 1);
     }
 
 }

@@ -44,6 +44,8 @@ namespace Gamekit2D
             m_ContactFilter.useTriggers = false;
 
             Physics2D.queriesStartInColliders = false;
+
+            IsGrounded = true;
         }
 
         void FixedUpdate()

@@ -12,6 +12,7 @@ public class SpeedBoostItem : ClickableItem {
     protected override bool OnClick(PlayerPlatformerController player)
     {
         CameraShaker.Shake(0.2f, 0.2f);
+        //Ripple.Trigger(player.transform.position);
         player.GetComponent<Animator>().SetBool(player.m_HashRunFastPara, true);
         StartCoroutine(Boost(player));
         return true;

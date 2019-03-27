@@ -520,8 +520,8 @@ MonoBehaviour:
   startDelayTime: 0.5
   speed: 4.3
   jumpSpeed: 12
-  jumpAbortSpeedReduction: 17
-  gravity: 17
+  jumpAbortSpeedReduction: 16.85
+  gravity: 16.85
   obstacleForwardDistance: 1.5
   gulfForwardDistance: 0.1
   footStepAudioPlayer: PlayerFootStepAudio

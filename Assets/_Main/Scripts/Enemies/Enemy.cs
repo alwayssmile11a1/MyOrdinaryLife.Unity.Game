@@ -93,6 +93,11 @@ public abstract class Enemy : MonoBehaviour
         PerformMeleeAttack();
     }
 
+    public virtual void OnHit()
+    {
+        gameObject.SetActive(false);
+    }
+
     public bool IsPlayerVisible()
     {
         Vector3 dir = m_Player.transform.position - transform.position;

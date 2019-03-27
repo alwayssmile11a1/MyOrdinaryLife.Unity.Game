@@ -22,7 +22,11 @@ public class PlayerSlash : MonoBehaviour
 
     public void OnHitEnemy(Damager damager, Damageable damageable)
     {
-        damageable.gameObject.SetActive(false);
+        Enemy enemy = damageable.GetComponent<Enemy>();
+        if (enemy)
+        {
+            enemy.OnHit();
+        }
     }
 
 

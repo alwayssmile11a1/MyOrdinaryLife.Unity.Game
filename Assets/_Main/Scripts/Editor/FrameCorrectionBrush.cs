@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 
 namespace UnityEditor
 {
-    [CustomGridBrush(false, false, false, "Frame Correction Brush")]
+    [CustomGridBrush(false, false, true, "Frame Correction Brush")]
     public class FrameCorrectionBrush : GridBrush
     {
         public override void Paint(GridLayout grid, GameObject brushTarget, Vector3Int position)

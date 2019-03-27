@@ -232,6 +232,7 @@ namespace Gamekit2D
 
         public static int StringToHash(string name)
         {
+            if (name == null) return 0;
             return name.GetHashCode();
         }
 

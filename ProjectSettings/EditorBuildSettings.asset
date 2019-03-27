@@ -79,5 +79,8 @@ EditorBuildSettings:
     guid: 6ffc7d21d6aae0b4b871a7d885d70862
   - enabled: 1
     path: Assets/_Main/_Scenes/TrapLand/Level2-8.unity
-    guid: 00000000000000000000000000000000
+    guid: 2481b9beeeea7f24cb20fc71f4b9ab81
+  - enabled: 1
+    path: Assets/_Main/_Scenes/TrapLand/Level2-9.unity
+    guid: 6f6a77102628f394f9af3e0cbb50d024
   m_configObjects: {}

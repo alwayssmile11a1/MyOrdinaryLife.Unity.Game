@@ -65,7 +65,7 @@ public class LevelEditor : EditorWindow
         {
             newSceneIndex = FindAppropriateIndex();
 
-            if (EditorUtility.DisplayDialog("Create new scene", "Do you want to create new scene? Unsaved changes in this scene will be discarded.", "Yes", "No"))
+            if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
             {
                 // Create new scene
                 EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);

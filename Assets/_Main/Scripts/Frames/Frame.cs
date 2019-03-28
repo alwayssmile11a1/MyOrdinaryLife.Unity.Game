@@ -360,9 +360,9 @@ public class Frame : MonoBehaviour
     private Vector3 GetTouchedPosition()
     {
 
-#if UNITY_EDITOR
+#if UNITY_EDITOR || UNITY_STANDALONE_WIN
 
-        return  Input.mousePosition;
+        return Input.mousePosition;
 
 #else  
         return Input.GetTouch(0).position;

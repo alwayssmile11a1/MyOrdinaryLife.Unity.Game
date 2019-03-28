@@ -8,7 +8,7 @@ public class ShieldItem : ClickableItem
     public      GameObject      shieldEffect;
 
     private     GameObject      shieldEffectClone;
-    private ParticleSystem particleSystem;
+    private new ParticleSystem  particleSystem;
 
     new void Start()
     {

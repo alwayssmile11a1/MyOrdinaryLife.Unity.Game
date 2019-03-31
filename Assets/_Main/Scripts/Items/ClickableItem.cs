@@ -67,6 +67,12 @@ public abstract class ClickableItem : MonoBehaviour
                 m_CurrentCountdownTime = countdownTime;
                 m_Button.enabled = false;
                 m_backGroundImage.enabled = true;
+
+                // Add this to disabled count down (for item using more than once)
+                if (m_CurrentCount >= count)
+                {
+                    m_CurrentCountdownTime = 0;
+                }
             }
         }
     }

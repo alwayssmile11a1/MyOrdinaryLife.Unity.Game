@@ -20,13 +20,12 @@ public class ShieldItem : ClickableItem
     protected override bool OnClick(PlayerPlatformerController player)
     {
         shieldEffectClone.SetActive(true);
-        StartCoroutine(DisableShield());
+        Invoke("DisableShield", particleSystem.main.duration);
         return true;
     }
 
-    private IEnumerator DisableShield()
+    private void DisableShield()
     {
-        yield return new WaitForSeconds(particleSystem.main.duration);
         shieldEffectClone.SetActive(false);
     }
 }

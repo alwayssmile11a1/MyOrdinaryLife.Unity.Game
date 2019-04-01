@@ -12,27 +12,6 @@ public class LevelButton : MonoBehaviour {
 
     private string m_SceneName;
 
-    private void Awake()
-    {
-        string activeScene = SceneManager.GetActiveScene().name;
-        m_SceneName = $"Level{activeScene[activeScene.Length - 1]}-{text.text}";
-
-        SavedData savedData = new SavedData();
-
-        if(savedData.Load(m_SceneName))
-        {
-            for (int i = 0; i < savedData.count; i++)
-            {
-              
-                stars[i].color = starActiveColor;
-            }
-
-            UIManager.Instance.AddToCurrentTotalScore(savedData.count);
-
-        }
-        UIManager.Instance.AddToTotalStars(stars.Length);
-    }
-
     private void LoadStar()
     {
         SavedData savedData = new SavedData();
@@ -54,8 +33,6 @@ public class LevelButton : MonoBehaviour {
     private void SetSceneName(char episodeIndex, int levelIndex)
     {
         m_SceneName = $"Level{episodeIndex}-{levelIndex}";
-
-        LoadStar();
     }
 
     public void SetSceneNameAndLoadStar(char episodeIndex, int levelIndex)

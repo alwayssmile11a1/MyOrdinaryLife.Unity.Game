@@ -421,7 +421,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -452, y: 19}
+  m_AnchoredPosition: {x: -288.6542, y: 19}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &194842201
@@ -444,7 +444,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: b2a82fb8c6524c74a9ed6e0bb0422928, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3a7dc70aa6d74a240b694a05eaed1d34, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1357,7 +1357,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clips:
   - {fileID: 8300000, guid: f39203fd913316d41bab84c97d42a130, type: 3}
-  overrides: []
   randomizePitch: 1
   pitchRange: 0.2
 --- !u!1001 &1434615348
@@ -3319,6 +3318,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3382131932012480783, guid: b062c98b3454cdb4799e8c09755ff470,
         type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3382131932012480783, guid: b062c98b3454cdb4799e8c09755ff470,
+        type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[0].X
       value: -57656248
       objectReference: {fileID: 0}
@@ -4990,6 +4994,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 877187048723489321, guid: b062c98b3454cdb4799e8c09755ff470,
         type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 877187048723489321, guid: b062c98b3454cdb4799e8c09755ff470,
+        type: 3}
       propertyPath: m_ColliderPaths.Array.data[0].m_ColliderPaths.Array.data[0].Array.data[0].X
       value: -59531248
       objectReference: {fileID: 0}
@@ -6347,6 +6356,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_CompositePaths.m_Paths.Array.data[1].Array.size
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 7629579881235069663, guid: b062c98b3454cdb4799e8c09755ff470,
+        type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7629579881235069663, guid: b062c98b3454cdb4799e8c09755ff470,
         type: 3}

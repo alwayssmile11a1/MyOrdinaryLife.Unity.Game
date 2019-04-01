@@ -2628,7 +2628,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clips:
   - {fileID: 8300000, guid: a69cd135b2cd2cc4eb3385f23b7bc73f, type: 3}
-  overrides: []
   randomizePitch: 0
   pitchRange: 0.2
 --- !u!82 &1018050571
@@ -4800,6 +4799,11 @@ PrefabInstance:
       propertyPath: m_Text
       value: Trap Land
       objectReference: {fileID: 0}
+    - target: {fileID: 1594701123566083606, guid: 0191afa4f45555e48bbb69f3ace597af,
+        type: 3}
+      propertyPath: unlockNumber
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0191afa4f45555e48bbb69f3ace597af, type: 3}
 --- !u!224 &2012757671 stripped
@@ -4985,6 +4989,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Text
       value: Death Land
+      objectReference: {fileID: 0}
+    - target: {fileID: 1594701123566083606, guid: 0191afa4f45555e48bbb69f3ace597af,
+        type: 3}
+      propertyPath: unlockNumber
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0191afa4f45555e48bbb69f3ace597af, type: 3}

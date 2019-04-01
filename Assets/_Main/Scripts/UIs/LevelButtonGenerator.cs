@@ -7,10 +7,10 @@ using UnityEngine.UI;
 
 public class LevelButtonGenerator : MonoBehaviour
 {
-    public GameObject buttonPrefab;
-    public float buttonSize;
-    public Transform content;
-    public Sprite buttonBackgroundSprite;
+    public      GameObject      buttonPrefab;
+    public      float           buttonSize;
+    public      Transform       content;
+    public      Sprite          buttonBackgroundSprite;
 
     // Start is called before the first frame update
     void Awake()

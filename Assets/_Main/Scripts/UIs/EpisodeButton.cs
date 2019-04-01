@@ -7,6 +7,7 @@ public class EpisodeButton : MonoBehaviour
 {
     public Text episodeNumberText;
     public Text starsCountText;
+    public int unlockNumber = 0;
 
     private void Awake()
     {
@@ -21,7 +22,7 @@ public class EpisodeButton : MonoBehaviour
         {
             starsCountText.text = $"* {0}";
         }
-
+        GetComponent<Button>().interactable = UIManager.Instance.GetCurrentTotalScore() >= unlockNumber ? true : false;
     }
 
     public void LoadScene()

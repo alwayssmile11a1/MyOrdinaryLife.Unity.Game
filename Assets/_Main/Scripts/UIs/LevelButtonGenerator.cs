@@ -7,23 +7,24 @@ using UnityEngine.UI;
 
 public class LevelButtonGenerator : MonoBehaviour
 {
-    public      GameObject      buttonPrefab;
-    public      float           buttonSize;
-    public      Transform       content;
-    public      Sprite          buttonBackgroundSprite;
+    public      GameObject                      buttonPrefab;
+    public      float                           buttonSize;
+    public      Transform                       content;
+    public      Sprite                          buttonBackgroundSprite;
+    public      SceneAmountScriptableObject     sceneAmountSO;
 
     // Start is called before the first frame update
     void Awake()
     {
-        string[] pathSplit = SceneManager.GetActiveScene().path.Split('/');
-        string folderName = pathSplit[pathSplit.Length - 2];
-        DirectoryInfo directoryInfo = new DirectoryInfo($"Assets/_Main/_Scenes/{folderName}");
-        FileInfo[] arrFiles = directoryInfo.GetFiles("Level*.unity");
+        string sceneName = SceneManager.GetActiveScene().name;
+        Debug.Log(sceneName);
+        int index = int.Parse(sceneName[sceneName.Length - 1].ToString());
+
         
         string activeScene = SceneManager.GetActiveScene().name;
         char episodeIndex = activeScene[activeScene.Length - 1];
 
-        for (int i = 0; i < arrFiles.Length; i++)
+        for (int i = 0; i < sceneAmountSO.episodeScriptableObjects[index - 1].numberOfScene; i++)
         {
             GameObject button = Instantiate(buttonPrefab, content);
             button.GetComponent<Image>().sprite = buttonBackgroundSprite;

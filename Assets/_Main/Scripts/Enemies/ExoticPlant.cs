@@ -35,6 +35,11 @@ public class ExoticPlant : MonoBehaviour
 
     private void OnPlayerExitFrame()
     {
+        Invoke("StopAttacking", 0.1f);
+    }
+
+    private void StopAttacking()
+    {
         animator.SetBool(HashAttack, false);
         foreach (var bullet in bulletPool.GetAll())
         {

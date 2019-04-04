@@ -4802,7 +4802,7 @@ PrefabInstance:
     - target: {fileID: 1594701123566083606, guid: 0191afa4f45555e48bbb69f3ace597af,
         type: 3}
       propertyPath: unlockNumber
-      value: 12
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0191afa4f45555e48bbb69f3ace597af, type: 3}

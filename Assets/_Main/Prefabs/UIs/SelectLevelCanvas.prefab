@@ -645,6 +645,7 @@ MonoBehaviour:
   content: {fileID: 4568027462717181628}
   buttonBackgroundSprite: {fileID: 21300216, guid: 56cbdcc526bfc3142a4e4dd419e442da,
     type: 3}
+  sceneAmountSO: {fileID: 11400000, guid: 6e7d9d02c5b8a494ca61f73e0ea0ad8b, type: 2}
 --- !u!1 &4568027462717181629
 GameObject:
   m_ObjectHideFlags: 0

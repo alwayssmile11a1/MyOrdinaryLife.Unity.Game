@@ -80,7 +80,8 @@ public class LevelEditor : EditorWindow
                 AddBackgroundToNewScene();
 
                 // Save scene after adding everything
-                EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), $"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{folderIndex + 1}-{newSceneIndex}.unity");
+                SaveScene();
+                
             }
             return;
         }
@@ -165,6 +166,7 @@ public class LevelEditor : EditorWindow
                     File.Delete(filePath);
 #if UNITY_EDITOR
                     AssetDatabase.Refresh();
+                    UpdateSceneAmountInScriptableObject(false);
 #endif
 
                     EditorBuildSettingsScene[] originalSettingScenes = EditorBuildSettings.scenes;
@@ -183,6 +185,10 @@ public class LevelEditor : EditorWindow
 
                     EditorUtility.DisplayDialog("Message", $"{sceneName} has been deleted from project folder and build settings", "OK");
                 }
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("File not found", $"Can not find IntroScene in folder {filePath}", "OK");
             }
         }
         EditorGUILayout.EndToggleGroup();
@@ -374,6 +380,29 @@ public class LevelEditor : EditorWindow
         System.Array.Copy(originalSettingScenes, newSettings, originalSettingScenes.Length);
         newSettings[newSettings.Length - 1] = sceneToAdd;
         EditorBuildSettings.scenes = newSettings;
+    }
+
+    private void SaveScene()
+    {
+        EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), $"Assets/_Main/_Scenes/{levelEditorSO.sceneFolderName[folderIndex]}/Level{folderIndex + 1}-{newSceneIndex}.unity");
+        UpdateSceneAmountInScriptableObject(true);
+    }
+
+    private void UpdateSceneAmountInScriptableObject(bool increase)
+    {
+        SceneAmountScriptableObject sceneAmountSO = AssetDatabase.LoadAssetAtPath("Assets/_Main/Resources/SceneNumberSO.asset", typeof(SceneAmountScriptableObject)) as SceneAmountScriptableObject;
+        int i;
+        for (i = 0; i < sceneAmountSO.episodeScriptableObjects.Length; i++)
+        {
+            if (sceneAmountSO.episodeScriptableObjects[i].episodeName.Equals(levelEditorSO.sceneFolderName[folderIndex]))
+            {
+                break;
+            }
+        }
+        sceneAmountSO.episodeScriptableObjects[i].numberOfScene = increase ? sceneAmountSO.episodeScriptableObjects[i].numberOfScene + 1 : sceneAmountSO.episodeScriptableObjects[i].numberOfScene - 1;
+        Debug.Log(sceneAmountSO.episodeScriptableObjects[0].numberOfScene);
+        EditorUtility.SetDirty(sceneAmountSO);
+        AssetDatabase.SaveAssets();
     }
 
     private int FindAppropriateIndex()

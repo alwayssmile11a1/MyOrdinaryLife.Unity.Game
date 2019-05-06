@@ -13,7 +13,7 @@ using UnityEditor;
 [System.Serializable]
 public class SerializableSavedData
 {
-
+    public bool levelComplete;
     public int count;
 
 }
@@ -22,6 +22,7 @@ public class SerializableSavedData
 public class SavedData
 {
     public int count;
+    public bool levelComplete = false;
     private static readonly string gameName = "MyOrdinaryLife.dat";
 
     public SerializableSavedData GetSeralizableData()
@@ -29,7 +30,7 @@ public class SavedData
         SerializableSavedData serializableData = new SerializableSavedData();
 
         serializableData.count = count;
-
+        serializableData.levelComplete = levelComplete;
 
         return serializableData;
     }
@@ -37,6 +38,7 @@ public class SavedData
     public void FromSerializableData(SerializableSavedData serializableData)
     {
         count = serializableData.count;
+        levelComplete = serializableData.levelComplete;
     }
 
 

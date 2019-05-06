@@ -35,7 +35,7 @@ public class LevelButtonGenerator : MonoBehaviour
 
             LevelButton levelButton = button.GetComponent<LevelButton>();
             levelButton.text.text = (i + 1).ToString();
-            levelButton.SetSceneNameAndLoadStar(episodeIndex, i + 1);
+            levelButton.SetSceneNameAndLoadStars(episodeIndex, i + 1);
         }
     }
 

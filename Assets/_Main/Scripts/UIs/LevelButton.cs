@@ -11,8 +11,9 @@ public class LevelButton : MonoBehaviour {
     public Image[] stars;
 
     private string m_SceneName;
+    private string m_PreviousSceneName;
 
-    private void LoadStar()
+    private void LoadStars(int levelIndex)
     {
         SavedData savedData = new SavedData();
 
@@ -33,13 +34,32 @@ public class LevelButton : MonoBehaviour {
     private void SetSceneName(char episodeIndex, int levelIndex)
     {
         m_SceneName = $"Level{episodeIndex}-{levelIndex}";
+        m_PreviousSceneName = $"Level{episodeIndex}-{levelIndex - 1}";
     }
 
-    public void SetSceneNameAndLoadStar(char episodeIndex, int levelIndex)
+    private void SetButtonActive(int levelIndex)
+    {
+        if (levelIndex == 1) return;
+
+        SavedData savedData = new SavedData();
+
+        if (savedData.Load(m_PreviousSceneName))
+        {
+            GetComponent<Button>().interactable = savedData.levelComplete;
+        }
+        else
+        {
+            GetComponent<Button>().interactable = false;
+        }
+    }
+
+    public void SetSceneNameAndLoadStars(char episodeIndex, int levelIndex)
     {
         SetSceneName(episodeIndex, levelIndex);
 
-        LoadStar();
+        LoadStars(levelIndex);
+
+        SetButtonActive(levelIndex);
     }
 
     public void LoadScene()

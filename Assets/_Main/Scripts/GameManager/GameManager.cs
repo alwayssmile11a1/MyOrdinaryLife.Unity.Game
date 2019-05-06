@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour {
         SavedData levelSavedData = new SavedData();
         if (levelSavedData.Load(SceneManager.GetActiveScene().name))
         {
+            levelSavedData.levelComplete = true;
             if (levelSavedData.count < m_StarsCount)
             {
                 levelSavedData.count = m_StarsCount;
@@ -87,6 +88,7 @@ public class GameManager : MonoBehaviour {
         else
         {
             levelSavedData.count = m_StarsCount;
+            levelSavedData.levelComplete = true;
             levelSavedData.Save(SceneManager.GetActiveScene().name);
 
             episodeSavedData.count += levelSavedData.count;

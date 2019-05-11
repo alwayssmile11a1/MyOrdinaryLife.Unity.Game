@@ -18360,6 +18360,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9125689900355333968, guid: 816fe0c4694ae6947be8f749c19fb0cf,
+        type: 3}
+      propertyPath: orthographic size
+      value: 11.996044
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 816fe0c4694ae6947be8f749c19fb0cf, type: 3}
 --- !u!1001 &741577738
@@ -19097,6 +19102,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: UIManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3845821322116916623, guid: efbb2dcda77655e4dac9642c9193b78a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3845821322116916622, guid: efbb2dcda77655e4dac9642c9193b78a,
         type: 3}

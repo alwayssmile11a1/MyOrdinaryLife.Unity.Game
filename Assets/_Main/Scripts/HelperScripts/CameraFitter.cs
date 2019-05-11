@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+[ExecuteInEditMode]
+#endif
 public class CameraFitter : MonoBehaviour
 {
     public float masterCameraSize = 5;
@@ -11,6 +14,13 @@ public class CameraFitter : MonoBehaviour
     {
         FitCamera();
     }
+
+#if UNITY_EDITOR
+    private void Update()
+    {
+        FitCamera();
+    }
+#endif
 
     void FitCamera()
     {

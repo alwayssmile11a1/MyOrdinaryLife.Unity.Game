@@ -5,6 +5,7 @@
 /[Bb]uilds/
 /Assets/AssetStoreTools*
 /Assets/_Main/Editor/ScreenShots/*
+/Assets/EditorOnly*
 
 # Visual Studio 2015 cache directory
 /.vs/
@@ -33,3 +34,4 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+

@@ -473,7 +473,7 @@
       <IsLandscape>true</IsLandscape>
       <IsPortrait>false</IsPortrait>
       <IsBaseRes>true</IsBaseRes>
-      <Enabled>false</Enabled>
+      <Enabled>true</Enabled>
     </xARMScreenCap>
     <xARMScreenCap>
       <Name>iPad mini</Name>
@@ -519,7 +519,7 @@
       <IsLandscape>true</IsLandscape>
       <IsPortrait>false</IsPortrait>
       <IsBaseRes>true</IsBaseRes>
-      <Enabled>false</Enabled>
+      <Enabled>true</Enabled>
     </xARMScreenCap>
     <xARMScreenCap>
       <Name>iPad</Name>
@@ -699,7 +699,7 @@
       <IsLandscape>true</IsLandscape>
       <IsPortrait>false</IsPortrait>
       <IsBaseRes>true</IsBaseRes>
-      <Enabled>false</Enabled>
+      <Enabled>true</Enabled>
     </xARMScreenCap>
     <xARMScreenCap>
       <Name>iPad mini</Name>
@@ -745,7 +745,7 @@
       <IsLandscape>true</IsLandscape>
       <IsPortrait>false</IsPortrait>
       <IsBaseRes>true</IsBaseRes>
-      <Enabled>false</Enabled>
+      <Enabled>true</Enabled>
     </xARMScreenCap>
     <xARMScreenCap>
       <Name>iPad</Name>
@@ -3445,7 +3445,7 @@
       <IsLandscape>true</IsLandscape>
       <IsPortrait>false</IsPortrait>
       <IsBaseRes>true</IsBaseRes>
-      <Enabled>false</Enabled>
+      <Enabled>true</Enabled>
     </xARMScreenCap>
     <xARMScreenCap>
       <Name>iPad Pro</Name>
@@ -4323,7 +4323,7 @@
   <FoldoutOptions>true</FoldoutOptions>
   <FoldoutOptionsPreview>false</FoldoutOptionsPreview>
   <FoldoutOptionsGallery>false</FoldoutOptionsGallery>
-  <FoldoutIOS>false</FoldoutIOS>
+  <FoldoutIOS>true</FoldoutIOS>
   <FoldoutAndroid>false</FoldoutAndroid>
   <FoldoutWinPhone8>false</FoldoutWinPhone8>
   <FoldoutWinRT>false</FoldoutWinRT>
@@ -4367,7 +4367,7 @@
   </HiddenGameViewPosition>
   <HideGameView>false</HideGameView>
   <PreviewSelectedScreenCapIndex>34</PreviewSelectedScreenCapIndex>
-  <PreviewAutoUpdateInEditorMode>true</PreviewAutoUpdateInEditorMode>
+  <PreviewAutoUpdateInEditorMode>false</PreviewAutoUpdateInEditorMode>
   <PreviewAutoUpdateInPauseMode>false</PreviewAutoUpdateInPauseMode>
   <PreviewAutoUpdateInPlayMode>false</PreviewAutoUpdateInPlayMode>
   <PreviewOneToOnePixel>false</PreviewOneToOnePixel>
@@ -4379,7 +4379,7 @@
   <GalleryScreenCapsPerRow>1</GalleryScreenCapsPerRow>
   <GalleryUpdateIntervalLimitEdit>12</GalleryUpdateIntervalLimitEdit>
   <GameViewPosition>
-    <x>259</x>
-    <y>204</y>
+    <x>0</x>
+    <y>25</y>
   </GameViewPosition>
 </xARMConfig>

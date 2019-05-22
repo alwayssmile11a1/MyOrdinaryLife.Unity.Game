@@ -64,6 +64,8 @@ public class LevelButton : MonoBehaviour {
 
     public void LoadScene()
     {
+        if (UIManager.Instance.GetPlayerLife() <= 0) return;
+
         StartCoroutine(GameManager.Instance.LoadLevel(m_SceneName));
     }
 

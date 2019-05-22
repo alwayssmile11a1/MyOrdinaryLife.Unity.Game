@@ -103,5 +103,11 @@ class MyWindow : Editor
     {
         SavedData.DeleteData();
     }
+
+    [MenuItem("Tool/Delete All PlayerPrefs Data")]
+    static void DeleteAllPlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+    }
 }
 #endif

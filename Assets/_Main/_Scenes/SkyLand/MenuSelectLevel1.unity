@@ -3074,16 +3074,27 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4568027462468769165, guid: 8dc983911a068b24799fe9ada8bbd16a,
-        type: 3}
-      propertyPath: buttonBackgroundSprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 56cbdcc526bfc3142a4e4dd419e442da,
-        type: 3}
     - target: {fileID: 4568027462717181628, guid: 8dc983911a068b24799fe9ada8bbd16a,
         type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8093586990772113538, guid: 8dc983911a068b24799fe9ada8bbd16a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8093586990772113538, guid: 8dc983911a068b24799fe9ada8bbd16a,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 6.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7890842904455300981, guid: 8dc983911a068b24799fe9ada8bbd16a,
+        type: 3}
+      propertyPath: m_Text
+      value: 'x0
+
+'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8dc983911a068b24799fe9ada8bbd16a, type: 3}

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -34,7 +35,6 @@ public class UIManager : MonoBehaviour
 
     private int m_TotalStarsCount = 0;
     private int m_CurrentTotalScore = 0;
-    private int m_PlayerLife;
 
     private void Awake()
     {
@@ -45,18 +45,13 @@ public class UIManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
-
-        if (PlayerPrefs.HasKey("playerLife"))
-        {
-            m_PlayerLife = PlayerPrefs.GetInt("playerLife");
-        }
-        else
-        {
-            PlayerPrefs.SetInt("playerLife", 30);
-            m_PlayerLife = 30;
-        }
+        PlayerLife.Instance.CalculateOfflineLife();
     }
 
+    private void OnApplicationQuit()
+    {
+        PlayerLife.Instance.TimePlayerOut();
+    }
 
     public void ResetUIs()
     {
@@ -108,15 +103,6 @@ public class UIManager : MonoBehaviour
 
     public int GetPlayerLife()
     {
-        return m_PlayerLife;
-    }
-    /// <summary>
-    /// Update playerLife variable
-    /// </summary>
-    /// <param name="minus">if true subtract playerLife by 1, if false plus playerLife by 1</param>
-    public void UpdatePlayerLife(bool minus)
-    {
-        m_PlayerLife = minus ? --m_PlayerLife : ++m_PlayerLife;
-        PlayerPrefs.SetInt("playerLife", m_PlayerLife);
+        return PlayerLife.Instance.GetPlayerLife();
     }
 }

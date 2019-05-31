@@ -25,7 +25,6 @@ public class FinishBound : MonoBehaviour {
             VFXController.Instance.Trigger(m_HashEndLevelEffect, player.transform.position - Vector3.left, 0, false, null);
             m_Audio.PlayRandomSound();
             GameManager.Instance.FinishLevel();
-            UIManager.Instance.UpdatePlayerLife(true);
         }
     }
 

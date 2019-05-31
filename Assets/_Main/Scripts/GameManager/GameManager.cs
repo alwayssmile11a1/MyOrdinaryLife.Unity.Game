@@ -49,6 +49,20 @@ public class GameManager : MonoBehaviour {
         m_FadeDurationSeconds = new WaitForSeconds(fadeDuration);
     }
 
+    private void Update()
+    {
+        if (PlayerLife.Instance.GetPlayerLife() < 30)
+        {
+            PlayerLife.Instance.playerLifeExpandElapsedTime += Time.deltaTime;
+            if(PlayerLife.Instance.playerLifeExpandElapsedTime > 15 * 60)
+            {
+                PlayerLife.Instance.playerLifeExpandElapsedTime = 0;
+                PlayerLife.Instance.UpdatePlayerLife(true);
+            }
+            Debug.Log(PlayerLife.Instance.playerLifeExpandElapsedTime);
+        }
+    }
+
     public void AddOneStar()
     {
         m_StarsCount++;
